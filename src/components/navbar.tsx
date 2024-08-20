@@ -17,11 +17,7 @@ const Navbar = () => {
             to="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <img
-              src={logo}
-              className="h-10"
-              alt="Flowbite Logo"
-            />
+            <img src={logo} className="h-10" alt="Flowbite Logo" />
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
               CookBook
             </span>
@@ -59,7 +55,9 @@ const Navbar = () => {
             </button>
           </div>
           <div
-            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${isMenuOpen ? "block" : "hidden"}`}
+            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${
+              isMenuOpen ? "block" : "hidden"
+            }`}
             id="navbar-cta"
           >
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-700 rounded-lg bg-gray-800 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-gray-900">
@@ -96,6 +94,7 @@ const Navbar = () => {
                   Tools
                 </Link>
               </li>
+              
             </ul>
           </div>
         </div>
