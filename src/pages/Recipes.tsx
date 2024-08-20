@@ -45,7 +45,7 @@ const Recipes = () => {
         </h1>
         <div>
           {/* search bar */}
-          <p className="text-white mt-3 mb-1">Select Ingredients</p>
+          
           <div className="flex justify-center mb-5">
             
             <Select
@@ -61,7 +61,7 @@ const Recipes = () => {
             />
           </div>
           {/* dropdown menu to select a single cuisine */}
-          <p className="text-white mt-3 mb-1">Select Cuisine</p>
+          
           <div className="flex justify-center mb-5">
             <Select
               components={animatedComponents}
