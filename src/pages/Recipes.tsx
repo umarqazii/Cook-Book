@@ -1,19 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Select, { MultiValue, SingleValue } from "react-select";
 import makeAnimated from "react-select/animated";
 import axios from "axios";
 import { ingredientOptions, cuisineOptions } from "../data/recipePageData";
 import { fetchRecipes } from "../lib/utils";
 
+interface Recipe {
+  label: string;
+  image: string;
+  url: string;
+}
+
+interface Hit {
+  recipe: Recipe;
+}
+
 const Recipes = () => {
   const animatedComponents = makeAnimated();
   const [selectedIngredients, setSelectedIngredients] = React.useState<
     MultiValue<{ value: string; label: string }>
   >([]);
+  
   const [selectedCuisine, setSelectedCuisine] = React.useState<{
     value: string;
     label: string;
   } | null>(null);
+
+  const [recipes, setRecipes] = useState<Hit[]>([]);
 
   useEffect(() => {
     console.log(selectedIngredients);
@@ -21,12 +34,17 @@ const Recipes = () => {
   }, [selectedIngredients, selectedCuisine]);
 
   useEffect(() => {
-    fetchRecipes(
-      selectedIngredients.map((ingredient) => ingredient.value).join(","),
-      selectedCuisine?.value || ""
-    );
-    
-  }, [selectedIngredients, selectedCuisine]);
+    const fetchAndSetRecipes = async () => {
+        const hits = await fetchRecipes(
+            selectedIngredients.map((ingredient) => ingredient.value).join(","),
+            selectedCuisine?.value || ""
+        );
+        setRecipes(hits);  // Update the recipes state with the fetched hits
+    };
+
+    fetchAndSetRecipes();
+}, [selectedIngredients, selectedCuisine]);
+
 
   return (
     <div className="bg-gray-700 min-h-screen">
@@ -71,19 +89,20 @@ const Recipes = () => {
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            <div className="bg-gray-800 rounded-lg p-4">
-              <h2 className="text-xl text-white font-semibold">Recipe 1</h2>
-              <p className="text-gray-400">Description of Recipe 1</p>
-            </div>
-            <div className="bg-gray-800 rounded-lg p-4">
-              <h2 className="text-xl text-white font-semibold">Recipe 2</h2>
-              <p className="text-gray-400">Description of Recipe 2</p>
-            </div>
-            <div className="bg-gray-800 rounded-lg p-4">
-              <h2 className="text-xl text-white font-semibold">Recipe 3</h2>
-              <p className="text-gray-400">Description of Recipe 3</p>
-            </div>
-          </div>
+
+            {/* Dynamic grid items from API */}
+            {recipes.map((recipeData, index) => {
+                const { label, image, url } = recipeData.recipe;
+
+                return (
+                    <div key={index} className="bg-gray-800 rounded-lg p-4 text-center">
+                        <h2 className="text-xl text-white font-semibold">{label}</h2>
+                        <img src={image} alt={label} className="mt-2 rounded-lg w-full object-cover" />
+                        <a href={url} target="_blank" rel="noreferrer" className="block text-blue-400 mt-2 ">View Recipe</a>
+                    </div>
+                );
+            })}
+        </div>
         </div>
       </div>
     </div>
