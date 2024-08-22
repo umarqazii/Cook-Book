@@ -50,7 +50,7 @@ const Navbar = () => {
           </div>
           <div
             className={`items-center justify-between w-full md:flex md:w-auto md:order-1 transition-all duration-500 ease-in-out ${
-              isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              isMenuOpen ? "block" : "hidden"
             }`}
             id="navbar-cta"
           >

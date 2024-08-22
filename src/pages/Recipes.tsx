@@ -157,11 +157,11 @@ const Recipes = () => {
           <div className="flex flex-col ">
             <div className="flex justify-center flex-col items-center">
               <div className="bg-slate-400 mt-2 mb-2 sm:w-1/3 w-2/3 h-1 border rounded-lg"></div>
-              <h2 className="text-xl">Apply Filters <i className="pi pi-filter"></i></h2>
-              <div className="bg-slate-400 mt-2 mb-2 w-full h-0.3 border rounded-lg"></div>
+              <h2 className="text-xl mb-10">Apply Filters <i className="pi pi-filter"></i></h2>
+              <div className="bg-slate-400 mt-2 w-full h-0.3 border rounded-lg"></div>
             </div>
             {/* dropdown menu to select multiple ingredients */}
-            <p className="text-black text-center mb-1 ">Select Ingredients</p>
+            <p className="text-black text-center mb-1 mt-2">Select Ingredients</p>
             <div className="flex justify-center mb-5">
               <Select
                 closeMenuOnSelect={false}
@@ -259,7 +259,7 @@ const Recipes = () => {
                   className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
                   style={{
                     width: "17rem",
-                    height: "350px",
+                    height: "360px",
                     background: "white",
                     padding: "0px",
                     margin: "0px",
@@ -284,7 +284,7 @@ const Recipes = () => {
                       className="flex flex-col p-2 justify-between"
                       style={{ flexGrow: 1 }} // Allows content to grow and fill available space
                     >
-                      <CardHeader>
+                      <CardHeader className="mt--10">
                         <CardTitle className="text-[#005D90] text-center align-middle">
                           {/* {`${randomrecipe.recipe.label}`} */}
                           {/* only display the first 30 characted of the label */}
@@ -341,7 +341,7 @@ const Recipes = () => {
                       style={{ flexGrow: 1 }} // Allows content to grow and fill available space
                     >
                       <CardHeader>
-                        <CardTitle className="text-[#005D90] text-center align-middle">
+                        <CardTitle className="text-[#005D90] text-center align-middle mt--3">
                           {/* {`${randomrecipe.recipe.label}`} */}
                           {/* only display the first 30 characted of the label */}
                           {`${recipe.recipe.label}`.substring(0, 25)}
