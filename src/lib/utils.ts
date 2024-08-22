@@ -6,7 +6,7 @@ import {
   cuisineOptions,
   mealTypeOptions,
   dishTypeOptions,
-} from "../data/recipePageData";
+} from "../data/ArrayExports";
 
 
 export function cn(...inputs: ClassValue[]) {

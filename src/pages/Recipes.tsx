@@ -10,7 +10,7 @@ import {
   cuisineOptions,
   mealTypeOptions,
   dishTypeOptions,
-} from "../data/recipePageData";
+} from "../data/ArrayExports";
 import {
   Card,
   CardContent,
@@ -285,7 +285,7 @@ const Recipes = () => {
                       style={{ flexGrow: 1 }} // Allows content to grow and fill available space
                     >
                       <CardHeader className="mt--10">
-                        <CardTitle className="text-[#005D90] text-center align-middle overflow-clip h-12 ">
+                        <CardTitle className="text-[#005D90] text-center align-middle overflow-clip h-11 ">
                           {/* {`${randomrecipe.recipe.label}`} */}
                           {/* only display the first 30 characted of the label */}
                           {`${randomrecipe.recipe.label}`}

@@ -10,7 +10,7 @@ import {
   cuisineOptions,
   mealTypeOptions,
   dishTypeOptions,
-} from "../data/recipePageData";
+} from "../data/ArrayExports";
 import {
   Card,
   CardContent,

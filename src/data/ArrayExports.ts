@@ -124,3 +124,19 @@ export const dishTypeOptions = [
   { value: "sandwiches", label: "Sandwiches" },
   { value: "seafood", label: "Seafood" },
 ];
+
+export const toolsOptions = [
+  { value: "dry-Cel-to-Fah", label: "Dry Celsius to Fahrenheit" },
+  { value: "dry-gm-to-oz", label: "Dry Grams to Ounces" },
+  { value: "dry-cup-to-tbsp", label: "Dry Cups to Tablespoons" },
+  { value: "dry-cup-to-tsp", label: "Dry Cups to Teaspoons" },
+  { value: "dry-cup-to-oz", label: "Dry Cups to Ounces" },
+  { value: "dry-tbsp-to-oz", label: "Dry Tablespoons to Ounces" },
+  { value: "dry-tsp-to-oz", label: "Dry Teaspoons to Ounces" },
+  { value: "fluid-gal-to-cup", label: "Fluid Gallons to Cup" },
+  { value: "fluid-gal-to-oz", label: "Fluid Gallon to Ounces" },
+  { value: "fluid-gal-to-liter", label: "Fluid Gallon to Liters" },
+  { value: "fluid-cup-to-oz", label: "Fluid Cups to Ounces" },
+  { value: "fluid-cup-to-liter", label: "Fluid Cups to Liters" },
+  { value: "fluid-oz-to-litre", label: "Fluid Ounces to Liters" },
+]
