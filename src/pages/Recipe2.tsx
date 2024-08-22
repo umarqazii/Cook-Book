@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Select, { MultiValue, SingleValue } from "react-select";
 import makeAnimated from "react-select/animated";
 import Drawer from "react-modern-drawer";
+import 'primeicons/primeicons.css';
 import "react-modern-drawer/dist/index.css";
 import {
   ingredientOptions,
@@ -84,13 +85,17 @@ const Recipes = () => {
         selectedCuisine?.value || "",
         selectedDishType?.value || "",
         selectedMealType?.value || ""
-        
       );
       setRecipes(hits); // Update the recipes state with the fetched hits
     };
 
     fetchAndSetRecipes();
-  }, [selectedIngredients, selectedCuisine, selectedMealType, selectedDishType]);
+  }, [
+    selectedIngredients,
+    selectedCuisine,
+    selectedMealType,
+    selectedDishType,
+  ]);
 
   // Function to handle the change in the dropdown menu
   const handleCuisineChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -139,7 +144,7 @@ const Recipes = () => {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-auto"
             onClick={toggleDrawer}
           >
-            Browse Recipes
+            Browse Recipes &nbsp;<i className="pi pi-search"></i>
           </button>
         </div>
         <Drawer
@@ -152,11 +157,11 @@ const Recipes = () => {
           <div className="flex flex-col ">
             <div className="flex justify-center flex-col items-center">
               <div className="bg-slate-400 mt-2 mb-2 sm:w-1/3 w-2/3 h-1 border rounded-lg"></div>
-              <h2 className="text-xl">Apply Filters</h2>
-              <div className="bg-slate-400 mt-2 mb-2 w-full h-0.3 border rounded-lg"></div>
+              <h2 className="text-xl mb-10">Apply Filters <i className="pi pi-filter"></i></h2>
+              <div className="bg-slate-400 mt-2 w-full h-0.3 border rounded-lg"></div>
             </div>
             {/* dropdown menu to select multiple ingredients */}
-            <p className="text-black text-center mb-1 ">Select Ingredients</p>
+            <p className="text-black text-center mb-1 mt-2">Select Ingredients</p>
             <div className="flex justify-center mb-5">
               <Select
                 closeMenuOnSelect={false}
@@ -188,8 +193,6 @@ const Recipes = () => {
                 ))}
               </select>
             </div>
-
-            
 
             {/* dropdown menu to select a single dish type */}
             <div className="flex justify-center">
@@ -246,70 +249,115 @@ const Recipes = () => {
         <div>
           {recipes.length === 0 ? (
             <>
-            <div className="text-white text-center mb-3">Here are some Random Recipes for You</div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {/* Dynamic grid items from API */}
-              {randomrecipes.map((recipeData, index) => {
-                const { label, image, url } = recipeData.recipe;
-
-                return (
-                  <div
-                    key={index}
-                    className="bg-gray-800 rounded-lg p-4 text-center"
-                  >
-                    <h2 className="text-xl text-white font-semibold">
-                      {label}
-                    </h2>
+              {/* use cards to display the recipe label, image and anchor tag for the url */}
+              <h2 className="text-white text-lg text-center mb-3 mt-3">Browsing random recipes for you</h2>
+              <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
+                
+                {randomrecipes.map((randomrecipe) => (
+                  <Card
+                  key={randomrecipe.recipe.url}
+                  className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                  style={{
+                    width: "17rem",
+                    height: "360px",
+                    background: "white",
+                    padding: "0px",
+                    margin: "0px",
+                    borderRadius: "5px",
+                    display: "flex",
+                    flexDirection: "column",
+                    boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
+                  }}
+                >
                     <img
-                      src={image}
-                      alt={label}
-                      className="mt-2 rounded-lg w-full h-4/5 object-cover"
+                      src={randomrecipe.recipe.image}
+                      alt="not found"
+                      style={{
+                        width: "100%",
+                        height: "60%",
+                        objectFit: "cover",
+                        borderTopLeftRadius: "5px",
+                        borderTopRightRadius: "5px",
+                      }}
                     />
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="block text-blue-400 mt-2 "
+                    <CardContent
+                      className="flex flex-col p-2 justify-between"
+                      style={{ flexGrow: 1 }} // Allows content to grow and fill available space
                     >
-                      View Recipe
-                    </a>
-                  </div>
-                );
-              })}
-            </div>
+                      <CardHeader className="mt--10">
+                        <CardTitle className="text-[#005D90] text-center align-middle">
+                          {/* {`${randomrecipe.recipe.label}`} */}
+                          {/* only display the first 30 characted of the label */}
+                          {`${randomrecipe.recipe.label}`.substring(0, 30)}
+                          {`${randomrecipe.recipe.label}`.length > 30 && "..."}
+                        </CardTitle>
+                      </CardHeader>
+                      <div className="flex items-center justify-center">
+                        <a href={randomrecipe.recipe.url} className="bg-white text-[#005D90] hover:bg-[#005D90] hover:text-white font-bold py-1 px-3 rounded border border-[#005D90] ">
+                          View Recipe
+                        </a>
+                      
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </>
-            
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {/* Dynamic grid items from API */}
-              {recipes.map((recipeData, index) => {
-                const { label, image, url } = recipeData.recipe;
-
-                return (
-                  <div
-                    key={index}
-                    className="bg-gray-800 rounded-lg p-4 text-center"
-                  >
-                    <h2 className="text-xl text-white font-semibold">
-                      {label}
-                    </h2>
+            <>
+              {/* use cards to display the recipe label, image and anchor tag for the url */}
+              <h2 className="text-white text-lg text-center mb-3 mt-3">Recipes Based on your Search</h2>
+              <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
+                
+                {recipes.map((recipe) => (
+                  <Card
+                  key={recipe.recipe.url}
+                  className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                  style={{
+                    width: "17rem",
+                    height: "350px",
+                    background: "white",
+                    padding: "0px",
+                    margin: "0px",
+                    borderRadius: "5px",
+                    display: "flex",
+                    flexDirection: "column",
+                    boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
+                  }}
+                >
                     <img
-                      src={image}
-                      alt={label}
-                      className="mt-2 rounded-lg w-full h-4/5 object-cover"
+                      src={recipe.recipe.image}
+                      alt="not found"
+                      style={{
+                        width: "100%",
+                        height: "60%",
+                        objectFit: "cover",
+                        borderTopLeftRadius: "5px",
+                        borderTopRightRadius: "5px",
+                      }}
                     />
-                    <a
-                      href={url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="block text-blue-400 mt-2 "
-                    >
-                      View Recipe
-                    </a>
-                  </div>
-                );
-              })}
-            </div>
+                    <CardContent>
+                    <div className="h-80px">
+                      <CardHeader>
+                        <CardTitle className="text-[#005D90] text-center align-middle mt--3">
+                          {/* {`${randomrecipe.recipe.label}`} */}
+                          {/* only display the first 30 characted of the label */}
+                          {`${recipe.recipe.label}`.substring(0, 25)}
+                          {`${recipe.recipe.label}`.length > 25 && "..."}
+                        </CardTitle>
+                      </CardHeader>
+                    </div>
+                      <div className="flex items-center justify-center">
+                        <a href={recipe.recipe.url} className="bg-white text-[#005D90] hover:bg-[#005D90] hover:text-white font-bold py-1 px-3 rounded border border-[#005D90] ">
+                          View Recipe
+                        </a>
+                      
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </div>

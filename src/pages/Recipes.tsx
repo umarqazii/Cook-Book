@@ -285,11 +285,11 @@ const Recipes = () => {
                       style={{ flexGrow: 1 }} // Allows content to grow and fill available space
                     >
                       <CardHeader className="mt--10">
-                        <CardTitle className="text-[#005D90] text-center align-middle">
+                        <CardTitle className="text-[#005D90] text-center align-middle overflow-clip h-12 ">
                           {/* {`${randomrecipe.recipe.label}`} */}
                           {/* only display the first 30 characted of the label */}
-                          {`${randomrecipe.recipe.label}`.substring(0, 30)}
-                          {`${randomrecipe.recipe.label}`.length > 30 && "..."}
+                          {`${randomrecipe.recipe.label}`}
+                          {/* {`${randomrecipe.recipe.label}`.length > 30 && "..."} */}
                         </CardTitle>
                       </CardHeader>
                       <div className="flex items-center justify-center">
