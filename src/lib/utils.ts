@@ -13,7 +13,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const fetchRecipes = async (query: string, selectedCuisineType: string, selectedMealType: string, selectedDishType: string) => {
+export const fetchRecipes = async (query: string, selectedCuisineType: string, selectedDishType: string, selectedMealType: string) => {
   //const appId = "ab7aeda7";
   const appId = process.env.REACT_APP_APPLICATION_ID;
   //const appKey = "582c50836c0a17b6c3b525cff3c88f63";

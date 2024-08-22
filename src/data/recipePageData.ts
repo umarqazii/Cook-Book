@@ -1,4 +1,5 @@
 export const ingredientOptions = [
+    {value: "", label: "Select an ingredient"},
     { value: "chicken", label: "Chicken" },
     { value: "beef", label: "Beef" },
     { value: "mutton", label: "Mutton" },
@@ -100,7 +101,7 @@ export const ingredientOptions = [
 
 export const mealTypeOptions = [
     { value: "breakfast", label: "Breakfast" },
-    { value: "lunch/dinner", label: "Lunch/Dinner" },
+    { value: "lunch+dinner", label: "Lunch/Dinner" },
     { value: "snack", label: "Snack" },
     { value: "teatime", label: "Teatime" },
     { value: "brunch", label: "Brunch" },
