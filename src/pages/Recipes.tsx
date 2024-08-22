@@ -144,7 +144,7 @@ const Recipes = () => {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-auto"
             onClick={toggleDrawer}
           >
-            Browse Recipes <i className="pi pi-search"></i>
+            Browse Recipes &nbsp;<i className="pi pi-search"></i>
           </button>
         </div>
         <Drawer

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   let logo = "/logo192.png";
@@ -13,7 +13,7 @@ const Navbar = () => {
     <div>
       <nav className="bg-gray-900 border-gray-700">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link
+          <NavLink
             to="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
@@ -21,14 +21,8 @@ const Navbar = () => {
             <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">
               CookBook
             </span>
-          </Link>
+          </NavLink>
           <div className="flex md:order-2 space-x-3 rtl:space-x-reverse">
-            {/* <button
-              type="button"
-              className="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-800 font-medium rounded-lg text-sm px-4 py-2 text-center"
-            >
-              Get started
-            </button> */}
             <button
               onClick={toggleMenu}
               type="button"
@@ -46,55 +40,82 @@ const Navbar = () => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M1 1h15M1 7h15M1 13h15"
                 />
               </svg>
             </button>
           </div>
           <div
-            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${
-              isMenuOpen ? "block" : "hidden"
+            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 transition-all duration-500 ease-in-out ${
+              isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
             }`}
             id="navbar-cta"
           >
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-700 rounded-lg bg-gray-800 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-gray-900">
               <li>
-                <Link
+                <NavLink
                   to="/"
-                  className="block py-2 px-3 md:p-0 text-white bg-blue-600 rounded md:bg-transparent md:text-blue-500"
+                  className={({ isActive }) =>
+                    `block py-2 px-3 md:p-0 rounded ${
+                      isActive
+                        ? "text-blue-500 bg-blue-600 md:bg-transparent"
+                        : "text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                    }`
+                  }
                   aria-current="page"
+                  onClick={toggleMenu}
                 >
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
+                <NavLink
                   to="/recipes"
-                  className="block py-2 px-3 md:p-0 text-gray-400 rounded hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                  className={({ isActive }) =>
+                    `block py-2 px-3 md:p-0 rounded ${
+                      isActive
+                        ? "text-blue-500 bg-blue-600 md:bg-transparent"
+                        : "text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                    }`
+                  }
+                  onClick={toggleMenu}
                 >
                   Recipes
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
+                <NavLink
                   to="/favorites"
-                  className="block py-2 px-3 md:p-0 text-gray-400 rounded hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                  className={({ isActive }) =>
+                    `block py-2 px-3 md:p-0 rounded ${
+                      isActive
+                        ? "text-blue-500 bg-blue-600 md:bg-transparent"
+                        : "text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                    }`
+                  }
+                  onClick={toggleMenu}
                 >
                   Favorites
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
+                <NavLink
                   to="/tools"
-                  className="block py-2 px-3 md:p-0 text-gray-400 rounded hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                  className={({ isActive }) =>
+                    `block py-2 px-3 md:p-0 rounded ${
+                      isActive
+                        ? "text-blue-500 bg-blue-600 md:bg-transparent"
+                        : "text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                    }`
+                  }
+                  onClick={toggleMenu}
                 >
                   Tools
-                </Link>
+                </NavLink>
               </li>
-              
             </ul>
           </div>
         </div>
