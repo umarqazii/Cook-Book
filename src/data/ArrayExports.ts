@@ -126,7 +126,7 @@ export const dishTypeOptions = [
 ];
 
 export const toolsOptions = [
-  { value: "Cel-to-Fah", label: "Celsius to Fahrenheit" },
+  { value: "Cel-to-Fah", label: "Celsius to Fahrenheit (done)" },
   { value: "dry-gm-to-oz", label: "Dry Grams to Ounces" },
   { value: "dry-cup-to-tbsp", label: "Dry Cups to Tablespoons" },
   { value: "dry-cup-to-tsp", label: "Dry Cups to Teaspoons" },
