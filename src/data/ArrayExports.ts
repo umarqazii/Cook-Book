@@ -1,5 +1,6 @@
 export const ingredientOptions = [
     {value: "", label: "Select an ingredient"},
+    { value: "pakistani", label: "Pakistani" },
     { value: "chicken", label: "Chicken" },
     { value: "beef", label: "Beef" },
     { value: "mutton", label: "Mutton" },

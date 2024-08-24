@@ -268,6 +268,7 @@ const Recipes = () => {
                     flexDirection: "column",
                     boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
                   }}
+                  onClick={() => window.open(randomrecipe.recipe.url, "_blank")}
                 >
                     <img
                       src={randomrecipe.recipe.image}
@@ -281,11 +282,10 @@ const Recipes = () => {
                       }}
                     />
                     <CardContent
-                      className="flex flex-col p-2 justify-between"
-                      style={{ flexGrow: 1 }} // Allows content to grow and fill available space
+
                     >
                       <CardHeader className="mt--10">
-                        <CardTitle className="text-[#005D90] text-center align-middle overflow-clip h-11 ">
+                        <CardTitle className="text-[#005D90] text-center align-middle  overflow-clip h-28">
                           {/* {`${randomrecipe.recipe.label}`} */}
                           {/* only display the first 30 characted of the label */}
                           {`${randomrecipe.recipe.label}`}
@@ -293,10 +293,7 @@ const Recipes = () => {
                         </CardTitle>
                       </CardHeader>
                       <div className="flex items-center justify-center">
-                        <a href={randomrecipe.recipe.url} className="bg-white text-[#005D90] hover:bg-[#005D90] hover:text-white font-bold py-1 px-3 rounded border border-[#005D90] ">
-                          View Recipe
-                        </a>
-                      
+
                       </div>
                     </CardContent>
                   </Card>
@@ -315,7 +312,7 @@ const Recipes = () => {
                   className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
                   style={{
                     width: "17rem",
-                    height: "350px",
+                    height: "360px",
                     background: "white",
                     padding: "0px",
                     margin: "0px",
@@ -324,6 +321,7 @@ const Recipes = () => {
                     flexDirection: "column",
                     boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
                   }}
+                  onClick={() => window.open(recipe.recipe.url, "_blank")}
                 >
                     <img
                       src={recipe.recipe.image}
@@ -337,23 +335,14 @@ const Recipes = () => {
                       }}
                     />
                     <CardContent
-                      className="flex flex-col p-2 justify-between"
-                      style={{ flexGrow: 1 }} // Allows content to grow and fill available space
+                      // className="flex flex-col p-2 justify-between"
+                      // style={{ flexGrow: 1 }} // Allows content to grow and fill available space
                     >
                       <CardHeader>
-                        <CardTitle className="text-[#005D90] text-center align-middle mt--3">
-                          {/* {`${randomrecipe.recipe.label}`} */}
-                          {/* only display the first 30 characted of the label */}
-                          {`${recipe.recipe.label}`.substring(0, 25)}
-                          {`${recipe.recipe.label}`.length > 25 && "..."}
+                        <CardTitle className="text-[#005D90] text-center align-middle overflow-clip h-28">
+                          {`${recipe.recipe.label}`}
                         </CardTitle>
                       </CardHeader>
-                      <div className="flex items-center justify-center">
-                        <a href={recipe.recipe.url} className="bg-white text-[#005D90] hover:bg-[#005D90] hover:text-white font-bold py-1 px-3 rounded border border-[#005D90] ">
-                          View Recipe
-                        </a>
-                      
-                      </div>
                     </CardContent>
                   </Card>
                 ))}
