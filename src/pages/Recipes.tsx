@@ -261,7 +261,7 @@ const Recipes = () => {
             </h2>
             {loading ? ( // Step 3: Conditional rendering
               <div className="flex justify-center">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
               </div>
             ) : (
               <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
