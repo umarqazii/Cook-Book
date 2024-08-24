@@ -14,8 +14,13 @@ const Tools = () => {
     label: string;
   } | null>(null);
 
-  const [celsius, setCelsius] = useState<number>(); // Corrected variable name
+  const [celsius, setCelsius] = useState<number>();
   const [fahrenheit, setFahrenheit] = useState<number>();
+  const [grams, setGrams] = useState<number>();
+  const [ounces, setOunces] = useState<number>();
+  const [cups, setCups] = useState<number>();
+  const [tablespoons, setTablespoons] = useState<number>();
+  const [teaspoons, setTeaspoons] = useState<number>();
 
   // Function to handle the change in the dropdown menu
   const handleToolChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -23,6 +28,43 @@ const Tools = () => {
     const selectedOption =
       toolsOptions.find((option) => option.value === selectedValue) || null;
     setSelectedTool(selectedOption);
+  };
+
+  const handleTeaspoonsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const teaspoonsValue = Number(e.target.value);
+    setTeaspoons(teaspoonsValue);
+    setCups((teaspoonsValue / 48));
+    setOunces((teaspoonsValue / 6));
+  }
+
+  const handleCupsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const cupsValue = Number(e.target.value);
+    setCups(cupsValue);
+    setTablespoons((cupsValue * 16));
+    setTeaspoons((cupsValue * 48));
+    setOunces((cupsValue * 8));
+  }
+
+  const handleTablespoonsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const tablespoonsValue = Number(e.target.value);
+    setTablespoons(tablespoonsValue);
+    setCups((tablespoonsValue / 16));
+    setOunces((tablespoonsValue / 2));
+  }
+
+    const handleGramsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const gramsValue = Number(e.target.value);
+    setGrams(gramsValue);
+    setOunces((gramsValue / 28.34952) );
+  };
+
+  const handleOuncesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const ouncesValue = Number(e.target.value);
+    setOunces(ouncesValue);
+    setGrams((ouncesValue * 28.34952));
+    setCups((ouncesValue / 8));
+    setTablespoons((ouncesValue * 2));
+    setTeaspoons((ouncesValue * 6));
   };
 
   const handleCelsiusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,6 +77,25 @@ const Tools = () => {
     const fahrenheitValue = Number(e.target.value);
     setFahrenheit(fahrenheitValue);
     setCelsius(((fahrenheitValue - 32) * 5) / 9);
+  };
+
+  // Helper function to convert decimal to fraction
+  const decimalToFraction = (decimal: number): string => {
+    const gcd = (a: number, b: number): number => {
+      return b ? gcd(b, a % b) : a;
+    };
+
+    const len = decimal.toString().length - 2;
+    const denominator = Math.pow(10, len);
+    const numerator = decimal * denominator;
+    const divisor = gcd(numerator, denominator);
+
+    const fraction = Math.floor(numerator / divisor) + '/' + Math.floor(denominator / divisor);
+    
+    // To handle cases like 1.0 showing as "1/1"
+    if (fraction === "1/1") return "1";
+
+    return fraction;
   };
 
   return (
@@ -109,7 +170,263 @@ const Tools = () => {
               </CardContent>
             </Card>
           </div>
-        ) : (
+        ) : selectedTool.value === "dry-gm-to-oz" ? (
+          <div className="flex justify-center">
+            <Card
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              style={{
+                boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
+              }}
+            >
+              <CardContent
+                className="flex flex-col p-4"
+                style={{ flexGrow: 1 }} // Allows content to grow and fill available space
+              >
+                <CardHeader className="text-center mb-4 flex justify-center">
+                  <CardTitle className="text-white text-3xl font-bold text-center">
+                    {selectedTool?.label}
+                  </CardTitle>
+                </CardHeader>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  {" "}
+                  {/* Added spacing between elements */}
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Grams:</label>
+                    <input
+                      type="number"
+                      value={grams}
+                      onChange={handleGramsChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500 " // Added width and border for better appearance
+                    />
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Ounces:</label>
+                    <input
+                      type="number"
+                      value={ounces}
+                      onChange={handleOuncesChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500" // Added width and border for better appearance
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        ) : selectedTool.value === "dry-cup-to-tbsp" ? (
+          <div className="flex justify-center">
+            <Card
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              style={{
+                boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
+              }}
+            >
+              <CardContent
+                className="flex flex-col p-4"
+                style={{ flexGrow: 1 }} // Allows content to grow and fill available space
+              >
+                <CardHeader className="text-center mb-4 flex justify-center">
+                  <CardTitle className="text-white text-3xl font-bold text-center">
+                    {selectedTool?.label}
+                  </CardTitle>
+                </CardHeader>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  {" "}
+                  {/* Added spacing between elements */}
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Cups:</label>
+                    <input
+                      type="number"
+                      value={cups}
+                      onChange={handleCupsChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500 " // Added width and border for better appearance
+                    />
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Tablespoons:</label>
+                    <input
+                      type="number"
+                      value={tablespoons}
+                      onChange={handleTablespoonsChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500" // Added width and border for better appearance
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        ) : selectedTool.value === "dry-cup-to-tsp" ? (
+          <div className="flex justify-center">
+            <Card
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              style={{
+                boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
+              }}
+            >
+              <CardContent
+                className="flex flex-col p-4"
+                style={{ flexGrow: 1 }} // Allows content to grow and fill available space
+              >
+                <CardHeader className="text-center mb-4 flex justify-center">
+                  <CardTitle className="text-white text-3xl font-bold text-center">
+                    {selectedTool?.label}
+                  </CardTitle>
+                </CardHeader>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  {" "}
+                  {/* Added spacing between elements */}
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Cups:</label>
+                    <input
+                      type="number"
+                      value={cups}
+                      onChange={handleCupsChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500 " // Added width and border for better appearance
+                    />
+                    {/* display cups in fractions */}
+                    <p className="text-white text-center">{cups ? decimalToFraction(cups) : ""}</p>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Teaspoons:</label>
+                    <input
+                      type="number"
+                      value={teaspoons}
+                      onChange={handleTeaspoonsChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500" // Added width and border for better appearance
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        ) : selectedTool.value === "dry-cup-to-oz" ? (
+          <div className="flex justify-center">
+            <Card
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              style={{
+                boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
+              }}
+            >
+              <CardContent
+                className="flex flex-col p-4"
+                style={{ flexGrow: 1 }} // Allows content to grow and fill available space
+              >
+                <CardHeader className="text-center mb-4 flex justify-center">
+                  <CardTitle className="text-white text-3xl font-bold text-center">
+                    {selectedTool?.label}
+                  </CardTitle>
+                </CardHeader>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  {" "}
+                  {/* Added spacing between elements */}
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Cups:</label>
+                    <input
+                      type="number"
+                      value={cups}
+                      onChange={handleCupsChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500 " // Added width and border for better appearance
+                    />
+                    {/* display cups in fractions */}
+                    <p className="text-white text-center">{cups ? decimalToFraction(cups) : ""}</p>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Ounces:</label>
+                    <input
+                      type="number"
+                      value={ounces}
+                      onChange={handleOuncesChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500" // Added width and border for better appearance
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )  : selectedTool.value === "dry-tbsp-to-oz" ? (
+          <div className="flex justify-center">
+            <Card
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              style={{
+                boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
+              }}
+            >
+              <CardContent
+                className="flex flex-col p-4"
+                style={{ flexGrow: 1 }} // Allows content to grow and fill available space
+              >
+                <CardHeader className="text-center mb-4 flex justify-center">
+                  <CardTitle className="text-white text-3xl font-bold text-center">
+                    {selectedTool?.label}
+                  </CardTitle>
+                </CardHeader>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  {" "}
+                  {/* Added spacing between elements */}
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Tablespoons:</label>
+                    <input
+                      type="number"
+                      value={tablespoons}
+                      onChange={handleTablespoonsChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500 " // Added width and border for better appearance
+                    />
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Ounces:</label>
+                    <input
+                      type="number"
+                      value={ounces}
+                      onChange={handleOuncesChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500" // Added width and border for better appearance
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        ) : selectedTool.value === "dry-tsp-to-oz" ? (
+          <div className="flex justify-center">
+            <Card
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              style={{
+                boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
+              }}
+            >
+              <CardContent
+                className="flex flex-col p-4"
+                style={{ flexGrow: 1 }} // Allows content to grow and fill available space
+              >
+                <CardHeader className="text-center mb-4 flex justify-center">
+                  <CardTitle className="text-white text-3xl font-bold text-center">
+                    {selectedTool?.label}
+                  </CardTitle>
+                </CardHeader>
+                <div className="flex flex-col items-center justify-center space-y-4">
+                  {" "}
+                  {/* Added spacing between elements */}
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Teapoons:</label>
+                    <input
+                      type="number"
+                      value={teaspoons}
+                      onChange={handleTeaspoonsChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500 " // Added width and border for better appearance
+                    />
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <label className="text-white mb-1">Ounces:</label>
+                    <input
+                      type="number"
+                      value={ounces}
+                      onChange={handleOuncesChange}
+                      className="p-2 rounded bg-gray-200 border border-gray-400 w-full text-center focus:outline-none focus:ring-2 focus:ring-blue-500" // Added width and border for better appearance
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )  :(
           <h1 className="text-white">Invalid Tool Selected</h1>
         )}
       </div>

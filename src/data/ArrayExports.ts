@@ -127,12 +127,12 @@ export const dishTypeOptions = [
 
 export const toolsOptions = [
   { value: "Cel-to-Fah", label: "Celsius to Fahrenheit" },
-  { value: "dry-gm-to-oz", label: "Dry Grams to Ounces (not yet implemented)" },
-  { value: "dry-cup-to-tbsp", label: "Dry Cups to Tablespoons (not yet implemented)" },
-  { value: "dry-cup-to-tsp", label: "Dry Cups to Teaspoons (not yet implemented)" },
-  { value: "dry-cup-to-oz", label: "Dry Cups to Ounces (not yet implemented)" },
-  { value: "dry-tbsp-to-oz", label: "Dry Tablespoons to Ounces (not yet implemented)" },
-  { value: "dry-tsp-to-oz", label: "Dry Teaspoons to Ounces (not yet implemented)" },
+  { value: "dry-gm-to-oz", label: "Dry Grams to Ounces" },
+  { value: "dry-cup-to-tbsp", label: "Dry Cups to Tablespoons" },
+  { value: "dry-cup-to-tsp", label: "Dry Cups to Teaspoons" },
+  { value: "dry-cup-to-oz", label: "Dry Cups to Ounces" },
+  { value: "dry-tbsp-to-oz", label: "Dry Tablespoons to Ounces" },
+  { value: "dry-tsp-to-oz", label: "Dry Teaspoons to Ounces" },
   { value: "fluid-gal-to-cup", label: "Fluid Gallons to Cup (not yet implemented)" },
   { value: "fluid-gal-to-oz", label: "Fluid Gallon to Ounces (not yet implemented)" },
   { value: "fluid-gal-to-liter", label: "Fluid Gallon to Liters (not yet implemented)" },
