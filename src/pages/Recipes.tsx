@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Select, { MultiValue, SingleValue } from "react-select";
 import makeAnimated from "react-select/animated";
 import Drawer from "react-modern-drawer";
-import 'primeicons/primeicons.css';
+import "primeicons/primeicons.css";
 import "react-modern-drawer/dist/index.css";
 import {
   ingredientOptions,
@@ -35,6 +35,7 @@ interface Hit {
 
 const Recipes = () => {
   /////////////////////////// state declarations  //////////////////////////
+  const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = React.useState(false);
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
@@ -71,8 +72,10 @@ const Recipes = () => {
 
   useEffect(() => {
     const fetchAndSetRandomRecipes = async () => {
+      setLoading(true); // Step 2: Set loading to true before fetching
       const hits = await fetchRandomRecipes();
       setRandomRecipes(hits); // Update the recipes state with the fetched hits
+      setLoading(false); // Step 2: Set loading to false after fetching
     };
 
     fetchAndSetRandomRecipes();
@@ -130,9 +133,9 @@ const Recipes = () => {
   /////////////////////////// return statement //////////////////////////
   return (
     <div className="bg-gray-700 min-h-screen">
-      <div className="max-w-screen-xl mx-auto p-4 flex flex-col">
+      <div className="max-w-full  mx-auto p-4 flex flex-col">
         <h1
-          className="text-5xl text-white font-semibold text-center mb-5"
+          className="text-5xl text-white font-semibold text-center mb-6"
           style={{ fontFamily: '"Matemasie", cursive' }}
         >
           Recipes
@@ -157,11 +160,15 @@ const Recipes = () => {
           <div className="flex flex-col ">
             <div className="flex justify-center flex-col items-center">
               <div className="bg-slate-400 mt-2 mb-2 sm:w-1/3 w-2/3 h-1 border rounded-lg"></div>
-              <h2 className="text-xl mb-10">Apply Filters <i className="pi pi-filter"></i></h2>
+              <h2 className="text-xl mb-10">
+                Apply Filters <i className="pi pi-filter"></i>
+              </h2>
               <div className="bg-slate-400 mt-2 w-full h-0.3 border rounded-lg"></div>
             </div>
             {/* dropdown menu to select multiple ingredients */}
-            <p className="text-black text-center mb-1 mt-2">Select Ingredients</p>
+            <p className="text-black text-center mb-1 mt-2">
+              Select Ingredients
+            </p>
             <div className="flex justify-center mb-5">
               <Select
                 closeMenuOnSelect={false}
@@ -249,29 +256,34 @@ const Recipes = () => {
         <div>
           {recipes.length === 0 ? (
             <>
-              {/* use cards to display the recipe label, image and anchor tag for the url */}
-              <h2 className="text-white text-lg text-center mb-3 mt-3">Browsing random recipes for you</h2>
+            <h2 className="text-white text-lg text-center mb-3 mt-3">
+              --- RANDOM RECIPES FOR YOU ---
+            </h2>
+            {loading ? ( // Step 3: Conditional rendering
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+              </div>
+            ) : (
               <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
-                
-                {randomrecipes.map((randomrecipe) => (
+                {randomrecipes.map((randomRecipe) => (
                   <Card
-                  key={randomrecipe.recipe.url}
-                  className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
-                  style={{
-                    width: "17rem",
-                    height: "360px",
-                    background: "white",
-                    padding: "0px",
-                    margin: "0px",
-                    borderRadius: "5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
-                  }}
-                  onClick={() => window.open(randomrecipe.recipe.url, "_blank")}
-                >
+                    key={randomRecipe.recipe.url}
+                    className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                    style={{
+                      width: "21rem",
+                      height: "330px",
+                      background: "white",
+                      padding: "0px",
+                      margin: "0px",
+                      borderRadius: "5px",
+                      display: "flex",
+                      flexDirection: "column",
+                      boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
+                    }}
+                    onClick={() => window.open(randomRecipe.recipe.url, "_blank")}
+                  >
                     <img
-                      src={randomrecipe.recipe.image}
+                      src={randomRecipe.recipe.image}
                       alt="not found"
                       style={{
                         width: "100%",
@@ -281,48 +293,44 @@ const Recipes = () => {
                         borderTopRightRadius: "5px",
                       }}
                     />
-                    <CardContent
-
-                    >
-                      <CardHeader className="mt--10">
-                        <CardTitle className="text-[#005D90] text-center align-middle  overflow-clip h-28">
-                          {/* {`${randomrecipe.recipe.label}`} */}
-                          {/* only display the first 30 characted of the label */}
-                          {`${randomrecipe.recipe.label}`}
-                          {/* {`${randomrecipe.recipe.label}`.length > 30 && "..."} */}
-                        </CardTitle>
-                      </CardHeader>
+                    <CardContent>
                       <div className="flex items-center justify-center">
-
+                        <CardHeader className="self-center">
+                          <CardTitle className="text-[#005D90] text-center overflow-clip h-24">
+                            {randomRecipe.recipe.label}
+                          </CardTitle>
+                        </CardHeader>
                       </div>
                     </CardContent>
                   </Card>
                 ))}
               </div>
-            </>
+            )}
+          </>
           ) : (
             <>
               {/* use cards to display the recipe label, image and anchor tag for the url */}
-              <h2 className="text-white text-lg text-center mb-3 mt-3">Recipes Based on your Search</h2>
+              <h2 className="text-white text-lg text-center mb-3 mt-3">
+                Recipes Based on your Search
+              </h2>
               <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
-                
                 {recipes.map((recipe) => (
                   <Card
-                  key={recipe.recipe.url}
-                  className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
-                  style={{
-                    width: "17rem",
-                    height: "360px",
-                    background: "white",
-                    padding: "0px",
-                    margin: "0px",
-                    borderRadius: "5px",
-                    display: "flex",
-                    flexDirection: "column",
-                    boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
-                  }}
-                  onClick={() => window.open(recipe.recipe.url, "_blank")}
-                >
+                    key={recipe.recipe.url}
+                    className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                    style={{
+                      width: "21rem",
+                      height: "330px",
+                      background: "white",
+                      padding: "0px",
+                      margin: "0px",
+                      borderRadius: "5px",
+                      display: "flex",
+                      flexDirection: "column",
+                      boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
+                    }}
+                    onClick={() => window.open(recipe.recipe.url, "_blank")}
+                  >
                     <img
                       src={recipe.recipe.image}
                       alt="not found"
@@ -334,15 +342,14 @@ const Recipes = () => {
                         borderTopRightRadius: "5px",
                       }}
                     />
-                    <CardContent
-                      // className="flex flex-col p-2 justify-between"
-                      // style={{ flexGrow: 1 }} // Allows content to grow and fill available space
-                    >
-                      <CardHeader>
-                        <CardTitle className="text-[#005D90] text-center align-middle overflow-clip h-28">
-                          {`${recipe.recipe.label}`}
-                        </CardTitle>
-                      </CardHeader>
+                    <CardContent>
+                      <div className="flex items-center justify-center">
+                        <CardHeader className="self-center">
+                          <CardTitle className="text-[#005D90] text-center  overflow-clip h-24">
+                            {recipe.recipe.label}
+                          </CardTitle>
+                        </CardHeader>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
