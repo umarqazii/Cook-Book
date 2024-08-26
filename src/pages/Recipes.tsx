@@ -5,6 +5,7 @@ import makeAnimated from "react-select/animated";
 import Drawer from "react-modern-drawer";
 import "primeicons/primeicons.css";
 import "react-modern-drawer/dist/index.css";
+import toast, { Toaster } from 'react-hot-toast';
 import axios from "axios";
 import {
   ingredientOptions,
@@ -40,7 +41,6 @@ const Recipes = () => {
   /////////////////////////// state declarations  //////////////////////////
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = React.useState(false);
-
   const animatedComponents = makeAnimated();
   const [selectedIngredients, setSelectedIngredients] = React.useState<
     MultiValue<{ value: string; label: string }>
@@ -61,7 +61,7 @@ const Recipes = () => {
     label: string;
   } | null>(null);
 
-  const [favorite, setFavorite] = React.useState<string[]>([]);
+  const [favorite, setFavorite] = React.useState<boolean>(false);
 
   const [recipes, setRecipes] = useState<Hit[]>([]);
   const [randomrecipes, setRandomRecipes] = useState<Hit[]>([]);
@@ -78,15 +78,21 @@ const Recipes = () => {
   };
 
   // handleFavorite function takes the recipe url as an argument and sends it to backend endpoint http://localhost:8080/recipes/add-to-favorites
-  const handleFavorite = async (url: string) => {
+  const handleFavorite = async (uri: string) => {
+    // 
     try {
       const response = await axios.post("http://localhost:8080/recipes/add-to-favorites", {
-        url: url,
+        uri: uri,
       });
+      toast.success(response.data.message);
+      
       console.log(response.data);
     } catch (error) {
       console.error(error);
+      toast.error("Failed to add to favorites");
     }
+
+
   };
 
   useEffect(() => {
@@ -152,6 +158,7 @@ const Recipes = () => {
   /////////////////////////// return statement //////////////////////////
   return (
     <div className="bg-gray-700 min-h-screen">
+      <div><Toaster/></div>
       <div className="max-w-full  mx-auto p-4 flex flex-col">
         <h1
           className="text-5xl text-white font-semibold text-center mb-6"
@@ -351,52 +358,79 @@ const Recipes = () => {
           </>
           ) : (
             <>
-              {/* use cards to display the recipe label, image and anchor tag for the url */}
-              <h2 className="text-white text-lg text-center mb-3 mt-3">
-                Recipes Based on your Search
-              </h2>
+            <h2 className="text-white text-lg text-center mb-3 mt-3">
+              --- RECIPES BASED ON YOUR SEARCH ---
+            </h2>
+            {loading ? ( // Step 3: Conditional rendering
+              <div className="flex justify-center">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
+              </div>
+            ) : (
               <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
-                {recipes.map((recipe) => (
+                {recipes.map((Recipe) => (
                   <Card
-                    key={recipe.recipe.url}
-                    className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                  key={Recipe.recipe.url}
+                  className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                  style={{
+                    width: "21rem",
+                    height: "330px",
+                    background: "white",
+                    padding: "0px",
+                    margin: "0px",
+                    borderRadius: "5px",
+                    display: "flex",
+                    flexDirection: "column",
+                    boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
+                    position: "relative", // Added to make the heart image position absolute within the card
+                  }}
+                  onClick={() => window.open(Recipe.recipe.url, "_blank")}
+                >
+                  <img
+                    src={Recipe.recipe.image}
+                    alt="not found"
                     style={{
-                      width: "21rem",
-                      height: "330px",
-                      background: "white",
-                      padding: "0px",
-                      margin: "0px",
-                      borderRadius: "5px",
-                      display: "flex",
-                      flexDirection: "column",
-                      boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
+                      width: "100%",
+                      height: "60%",
+                      objectFit: "cover",
+                      borderTopLeftRadius: "5px",
+                      borderTopRightRadius: "5px",
                     }}
-                    onClick={() => window.open(recipe.recipe.url, "_blank")}
-                  >
-                    <img
-                      src={recipe.recipe.image}
-                      alt="not found"
-                      style={{
-                        width: "100%",
-                        height: "60%",
-                        objectFit: "cover",
-                        borderTopLeftRadius: "5px",
-                        borderTopRightRadius: "5px",
-                      }}
-                    />
-                    <CardContent>
-                      <div className="flex items-center justify-center">
-                        <CardHeader className="self-center">
-                          <CardTitle className="text-[#005D90] text-center  overflow-clip h-24">
-                            {recipe.recipe.label}
-                          </CardTitle>
-                        </CardHeader>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  />
+                
+                  {/* Heart Image Positioned Absolutely */}
+                  <img
+                    src={heartimg}
+                    alt="not found"
+                    style={{
+                      width: "35px",
+                      height: "35px",
+                      position: "absolute", // Make it absolutely positioned
+                      top: "10px", // Distance from the top
+                      right: "10px", // Distance from the right
+                      cursor: "pointer", // Make it look like a button
+                      zIndex: 1, // Ensure it appears above other content
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the card's onClick event from firing
+                      handleFavorite(Recipe.recipe.uri);
+                      console.log('Added to Favorites');
+                    }}
+                  />
+                
+                  <CardContent>
+                    <div className="flex items-center justify-center">
+                      <CardHeader className="self-center">
+                        <CardTitle className="text-[#005D90] text-center overflow-clip h-24">
+                          {Recipe.recipe.label}
+                        </CardTitle>
+                      </CardHeader>
+                    </div>
+                  </CardContent>
+                </Card>
                 ))}
               </div>
-            </>
+            )}
+          </>
           )}
         </div>
       </div>

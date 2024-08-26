@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";  
 import Tools from "./pages/Tools";
 import Favorites from "./pages/Favorites";
+import toast, { Toaster } from 'react-hot-toast';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 // import "./App.css";
 
@@ -11,6 +12,7 @@ import { BrowserRouter, Route, Routes} from 'react-router-dom';
 function App() {
   return (
     <BrowserRouter>
+    <div><Toaster/></div>
     <Navbar />
     <Routes>
       <Route path="/" element={<Home />} />
