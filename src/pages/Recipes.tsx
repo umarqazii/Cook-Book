@@ -81,7 +81,8 @@ const Recipes = () => {
   const handleFavorite = async (uri: string) => {
     // 
     try {
-      const response = await axios.post("http://localhost:8080/recipes/add-to-favorites", {
+      //https://cook-book-api-rho.vercel.app/
+      const response = await axios.post("https://cook-book-api-rho.vercel.app/recipes/add-to-favorites", {
         uri: uri,
       });
       toast.success(response.data.message);

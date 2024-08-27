@@ -27,7 +27,8 @@ const Favorites = () => {
   useEffect(() => {
     const getFavoriteRecipes = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/recipes/get-favorites');
+        // https://cook-book-api-rho.vercel.app/
+        const response = await axios.get('https://cook-book-api-rho.vercel.app/recipes/get-favorites');
         const recipeIDs = response.data.favorites.map((favorite: any) => favorite.recipeid);
   
         setFavoriteRecipesID(recipeIDs);
