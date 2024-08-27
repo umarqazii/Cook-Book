@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../components/cards";
+import toast, { Toaster } from 'react-hot-toast';
 import heartimg from "../assets/heart.png";
 interface Recipe {
   label: string;
@@ -27,10 +28,9 @@ const Favorites = () => {
   useEffect(() => {
     const getFavoriteRecipes = async () => {
       try {
-        // https://cook-book-api-rho.vercel.app/
         const response = await axios.get('https://cook-book-api-rho.vercel.app/recipes/get-favorites');
+        // const response = await axios.get('http://localhost:8080/recipes/get-favorites');
         const recipeIDs = response.data.favorites.map((favorite: any) => favorite.recipeid);
-  
         setFavoriteRecipesID(recipeIDs);
       } catch (error) {
         console.error(error);
@@ -46,8 +46,8 @@ const Favorites = () => {
         const allRecipes: Recipe[] = []; // Changed type to Recipe[]
         setLoading(true);
         for (const id of favoriteRecipesID) {
-          const appId = 'ab7aeda7'; // Replace with your actual App ID
-          const appKey = '582c50836c0a17b6c3b525cff3c88f63'; // Replace with your actual App Key
+          const appId = 'ab7aeda7'; 
+          const appKey = '582c50836c0a17b6c3b525cff3c88f63'; 
 
           const url = `https://api.edamam.com/api/recipes/v2/${id}?type=public&app_id=${appId}&app_key=${appKey}`;
 
@@ -67,6 +67,31 @@ const Favorites = () => {
       fetchRecipeDetails();
     }
   }, [favoriteRecipesID]);
+
+  const handleRemoveFromFavorites = async (uri: string) => {
+    try {
+      await axios.post('https://cook-book-api-rho.vercel.app/recipes/remove-favorite', { uri });
+      // await axios.post('http://localhost:8080/recipes/remove-favorite', { uri });
+      toast.success('Recipe removed from favorites');
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to remove recipe from favorites');
+    }
+  }
+
+  const handleFavoriteButtonToast = () => {
+    toast('Processing your request...',
+      {
+        icon: '⏳',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      }
+    );
+  }
 
   return (
     <div className='bg-gray-700 min-h-screen p-4'>
@@ -127,6 +152,8 @@ const Favorites = () => {
                     }}
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent the card's onClick event from firing
+                      handleFavoriteButtonToast();
+                      handleRemoveFromFavorites(favRecipe.uri);
                       console.log('Added to Favorites');
                     }}
                   />

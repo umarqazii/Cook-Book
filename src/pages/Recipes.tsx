@@ -81,10 +81,12 @@ const Recipes = () => {
   const handleFavorite = async (uri: string) => {
     // 
     try {
-      //https://cook-book-api-rho.vercel.app/
       const response = await axios.post("https://cook-book-api-rho.vercel.app/recipes/add-to-favorites", {
         uri: uri,
       });
+      // const response = await axios.post("http://localhost:8080/recipes/add-to-favorites", {
+      //   uri: uri,
+      // });
       toast.success(response.data.message);
       
       console.log(response.data);
@@ -95,6 +97,19 @@ const Recipes = () => {
 
 
   };
+
+  const handleFavoriteButtonToast = () => {
+    toast('Processing your request...',
+      {
+        icon: '⏳',
+        style: {
+          borderRadius: '10px',
+          background: '#333',
+          color: '#fff',
+        },
+      }
+    );
+  }
 
   useEffect(() => {
     const fetchAndSetRandomRecipes = async () => {
@@ -338,6 +353,7 @@ const Recipes = () => {
                     }}
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent the card's onClick event from firing
+                      handleFavoriteButtonToast();
                       handleFavorite(randomRecipe.recipe.uri);
                       console.log('Added to Favorites');
                     }}
@@ -413,6 +429,7 @@ const Recipes = () => {
                     }}
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent the card's onClick event from firing
+                      handleFavoriteButtonToast();
                       handleFavorite(Recipe.recipe.uri);
                       console.log('Added to Favorites');
                     }}
