@@ -1,45 +1,80 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Navbar from "../components/navbar";
+import gsap from 'gsap'; 
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SplitType from "split-type";
 import Typed from "typed.js";
 import { useResponsive } from "./useResponsive";
 import img1 from "../assets/foodplate.png";
 import img2 from "../assets/handholdingplate1.png";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const Home = () => {
   const breakpoints = [640, 768, 1600]; // Example breakpoints: small, medium, large screens
   const breakpointIndex = useResponsive(breakpoints);
-  
+  const container = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    let typedSkillOptions = {
+    // SplitType and GSAP animations
+    const splitTypes = document.querySelectorAll<HTMLElement>(".reveal-type");
+
+    splitTypes.forEach((char) => {
+      const text = new SplitType(char, { types: "words" });
+
+      gsap.from(text.words, {
+        duration: 2,
+        x: 100,
+        opacity: 0,
+        stagger: 0.5,
+        ease: "expo",
+        
+      });
+    });
+
+    // GSAP animations for images
+    gsap.from('.plate-img', {
+      x: -300,
+      duration: 3,
+      ease: "anticipate",
+      opacity: 0,
+    });
+
+  }, [breakpointIndex]); // This ensures that the animation triggers every time the breakpoint changes
+
+  useEffect(() => {
+    // Typed.js animations
+    const typedSkillOptions = {
       strings: ["Millions of Recipes on your Fingertips"],
       typeSpeed: 70,
     };
 
-    // Conditionally create Typed.js instances based on screen size
-    let typedSkill: Typed;
+    let typedSkill: Typed | null = null;
+
     if (breakpointIndex === 0) {
       typedSkill = new Typed(".typedSkillSmall", typedSkillOptions);
     } else if (breakpointIndex === 1) {
       typedSkill = new Typed(".typedSkillMedium", typedSkillOptions);
-    }else if (breakpointIndex === 2) {
+    } else if (breakpointIndex === 2) {
       typedSkill = new Typed(".typedSkillLarge", typedSkillOptions);
     }
 
     return () => {
+      // Cleanup Typed.js instance
       if (typedSkill) {
         typedSkill.destroy();
       }
     };
-  }, [breakpointIndex]);
+  }, [breakpointIndex]); // This will re-run the Typed.js effect on every breakpoint change
 
   return (
     <>
       {breakpointIndex === 0 && (
         <div className="flex flex-wrap min-h-screen">
-          <div className="w-full bg-gray-700 flex flex-col items-center">
-            <img src={img2} alt="hospital" className="object-cover pr-5 pl-5 pb-10" />
+          <div ref={container} className="w-full bg-gray-700 flex flex-col items-center">
+            <img src={img2} alt="foodimg" className="object-cover pr-5 pl-5 pb-10 plate-img" />
             <h1
-              className="text-5xl text-white mb-3 text-center"
+              className="text-5xl text-white mb-3 text-center reveal-type"
               style={{ fontFamily: '"Matemasie", cursive' }}
             >
               Welcome to your Cook Book!
