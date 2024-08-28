@@ -1,0 +1,22 @@
+@keyframes border-shine {
+    0% {
+      border-color: transparent;
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+    50% {
+      border-color: #c6c6c6; /* Change to your desired shine color */
+      box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8);
+    }
+    100% {
+      border-color: transparent;
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+  }
+  
+  .custom-shine {
+    position: relative; /* Required for the shine effect */
+    animation: border-shine 2s 3;
+    border-width: 2px;
+    border-style: solid;
+  }
+  
