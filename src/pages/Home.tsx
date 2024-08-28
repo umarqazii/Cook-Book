@@ -3,7 +3,7 @@ import Navbar from "../components/navbar";
 import Typed from "typed.js";
 import { useResponsive } from "./useResponsive";
 import img1 from "../assets/foodplate.png";
-import img2 from "../assets/handholdingplate2.png";
+import img2 from "../assets/handholdingplate1.png";
 
 const Home = () => {
   const breakpoints = [640, 768, 1600]; // Example breakpoints: small, medium, large screens
@@ -37,7 +37,7 @@ const Home = () => {
       {breakpointIndex === 0 && (
         <div className="flex flex-wrap min-h-screen">
           <div className="w-full bg-gray-700 flex flex-col items-center">
-            <img src={img2} alt="hospital" className="w-full" />
+            <img src={img2} alt="hospital" className="object-cover pr-5 pl-5 pb-5" />
             <h1
               className="text-5xl text-white mb-3 text-center"
               style={{ fontFamily: '"Matemasie", cursive' }}
