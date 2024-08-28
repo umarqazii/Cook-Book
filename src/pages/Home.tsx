@@ -37,7 +37,7 @@ const Home = () => {
       {breakpointIndex === 0 && (
         <div className="flex flex-wrap min-h-screen">
           <div className="w-full bg-gray-700 flex flex-col items-center">
-            <img src={img2} alt="hospital" className="object-cover pr-5 pl-5 pb-5" />
+            <img src={img2} alt="hospital" className="object-cover pr-5 pl-5 pb-10" />
             <h1
               className="text-5xl text-white mb-3 text-center"
               style={{ fontFamily: '"Matemasie", cursive' }}
