@@ -39,6 +39,8 @@ const Home = () => {
       ease: "anticipate",
       opacity: 0,
     });
+    gsap.from('.circle-plate-img', {x: -300, duration: 3, ease: "anticipate", opacity: 0});
+    gsap.to('.circle-plate-img', { rotation: 100, duration: 3, repeat:0 });
 
   }, [breakpointIndex]); // This ensures that the animation triggers every time the breakpoint changes
 
@@ -70,18 +72,18 @@ const Home = () => {
   return (
     <>
       {breakpointIndex === 0 && (
-        <div className="flex flex-wrap min-h-screen">
+        <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 72px)" }}>
           <div ref={container} className="w-full bg-gray-700 flex flex-col items-center">
-            <img src={img2} alt="foodimg" className="object-cover pr-5 pl-5 pb-10 plate-img" />
+            <img src={img2} alt="foodimg" className="object-cover pr-5 pl-5 pb-10 plate-img w-5/6" />
             <h1
               className="text-5xl text-white mb-3 text-center reveal-type"
               style={{ fontFamily: '"Matemasie", cursive' }}
             >
               Welcome to your Cook Book!
             </h1>
-            <div className="text-2xl text-white text-center">
+            <div className="text-2xl text-white text-center pl-5 pr-5 mt-10">
               <span
-                className="typedSkillSmall text-xl"
+                className="typedSkillSmall text-xl "
                 style={{ fontFamily: '"Cedarville Cursive", cursive' }}
               ></span>
             </div>
@@ -112,14 +114,14 @@ const Home = () => {
       )}
 
       {breakpointIndex === 2 && (
-        <div className="flex flex-wrap min-h-screen">
+        <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 72px)" }}>
           <div className="w-full sm:w-1/2 bg-gray-700 flex items-center justify-center">
-            <img src={img1} alt="hospital" className="ml-3 w-1/1 sm: object-cover" />
+            <img src={img1} alt="hospital" className="ml-3 w-1/1 sm: object-cover circle-plate-img" />
           </div>
 
           <div className="w-full sm:w-1/2 flex flex-col justify-center items-center bg-gray-700">
             <h1
-              className="text-5xl text-white mb-3 text-center"
+              className="text-5xl text-white mb-3 text-center reveal-type"
               style={{ fontFamily: '"Matemasie", cursive' }}
             >
               Welcome to your Cook Book!
