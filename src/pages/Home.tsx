@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import Navbar from "../components/navbar";
 import gsap from 'gsap'; 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 import Typed from "typed.js";
-import { useResponsive } from "./useResponsive";
+import { useResponsive } from "../styling/useResponsive";
 import img1 from "../assets/foodplate.png";
 import img2 from "../assets/handholdingplate1.png";
 
@@ -93,12 +92,12 @@ const Home = () => {
       {breakpointIndex === 1 && (
         <div className="flex flex-wrap min-h-screen">
           <div className="w-full sm:w-1/2 bg-gray-700 flex items-center justify-center">
-            <img src={img1} alt="hospital" className="ml-3 w-1/1 sm: object-cover" />
+            <img src={img1} alt="hospital" className="ml-3 w-1/1 sm: object-cover circle-plate-img" />
           </div>
 
           <div className="w-full sm:w-1/2 flex flex-col justify-center items-center bg-gray-700">
             <h1
-              className="text-5xl text-white mb-3 text-center"
+              className="text-5xl text-white mb-3 text-center reveal-type"
               style={{ fontFamily: '"Matemasie", cursive' }}
             >
               Welcome to your Cook Book!

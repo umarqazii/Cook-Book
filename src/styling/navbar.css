@@ -15,7 +15,7 @@
   
   .custom-shine {
     position: relative; /* Required for the shine effect */
-    animation: border-shine 2s 3;
+    animation: border-shine 2s 5;
     border-width: 2px;
     border-style: solid;
   }
