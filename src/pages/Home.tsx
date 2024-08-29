@@ -6,6 +6,7 @@ import Typed from "typed.js";
 import { useResponsive } from "../styling/useResponsive";
 import img1 from "../assets/foodplate.png";
 import img2 from "../assets/handholdingplate1.png";
+import bgimg from "../assets/low-poly-grid-haikei.png";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,7 +73,7 @@ const Home = () => {
     <>
       {breakpointIndex === 0 && (
         <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 72px)" }}>
-          <div ref={container} className="w-full bg-gray-700 flex flex-col items-center">
+          <div ref={container} className="w-full  flex flex-col items-center" >
             <img src={img2} alt="foodimg" className="object-cover pr-5 pl-5 pb-10 plate-img w-5/6" />
             <h1
               className="text-5xl text-white mb-3 text-center reveal-type"
@@ -114,11 +115,11 @@ const Home = () => {
 
       {breakpointIndex === 2 && (
         <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 72px)" }}>
-          <div className="w-full sm:w-1/2 bg-gray-700 flex items-center justify-center">
+          <div className="w-full sm:w-1/2 flex items-center justify-center">
             <img src={img1} alt="hospital" className="ml-3 w-1/1 sm: object-cover circle-plate-img" />
           </div>
 
-          <div className="w-full sm:w-1/2 flex flex-col justify-center items-center bg-gray-700">
+          <div className="w-full sm:w-1/2 flex flex-col justify-center items-center ">
             <h1
               className="text-5xl text-white mb-3 text-center reveal-type"
               style={{ fontFamily: '"Matemasie", cursive' }}

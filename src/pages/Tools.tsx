@@ -121,7 +121,7 @@ const Tools = () => {
   };
 
   return (
-    <div className="bg-gray-700 min-h-screen">
+    <div className=" min-h-screen">
       <div className="max-w-screen-xl mx-auto p-4 flex flex-col">
         <h1
           className="text-5xl text-white font-semibold text-center mb-5"

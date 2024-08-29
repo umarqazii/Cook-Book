@@ -178,7 +178,7 @@ const Recipes = () => {
   return (
     <>
     {breakpointIndex === 0 && (
-      <div className="bg-gray-700 min-h-screen">
+      <div className=" min-h-screen">
       <div><Toaster/></div>
       <div className="max-w-full  mx-auto p-4 flex flex-col">
         <h1
@@ -465,7 +465,7 @@ const Recipes = () => {
     </div>
     )}
     {breakpointIndex === 1 && (
-      <div className="bg-gray-700 min-h-screen">
+      <div className=" min-h-screen">
       <div><Toaster/></div>
       <div className="max-w-full  mx-auto p-4 flex flex-col">
         <h1
@@ -756,7 +756,7 @@ const Recipes = () => {
     </div>
     )}
     {breakpointIndex === 2 && (
-    <div className="bg-gray-700 min-h-screen">
+    <div className=" min-h-screen">
       <div><Toaster/></div>
       <div className="max-w-full  mx-auto p-4 flex flex-col">
         <h1

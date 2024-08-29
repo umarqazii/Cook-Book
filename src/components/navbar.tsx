@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="bg-gray-900 border-gray-700">
+      <nav className="bg-gradient-to-b from-pink-500 to ">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <NavLink
             to="/"
@@ -27,7 +27,7 @@ const Navbar = () => {
           <button
   onClick={toggleMenu}
   type="button"
-  className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 border border-gray-500 custom-shine"
+  className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-transparent focus:outline-none focus:ring-2 focus:ring-white border border-white custom-shine"
   aria-controls="navbar-cta"
   aria-expanded={isMenuOpen}
 >
@@ -55,15 +55,15 @@ const Navbar = () => {
             }`}
             id="navbar-cta"
           >
-            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-700 rounded-lg bg-gray-800 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-gray-900">
+            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-700 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ">
               <li>
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
                     `block py-2 px-3 md:p-0 rounded ${
                       isActive
-                        ? "text-blue-500 bg-blue-600 md:bg-transparent"
-                        : "text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                        ? "text-white text-lg lg:underline underline-offset-8 bg-blue-800 md:bg-transparent"
+                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
                     }`
                   }
                   aria-current="page"
@@ -78,8 +78,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `block py-2 px-3 md:p-0 rounded ${
                       isActive
-                        ? "text-blue-500 bg-blue-600 md:bg-transparent"
-                        : "text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                        ? "text-white text-lg lg:underline underline-offset-8 bg-blue-800 md:bg-transparent"
+                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
                     }`
                   }
                   onClick={toggleMenu}
@@ -93,8 +93,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `block py-2 px-3 md:p-0 rounded ${
                       isActive
-                        ? "text-blue-500 bg-blue-600 md:bg-transparent"
-                        : "text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                        ? "text-white text-lg lg:underline underline-offset-8 bg-blue-800 md:bg-transparent"
+                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
                     }`
                   }
                   onClick={toggleMenu}
@@ -108,8 +108,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `block py-2 px-3 md:p-0 rounded ${
                       isActive
-                        ? "text-blue-500 bg-blue-600 md:bg-transparent"
-                        : "text-gray-400 hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                        ? "text-white text-lg lg:underline underline-offset-8 bg-blue-800 md:bg-transparent"
+                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
                     }`
                   }
                   onClick={toggleMenu}

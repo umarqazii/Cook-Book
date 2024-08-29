@@ -37,8 +37,9 @@
   }
 }
 
+
 body {
-  background-image: url('../public/assets/bg6.jpg'); /* Replace with your image path */
+  background-image: url('../public/assets/bg7.jpg'); /* Replace with your image path */
   background-size: cover;  /* This will make the image cover the entire background */
   background-repeat: no-repeat;  /* Prevents the image from repeating */
   background-attachment: fixed;  /* Keeps the background image fixed during scrolling */
@@ -47,4 +48,4 @@ body {
   padding: 0;
   min-height: 100vh;
   font-family: Arial, sans-serif;  /* Optional: apply consistent font styling */
-}
+} 

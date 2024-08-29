@@ -94,7 +94,7 @@ const Favorites = () => {
   }
 
   return (
-    <div className='bg-gray-700 min-h-screen p-4'>
+    <div className=' min-h-screen p-4'>
   <div className='flex justify-center text-white text-5xl mb-8' style={{ fontFamily: '"Matemasie", cursive' }}>
     <h1>Favorites</h1>
   </div>
