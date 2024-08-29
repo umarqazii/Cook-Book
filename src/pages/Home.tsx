@@ -74,7 +74,10 @@ const Home = () => {
       {breakpointIndex === 0 && (
         <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 72px)" }}>
           <div ref={container} className="w-full  flex flex-col items-center" >
-            <img src={img2} alt="foodimg" className="object-cover pr-5 pl-5 pb-10 plate-img w-5/6" />
+            <img src={img2} alt="foodimg" className="object-cover pr-5 pl-5 pb-10 plate-img w-5/6"style={{
+        WebkitMaskImage: "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1)10%)",  // Safari compatibility
+        maskImage: "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1)10%)"  // For other browsers
+      }} />
             <h1
               className="text-5xl text-white mb-3 text-center reveal-type"
               style={{ fontFamily: '"Matemasie", cursive' }}
