@@ -10,7 +10,20 @@ import { useResponsive } from "../styling/useResponsive";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
-
+import img1 from "../assets/1.jpg";
+import img2 from "../assets/2.jpg";
+import img3 from "../assets/3.jpg";
+import img4 from "../assets/4.jpg";
+import img5 from "../assets/5.jpg";
+import img6 from "../assets/6.jpg";
+import img7 from "../assets/7.jpg";
+import img8 from "../assets/8.jpg";
+import img9 from "../assets/9.jpg";
+import img10 from "../assets/10.jpg";
+import img11 from "../assets/11.jpg";
+import img12 from "../assets/12.jpg";
+import img13 from "../assets/13.jpg";
+import img14 from "../assets/14.jpg";
 import { responsive } from "../data/ArrayExports";
 
 import {
@@ -326,28 +339,221 @@ const Recipes = () => {
             <div>
               {recipes.length === 0 ? (
                 <>
-                  <Carousel responsive={responsive}>
-                    <div className="flex justify-center">
-                      <div className="" style={{ height:"100px", width:"100px", border:"1px solid black", borderRadius:"10px"}}></div>
+                <div className="mt-5 mb-5">
+                  <span><b>Cuisines for You</b></span>
+                </div>
+                  <Carousel 
+                  autoPlay={true}
+                  infinite={true}
+                  removeArrowOnDeviceType={["tablet", "mobile"]}
+                  autoPlaySpeed={2000}
+                  responsive={responsive}>
+                    <div className="flex justify-center flex-col">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img1}
+                          alt="american"
+                          className="border rounded-lg"
+                        />
+                        {/* a div below this to name the cuisine. max width should be 100px */}
+                        
+                      </div>
+                      <div className="text-black text-center">American</div>
                     </div>
-                    <div className="flex justify-center">
-                      <div className="" style={{ height:"100px", width:"100px", border:"1px solid black", borderRadius:"10px"}}></div>
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img2}
+                          alt="Asian"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center">Asian</div>
                     </div>
-                    <div className="flex justify-center">
-                      <div className="" style={{ height:"100px", width:"100px", border:"1px solid black", borderRadius:"10px"}}></div>
+
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img3}
+                          alt="British"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center">British</div>
                     </div>
-                    <div className="flex justify-center">
-                      <div className="" style={{ height:"100px", width:"100px", border:"1px solid black", borderRadius:"10px"}}></div>
+
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img4}
+                          alt="Caribbean"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center">Caribbean</div>
                     </div>
-                    <div className="flex justify-center">
-                      <div className="" style={{ height:"100px", width:"100px", border:"1px solid black", borderRadius:"10px"}}></div>
+
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img5}
+                          alt="Central Europe"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center w-24">Central Europe</div>
                     </div>
-                    <div className="flex justify-center">
-                      <div className="" style={{ height:"100px", width:"100px", border:"1px solid black", borderRadius:"10px"}}></div>
+
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img6}
+                          alt="Chinese"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center">Chinese</div>
                     </div>
-                    <div className="flex justify-center">
-                      <div className="" style={{ height:"100px", width:"100px", border:"1px solid black", borderRadius:"10px"}}></div>
+
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img7}
+                          alt="Eastern Europe"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center">Eastern Europe</div>
                     </div>
+
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img8}
+                          alt="French"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center">French</div>
+                    </div>
+
+                    <div className="flex  flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img9}
+                          alt="Indian"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center">Indian</div>
+                    </div>
+
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img10}
+                          alt="Italian"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center">Italian</div>
+                    </div>
+                  </Carousel>
+
+                  <div className="mt-5 mb-5">
+                  <span><b>Meal Types</b></span>
+                </div>
+                  <Carousel 
+                  infinite={true}
+                  removeArrowOnDeviceType={["tablet", "mobile"]}
+                  responsive={responsive}>
+                    <div className="flex justify-center flex-col">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img11}
+                          alt="breakfast"
+                          className="border rounded-lg"
+                        />
+                        {/* a div below this to name the cuisine. max width should be 100px */}
+                        
+                      </div>
+                      <div className="text-black text-center">Breakfast</div>
+                    </div>
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img12}
+                          alt="Lunch/Dinner"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center w-24">Lunch/Dinner</div>
+                    </div>
+
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img13}
+                          alt="Snack"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center">Snack</div>
+                    </div>
+
+                    <div className="flex flex-col justify-center">
+                      <div
+                        className="border rounded-lg"
+                        style={{ height: "100px", width: "100px" }}
+                      >
+                        <img
+                          src={img14}
+                          alt="Teatime"
+                          className="border rounded-lg"
+                        />
+                      </div>
+                      <div className="text-black text-center">Teatime</div>
+                    </div>
+
                   </Carousel>
                   <h2 className="text-white text-lg text-center mb-3 mt-3">
                     --- RANDOM RECIPES FOR YOU ---
