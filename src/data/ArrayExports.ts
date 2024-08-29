@@ -140,3 +140,11 @@ export const toolsOptions = [
   { value: "fluid-cup-to-liter", label: "Cups to Liters (Fluid)" },
   { value: "fluid-oz-to-litre", label: "Ounces to Liters (Fluid)" },
 ]
+
+export const responsive = {
+  
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 3
+  }
+};
