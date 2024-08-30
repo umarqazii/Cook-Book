@@ -10,28 +10,7 @@ import { useResponsive } from "../styling/useResponsive";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
-import img1 from "../assets/1.jpg";
-import img2 from "../assets/2.jpg";
-import img3 from "../assets/3.jpg";
-import img4 from "../assets/4.jpg";
-import img5 from "../assets/5.jpg";
-import img6 from "../assets/6.jpg";
-import img7 from "../assets/7.jpg";
-import img8 from "../assets/8.jpg";
-import img9 from "../assets/9.jpg";
-import img10 from "../assets/10.jpg";
-import img11 from "../assets/11.jpg";
-import img12 from "../assets/12.jpg";
-import img13 from "../assets/13.jpg";
-import img14 from "../assets/14.jpg";
-import img15 from "../assets/15.jpg";
-import img16 from "../assets/16.jpg";
-import img17 from "../assets/17.jpg";
-import img18 from "../assets/18.jpg";
-import img19 from "../assets/19.jpg";
-import img20 from "../assets/20.jpg";
-import img21 from "../assets/21.jpg";
-import img22 from "../assets/22.jpg";
+import { imgArray } from "../data/ArrayExports";
 import { responsive } from "../data/ArrayExports";
 
 import {
@@ -99,11 +78,21 @@ const Recipes = () => {
   //////////////////////////////////////////////////////////////////////////
 
   ///////////////////////// operations to be performed on states //////////////////////////
+
+  // displaying the selected states on the console
   useEffect(() => {
     console.log(selectedIngredients);
     console.log(selectedCuisine);
-  }, [selectedIngredients, selectedCuisine]);
+    console.log(selectedDishType);
+    console.log(selectedMealType);
+  }, [
+    selectedIngredients,
+    selectedCuisine,
+    selectedDishType,
+    selectedMealType,
+  ]);
 
+  // toggleDrawer function opens and closes the drawer
   const toggleDrawer = () => {
     setIsOpen((prevState) => !prevState);
   };
@@ -130,6 +119,7 @@ const Recipes = () => {
     }
   };
 
+  // displays a pending toast as soon as the favorite button is clicked
   const handleFavoriteButtonToast = () => {
     toast("Processing your request...", {
       icon: "⏳",
@@ -141,6 +131,7 @@ const Recipes = () => {
     });
   };
 
+  // fetching random recipes
   useEffect(() => {
     const fetchAndSetRandomRecipes = async () => {
       setLoading(true); // Step 2: Set loading to true before fetching
@@ -152,6 +143,7 @@ const Recipes = () => {
     //fetchAndSetRandomRecipes();
   }, []);
 
+  // when search button is clicked, it fetches the recipes according to the states selected
   const submitSearch = () => {
     const fetchAndSetRecipes = async () => {
       setLoading(true); // Step 2: Set loading to true before fetching
@@ -211,24 +203,17 @@ const Recipes = () => {
   return (
     <>
       {/* ---------------------------Mobile Screen Diplay-------------------------- */}
+      {/* ---------------------------Mobile Screen Diplay-------------------------- */}
+      {/* ---------------------------Mobile Screen Diplay-------------------------- */}
+
       {breakpointIndex === 0 && (
         <div className=" min-h-screen">
           <div>
             <Toaster />
           </div>
           <div className="max-w-full  mx-auto p-4 flex flex-col">
-            {/* <h1
-          className="text-5xl text-white font-semibold text-center mb-6"
-          style={{ fontFamily: '"Matemasie", cursive' }}
-        >
-          Recipes
-        </h1> */}
             <div className="flex justify-between items-center mb-3  w-full">
-              
-              <button
-                className="text-white mr"
-                onClick={goBack}
-              >
+              <button className="text-white mr" onClick={goBack}>
                 &nbsp;<i className="pi pi-angle-left text-2xl"></i>
               </button>
               {/* search bar */}
@@ -246,12 +231,6 @@ const Recipes = () => {
               >
                 &nbsp;<i className="pi pi-search text-lg"></i>
               </button>
-              {/* <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-auto"
-                onClick={toggleDrawer}
-              >
-                &nbsp;<i className="pi pi-sliders-h"></i>
-              </button> */}
             </div>
 
             <Drawer
@@ -367,11 +346,19 @@ const Recipes = () => {
             </Drawer>
 
             <div>
+              {/* ------------While there are no recipes (Give options to search for recipes and in the meanwhile displaying random)----------------- */}
               {recipes.length === 0 ? (
                 <>
+                  {/* -----------------------------Selecting Cuisine (Mobile View)-------------------------------- */}
                   <div className="mt-5 mb-5">
                     <span>
-                      <b>Cuisines for You</b>
+                      <b>Cuisines for You:</b>
+                      <span className="text-gray-600 text-sm">
+                        {"  "}
+                        {selectedCuisine
+                          ? "(" + selectedCuisine.label + ")"
+                          : "(Pick any one)"}
+                      </span>
                     </span>
                   </div>
                   {/* -----------------------------Cuisine Carousel-------------------------------- */}
@@ -383,47 +370,59 @@ const Recipes = () => {
                     responsive={responsive}
                   >
                     {[
-                      { value: "american", label: "American", img: img1 },
-                      { value: "asian", label: "Asian", img: img2 },
-                      { value: "british", label: "British", img: img3 },
-                      { value: "caribbean", label: "Caribbean", img: img4 },
+                      {
+                        value: "american",
+                        label: "American",
+                        img: imgArray[0],
+                      },
+                      { value: "asian", label: "Asian", img: imgArray[1] },
+                      { value: "british", label: "British", img: imgArray[2] },
+                      {
+                        value: "caribbean",
+                        label: "Caribbean",
+                        img: imgArray[3],
+                      },
                       {
                         value: "central+europe",
                         label: "Central Europe",
-                        img: img5,
+                        img: imgArray[4],
                       },
-                      { value: "chinese", label: "Chinese", img: img6 },
+                      { value: "chinese", label: "Chinese", img: imgArray[5] },
                       {
                         value: "eastern+europe",
                         label: "Eastern Europe",
-                        img: img7,
+                        img: imgArray[6],
                       },
-                      { value: "french", label: "French", img: img8 },
-                      { value: "indian", label: "Indian", img: img9 },
-                      { value: "italian", label: "Italian", img: img10 },
-                      { value: "japanese", label: "Japanese", img: img11 },
-                      { value: "kosher", label: "Kosher", img: img12 },
+                      { value: "french", label: "French", img: imgArray[7] },
+                      { value: "indian", label: "Indian", img: imgArray[8] },
+                      { value: "italian", label: "Italian", img: imgArray[9] },
+                      {
+                        value: "japanese",
+                        label: "Japanese",
+                        img: imgArray[10],
+                      },
+                      { value: "kosher", label: "Kosher", img: imgArray[11] },
                       {
                         value: "mediterranean",
                         label: "Mediterranean",
-                        img: img13,
+                        img: imgArray[12],
                       },
-                      { value: "mexican", label: "Mexican", img: img14 },
+                      { value: "mexican", label: "Mexican", img: imgArray[13] },
                       {
                         value: "middle+eastern",
                         label: "Middle Eastern",
-                        img: img15,
+                        img: imgArray[14],
                       },
-                      { value: "nordic", label: "Nordic", img: img16 },
+                      { value: "nordic", label: "Nordic", img: imgArray[15] },
                       {
                         value: "south+american",
                         label: "South American",
-                        img: img17,
+                        img: imgArray[16],
                       },
                       {
                         value: "south+east_asian",
                         label: "South East Asian",
-                        img: img18,
+                        img: imgArray[17],
                       },
                     ].map((cuisine) => (
                       <div
@@ -466,82 +465,168 @@ const Recipes = () => {
                     ))}
                   </Carousel>
 
+                  {/* -----------------------------Selecting MealType (Mobile View)-------------------------------- */}
                   <div className="mt-5 mb-5">
                     <span>
-                      <b>Meal Types</b>
+                      <b>Meal Types: </b>
+                      <span className="text-gray-600 text-sm">
+                        {"  "}
+                        {selectedMealType
+                          ? "(" + selectedMealType.label + ")"
+                          : "(Pick any one)"}{" "}
+                      </span>
                     </span>
                   </div>
+                  {/* -----------------------------MealType Carousel-------------------------------- */}
                   <Carousel
                     infinite={true}
                     removeArrowOnDeviceType={["tablet", "mobile"]}
                     responsive={responsive}
                   >
-                    <div className="flex justify-center flex-col">
+                    {[
+                      {
+                        value: "breakfast",
+                        label: "Breakfast",
+                        img: imgArray[18],
+                      },
+                      {
+                        value: "lunch+dinner",
+                        label: "Lunch/Dinner",
+                        img: imgArray[19],
+                      },
+                      { value: "snack", label: "Snack", img: imgArray[20] },
+                      { value: "teatime", label: "Teatime", img: imgArray[21] },
+                    ].map((mealType) => (
                       <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
+                        key={mealType.value}
+                        className="flex flex-col justify-center items-center"
+                        onClick={() =>
+                          selectedMealType &&
+                          selectedMealType.value === mealType.value
+                            ? setSelectedMealType(null)
+                            : setSelectedMealType(mealType)
+                        }
                       >
-                        <img
-                          src={img19}
-                          alt="breakfast"
-                          className="border rounded-lg"
-                        />
-                        {/* a div below this to name the cuisine. max width should be 100px */}
+                        <div
+                          className="relative border rounded-lg"
+                          style={{ height: "100px", width: "100px" }}
+                        >
+                          <img
+                            src={mealType.img}
+                            alt={mealType.label}
+                            className="border rounded-lg"
+                          />
+                          {/* Green Outline */}
+                          {selectedMealType &&
+                            selectedMealType.value === mealType.value && (
+                              <div
+                                className="absolute top-1/2 right-1/2 rounded-lg"
+                                style={{
+                                  transform: "translate(50%, -50%)",
+                                  width: "100px",
+                                  height: "100px",
+                                  border: "5px solid green",
+                                }}
+                              ></div>
+                            )}
+                        </div>
+                        <div className="text-black text-center">
+                          {mealType.label}
+                        </div>
                       </div>
-                      <div className="text-black text-center">Breakfast</div>
-                    </div>
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img20}
-                          alt="Lunch/Dinner"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center w-24">
-                        Lunch/Dinner
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img21}
-                          alt="Snack"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center">Snack</div>
-                    </div>
-
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img22}
-                          alt="Teatime"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center">Teatime</div>
-                    </div>
+                    ))}
                   </Carousel>
+
+                    {/* -----------------------------Selecting DishType (Mobile View)-------------------------------- */}
+                    <div className="mt-5 mb-5">
+                    <span>
+                      <b>Dish Types: </b>
+                      <span className="text-gray-600 text-sm">
+                        {"  "}
+                        {selectedDishType
+                          ? "(" + selectedDishType.label + ")"
+                          : "(Pick any one)"}{" "}
+                      </span>
+                    </span>
+                  </div>
+                  {/* -----------------------------DishType Carousel-------------------------------- */}
+                  <Carousel
+                    infinite={true}
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    responsive={responsive}
+                  >
+                    {[
+                      {
+                        value: "biscuits+and+cookies",
+                        label: "Biscuits and Cookies",
+                        img: imgArray[22],
+                      },
+                      {value: "bread", label: "Bread", img: imgArray[23]},
+                      {value: "desserts", label: "Desserts", img: imgArray[24]},
+                      {value: "salad", label: "Salads", img: imgArray[25]},
+                      {value: "sandwiches", label: "Sandwiches", img: imgArray[26]},
+                      {value: "soup", label: "Soup", img: imgArray[27]},
+                      {value: "sweets", label: "Sweets", img: imgArray[28]},
+                      {value: "drinks", label: "Drinks", img: imgArray[29]},
+                      {value: "main+course", label: "Main Course", img: imgArray[30]},
+                      {value: "starter", label: "Starter", img: imgArray[31]},
+                      {value: "pancake", label: "Pancake", img: imgArray[32]},
+                      {value: "pasta", label: "Pasta", img: imgArray[33]},
+                      {value: "seafood", label: "Seafood", img: imgArray[34]},
+                      {value: "pizza", label: "Pizza", img: imgArray[35]},
+                      {value: "side+dish", label: "Side Dish", img: imgArray[36]},
+                      
+                    ].map((dishType) => (
+                      <div
+                        key={dishType.value}
+                        className="flex flex-col justify-center items-center"
+                        onClick={() =>
+                          selectedDishType &&
+                          selectedDishType.value === dishType.value
+                            ? setSelectedDishType(null)
+                            : setSelectedDishType(dishType)
+                        }
+                      >
+                        <div
+                          className="relative border rounded-lg"
+                          style={{ height: "100px", width: "100px" }}
+                        >
+                          <img
+                            src={dishType.img}
+                            alt={dishType.label}
+                            className="border rounded-lg"
+                          />
+                          {/* Green Outline */}
+                          {selectedDishType &&
+                            selectedDishType.value === dishType.value && (
+                              <div
+                                className="absolute top-1/2 right-1/2 rounded-lg"
+                                style={{
+                                  transform: "translate(50%, -50%)",
+                                  width: "100px",
+                                  height: "100px",
+                                  border: "5px solid green",
+                                }}
+                              ></div>
+                            )}
+                        </div>
+                        <div className="text-black text-center">
+                          {dishType.label}
+                        </div>
+                      </div>
+                    ))}
+                  </Carousel>
+
                   <h2 className="text-white text-lg text-center mb-3 mt-3">
                     --- RANDOM RECIPES FOR YOU ---
                   </h2>
+                  {/* -----------------------------Loading state is true until random recipes are fetched-------------------------------- */}
                   {loading ? ( // Step 3: Conditional rendering
                     <div className="flex justify-center">
                       <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
                     </div>
                   ) : (
+                    // -----------------------------Displaying Random Recipes--------------------------------
                     <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
                       {randomrecipes.map((randomRecipe) => (
                         <Card
@@ -611,15 +696,19 @@ const Recipes = () => {
                   )}
                 </>
               ) : (
+                // -----------------------------Displaying Based on Search After options are selected--------------------------------
                 <>
                   <h2 className="text-white text-lg text-center mb-3 mt-3">
-                    BASED ON YOUR SEARCH 
+                    BASED ON YOUR SEARCH
                   </h2>
+
+                  {/* -----------------------------Loading state is true until recipes are fetched-------------------------------- */}
                   {loading ? ( // Step 3: Conditional rendering
                     <div className="flex justify-center">
                       <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
                     </div>
                   ) : (
+                    // ------------------------------Displaying Recipes--------------------------------
                     <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
                       {recipes.map((Recipe) => (
                         <Card
@@ -693,6 +782,11 @@ const Recipes = () => {
           </div>
         </div>
       )}
+
+      {/* -----------------------------Tablet Screen Display--------------------------------------- */}
+      {/* -----------------------------Tablet Screen Display--------------------------------------- */}
+      {/* -----------------------------Tablet Screen Display--------------------------------------- */}
+
       {breakpointIndex === 1 && (
         <div className=" min-h-screen">
           <div>
@@ -1002,6 +1096,11 @@ const Recipes = () => {
           </div>
         </div>
       )}
+
+      {/* -----------------------------Large Screen Display--------------------------------------- */}
+      {/* -----------------------------Large Screen Display--------------------------------------- */}
+      {/* -----------------------------Large Screen Display--------------------------------------- */}
+
       {breakpointIndex === 2 && (
         <div className=" min-h-screen">
           <div>
