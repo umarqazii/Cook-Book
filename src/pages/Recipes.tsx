@@ -139,11 +139,12 @@ const Recipes = () => {
       setLoading(false); // Step 2: Set loading to false after fetching
     };
 
-    fetchAndSetRandomRecipes();
+    //fetchAndSetRandomRecipes();
   }, []);
 
   useEffect(() => {
     const fetchAndSetRecipes = async () => {
+      setLoading(true); // Step 2: Set loading to true before fetching
       const hits = await fetchRecipes(
         selectedIngredients.map((ingredient) => ingredient.value).join(","),
         selectedCuisine?.value || "",
@@ -151,9 +152,10 @@ const Recipes = () => {
         selectedMealType?.value || ""
       );
       setRecipes(hits); // Update the recipes state with the fetched hits
+      setLoading(false); // Step 2: Set loading to false after fetching
     };
 
-    fetchAndSetRecipes();
+    //fetchAndSetRecipes();
   }, [
     selectedIngredients,
     selectedCuisine,
@@ -339,164 +341,89 @@ const Recipes = () => {
             <div>
               {recipes.length === 0 ? (
                 <>
-                <div className="mt-5 mb-5">
-                  <span><b>Cuisines for You</b></span>
-                </div>
-                  <Carousel 
-                  autoPlay={true}
-                  infinite={true}
-                  removeArrowOnDeviceType={["tablet", "mobile"]}
-                  autoPlaySpeed={2000}
-                  responsive={responsive}>
-                    <div className="flex justify-center flex-col">
+                  <div className="mt-5 mb-5">
+                    <span>
+                      <b>Cuisines for You</b>
+                    </span>
+                  </div>
+                  {/* -----------------------------Cuisine Carousel-------------------------------- */}
+                  <Carousel
+                    autoPlay={true}
+                    infinite={true}
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    autoPlaySpeed={2000}
+                    responsive={responsive}
+                  >
+                    {[
+                      { value: "american", label: "American", img: img1 },
+                      { value: "asian", label: "Asian", img: img2 },
+                      { value: "british", label: "British", img: img3 },
+                      { value: "caribbean", label: "Caribbean", img: img4 },
+                      {
+                        value: "central+europe",
+                        label: "Central Europe",
+                        img: img5,
+                      },
+                      { value: "chinese", label: "Chinese", img: img6 },
+                      {
+                        value: "eastern+europe",
+                        label: "Eastern Europe",
+                        img: img7,
+                      },
+                      { value: "french", label: "French", img: img8 },
+                      { value: "indian", label: "Indian", img: img9 },
+                      { value: "italian", label: "Italian", img: img10 },
+                    ].map((cuisine) => (
                       <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
+                        key={cuisine.value}
+                        className="flex flex-col justify-center items-center"
+                        onClick={() =>
+                          selectedCuisine &&
+                          selectedCuisine.value === cuisine.value
+                            ? setSelectedCuisine(null)
+                            : setSelectedCuisine(cuisine)
+                        }
                       >
-                        <img
-                          src={img1}
-                          alt="american"
-                          className="border rounded-lg"
-                        />
-                        {/* a div below this to name the cuisine. max width should be 100px */}
-                        
+                        <div
+                          className="relative border rounded-lg"
+                          style={{ height: "100px", width: "100px" }}
+                        >
+                          <img
+                            src={cuisine.img}
+                            alt={cuisine.label}
+                            className="border rounded-lg"
+                          />
+                          {/* Green Outline */}
+                          {selectedCuisine &&
+                            selectedCuisine.value === cuisine.value && (
+                              <div
+                                className="absolute top-1/2 right-1/2 rounded-lg"
+                                style={{
+                                  transform: "translate(50%, -50%)",
+                                  width: "100px",
+                                  height: "100px",
+                                  border: "5px solid green",
+                                }}
+                              ></div>
+                            )}
+                        </div>
+                        <div className="text-black text-center">
+                          {cuisine.label}
+                        </div>
                       </div>
-                      <div className="text-black text-center">American</div>
-                    </div>
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img2}
-                          alt="Asian"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center">Asian</div>
-                    </div>
-
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img3}
-                          alt="British"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center">British</div>
-                    </div>
-
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img4}
-                          alt="Caribbean"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center">Caribbean</div>
-                    </div>
-
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img5}
-                          alt="Central Europe"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center w-24">Central Europe</div>
-                    </div>
-
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img6}
-                          alt="Chinese"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center">Chinese</div>
-                    </div>
-
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img7}
-                          alt="Eastern Europe"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center">Eastern Europe</div>
-                    </div>
-
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img8}
-                          alt="French"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center">French</div>
-                    </div>
-
-                    <div className="flex  flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img9}
-                          alt="Indian"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center">Indian</div>
-                    </div>
-
-                    <div className="flex flex-col justify-center">
-                      <div
-                        className="border rounded-lg"
-                        style={{ height: "100px", width: "100px" }}
-                      >
-                        <img
-                          src={img10}
-                          alt="Italian"
-                          className="border rounded-lg"
-                        />
-                      </div>
-                      <div className="text-black text-center">Italian</div>
-                    </div>
+                    ))}
                   </Carousel>
 
                   <div className="mt-5 mb-5">
-                  <span><b>Meal Types</b></span>
-                </div>
-                  <Carousel 
-                  infinite={true}
-                  removeArrowOnDeviceType={["tablet", "mobile"]}
-                  responsive={responsive}>
+                    <span>
+                      <b>Meal Types</b>
+                    </span>
+                  </div>
+                  <Carousel
+                    infinite={true}
+                    removeArrowOnDeviceType={["tablet", "mobile"]}
+                    responsive={responsive}
+                  >
                     <div className="flex justify-center flex-col">
                       <div
                         className="border rounded-lg"
@@ -508,7 +435,6 @@ const Recipes = () => {
                           className="border rounded-lg"
                         />
                         {/* a div below this to name the cuisine. max width should be 100px */}
-                        
                       </div>
                       <div className="text-black text-center">Breakfast</div>
                     </div>
@@ -523,7 +449,9 @@ const Recipes = () => {
                           className="border rounded-lg"
                         />
                       </div>
-                      <div className="text-black text-center w-24">Lunch/Dinner</div>
+                      <div className="text-black text-center w-24">
+                        Lunch/Dinner
+                      </div>
                     </div>
 
                     <div className="flex flex-col justify-center">
@@ -553,7 +481,6 @@ const Recipes = () => {
                       </div>
                       <div className="text-black text-center">Teatime</div>
                     </div>
-
                   </Carousel>
                   <h2 className="text-white text-lg text-center mb-3 mt-3">
                     --- RANDOM RECIPES FOR YOU ---

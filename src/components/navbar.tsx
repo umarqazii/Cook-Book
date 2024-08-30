@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import "../styling/navbar.css";
+import "../styling/extraStyling.css";
 
 const Navbar = () => {
   let logo = "/logo192.png";
@@ -55,15 +55,15 @@ const Navbar = () => {
             }`}
             id="navbar-cta"
           >
-            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-700 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ">
+            <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-white rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ">
               <li>
                 <NavLink
                   to="/"
                   className={({ isActive }) =>
                     `block py-2 px-3 md:p-0 rounded ${
                       isActive
-                        ? "text-white text-lg lg:underline underline-offset-8 bg-blue-800 md:bg-transparent"
-                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                        ? "text-black lg:text-white lg:underline underline-offset-8 bg-white md:bg-transparent"
+                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-xl"
                     }`
                   }
                   aria-current="page"
@@ -78,8 +78,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `block py-2 px-3 md:p-0 rounded ${
                       isActive
-                        ? "text-white text-lg lg:underline underline-offset-8 bg-blue-800 md:bg-transparent"
-                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                        ? "text-black lg:text-white lg:underline underline-offset-8 bg-white md:bg-transparent"
+                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-xl"
                     }`
                   }
                   onClick={toggleMenu}
@@ -93,8 +93,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `block py-2 px-3 md:p-0 rounded ${
                       isActive
-                        ? "text-white text-lg lg:underline underline-offset-8 bg-blue-800 md:bg-transparent"
-                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                        ? "text-black lg:text-white lg:underline underline-offset-8 bg-white md:bg-transparent"
+                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-xl"
                     }`
                   }
                   onClick={toggleMenu}
@@ -108,8 +108,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `block py-2 px-3 md:p-0 rounded ${
                       isActive
-                        ? "text-white text-lg lg:underline underline-offset-8 bg-blue-800 md:bg-transparent"
-                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-blue-500"
+                        ? "text-black lg:text-white lg:underline underline-offset-8 bg-white md:bg-transparent"
+                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-xl"
                     }`
                   }
                   onClick={toggleMenu}
