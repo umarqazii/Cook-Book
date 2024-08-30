@@ -24,6 +24,14 @@ import img11 from "../assets/11.jpg";
 import img12 from "../assets/12.jpg";
 import img13 from "../assets/13.jpg";
 import img14 from "../assets/14.jpg";
+import img15 from "../assets/15.jpg";
+import img16 from "../assets/16.jpg";
+import img17 from "../assets/17.jpg";
+import img18 from "../assets/18.jpg";
+import img19 from "../assets/19.jpg";
+import img20 from "../assets/20.jpg";
+import img21 from "../assets/21.jpg";
+import img22 from "../assets/22.jpg";
 import { responsive } from "../data/ArrayExports";
 
 import {
@@ -71,6 +79,8 @@ const Recipes = () => {
     value: string;
     label: string;
   } | null>(null);
+
+  const [textQuery, setTextQuery] = React.useState<string>("");
 
   const [selectedMealType, setSelectedMealType] = React.useState<{
     value: string;
@@ -142,11 +152,15 @@ const Recipes = () => {
     //fetchAndSetRandomRecipes();
   }, []);
 
-  useEffect(() => {
+  const submitSearch = () => {
     const fetchAndSetRecipes = async () => {
       setLoading(true); // Step 2: Set loading to true before fetching
+      const updatedTextQuery = textQuery.replace(/ /g, "+");
       const hits = await fetchRecipes(
-        selectedIngredients.map((ingredient) => ingredient.value).join(","),
+        // replace all the spaces from the textQuery with '+' sign
+
+        updatedTextQuery +
+          selectedIngredients.map((ingredient) => ingredient.value).join("+"),
         selectedCuisine?.value || "",
         selectedDishType?.value || "",
         selectedMealType?.value || ""
@@ -155,13 +169,8 @@ const Recipes = () => {
       setLoading(false); // Step 2: Set loading to false after fetching
     };
 
-    //fetchAndSetRecipes();
-  }, [
-    selectedIngredients,
-    selectedCuisine,
-    selectedMealType,
-    selectedDishType,
-  ]);
+    fetchAndSetRecipes();
+  };
 
   // Function to handle the change in the dropdown menu
   const handleCuisineChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -191,6 +200,11 @@ const Recipes = () => {
     setSelectedDishType(selectedOption);
   };
 
+  const goBack = () => {
+    // set recipes to empty array
+    setRecipes([]);
+  };
+
   //////////////////////////////////////////////////////////////////////////
 
   /////////////////////////// return statement //////////////////////////
@@ -209,21 +223,35 @@ const Recipes = () => {
         >
           Recipes
         </h1> */}
-            <div className="flex justify-center mb-3">
-              {" "}
+            <div className="flex justify-between items-center mb-3  w-full">
+              
+              <button
+                className="text-white mr"
+                onClick={goBack}
+              >
+                &nbsp;<i className="pi pi-angle-left text-2xl"></i>
+              </button>
               {/* search bar */}
               <input
                 type="text"
                 placeholder="Search for recipes..."
-                className="w-3/4 sm:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-5/6 sm:w-1/2 px-3 py-2 border border-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={textQuery}
+                onChange={(e) => setTextQuery(e.target.value)}
               />
               {/* Centering the button */}
               <button
+                className="px-1 py-2  text-white border-white border-2 rounded-md shadow-sm focus:outline-none focus:ring-2o ml-1"
+                onClick={submitSearch}
+              >
+                &nbsp;<i className="pi pi-search text-lg"></i>
+              </button>
+              {/* <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-auto"
                 onClick={toggleDrawer}
               >
                 &nbsp;<i className="pi pi-sliders-h"></i>
-              </button>
+              </button> */}
             </div>
 
             <Drawer
@@ -373,6 +401,30 @@ const Recipes = () => {
                       { value: "french", label: "French", img: img8 },
                       { value: "indian", label: "Indian", img: img9 },
                       { value: "italian", label: "Italian", img: img10 },
+                      { value: "japanese", label: "Japanese", img: img11 },
+                      { value: "kosher", label: "Kosher", img: img12 },
+                      {
+                        value: "mediterranean",
+                        label: "Mediterranean",
+                        img: img13,
+                      },
+                      { value: "mexican", label: "Mexican", img: img14 },
+                      {
+                        value: "middle+eastern",
+                        label: "Middle Eastern",
+                        img: img15,
+                      },
+                      { value: "nordic", label: "Nordic", img: img16 },
+                      {
+                        value: "south+american",
+                        label: "South American",
+                        img: img17,
+                      },
+                      {
+                        value: "south+east_asian",
+                        label: "South East Asian",
+                        img: img18,
+                      },
                     ].map((cuisine) => (
                       <div
                         key={cuisine.value}
@@ -430,7 +482,7 @@ const Recipes = () => {
                         style={{ height: "100px", width: "100px" }}
                       >
                         <img
-                          src={img11}
+                          src={img19}
                           alt="breakfast"
                           className="border rounded-lg"
                         />
@@ -444,7 +496,7 @@ const Recipes = () => {
                         style={{ height: "100px", width: "100px" }}
                       >
                         <img
-                          src={img12}
+                          src={img20}
                           alt="Lunch/Dinner"
                           className="border rounded-lg"
                         />
@@ -460,7 +512,7 @@ const Recipes = () => {
                         style={{ height: "100px", width: "100px" }}
                       >
                         <img
-                          src={img13}
+                          src={img21}
                           alt="Snack"
                           className="border rounded-lg"
                         />
@@ -474,7 +526,7 @@ const Recipes = () => {
                         style={{ height: "100px", width: "100px" }}
                       >
                         <img
-                          src={img14}
+                          src={img22}
                           alt="Teatime"
                           className="border rounded-lg"
                         />
@@ -561,7 +613,7 @@ const Recipes = () => {
               ) : (
                 <>
                   <h2 className="text-white text-lg text-center mb-3 mt-3">
-                    --- RECIPES BASED ON YOUR SEARCH ---
+                    BASED ON YOUR SEARCH 
                   </h2>
                   {loading ? ( // Step 3: Conditional rendering
                     <div className="flex justify-center">
