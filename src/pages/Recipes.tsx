@@ -159,7 +159,7 @@ const Recipes = () => {
       setLoading(false); // Step 2: Set loading to false after fetching
     };
 
-    //fetchAndSetRandomRecipes();
+    fetchAndSetRandomRecipes();
   }, []);
 
   // when search button is clicked, it fetches the recipes according to the states selected
