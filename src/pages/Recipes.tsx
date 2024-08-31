@@ -96,8 +96,6 @@ const Recipes = () => {
   const [myStaticRecipes, setMyStaticRecipes] = useState<Hit[]>([staticRecipe1, staticRecipe2]);
   //////////////////////////////////////////////////////////////////////////
 
-  // add staticRecipe1 and staticRecipe2 to staticRecipes array
-
   ///////////////////////// operations to be performed on states //////////////////////////
 
   // displaying the selected states on the console
@@ -372,7 +370,7 @@ const Recipes = () => {
                 <>
                   {/* -----------------------------Selecting Cuisine (Mobile View)-------------------------------- */}
                   <details className="mt-5" open={true}>
-                  <summary className="text-black text-lg"><b>Cuisine Choices</b> <span className="text-gray-600 text-xs">(click to view/hide)</span></summary>
+                  <summary className="text-black text-lg"><b>Select Cuisine</b> <span className="text-gray-600 text-xs">(click to view/hide)</span></summary>
                   <div className=" mb-5">
                     
                       <span className="text-gray-600 text-sm">
@@ -489,8 +487,8 @@ const Recipes = () => {
                   </details>
 
                   {/* -----------------------------Selecting MealType (Mobile View)-------------------------------- */}
-                  <details className="mt-5" open={false}>
-                  <summary className="text-black text-lg"><b>Meal Type Choices</b> <span className="text-gray-600 text-xs">(click to view/hide)</span></summary>
+                  <details className="mt-5" open={true}>
+                  <summary className="text-black text-lg"><b>Select Meal Type</b> <span className="text-gray-600 text-xs">(click to view/hide)</span></summary>
                   <div className=" mb-5">
                     
                       <span className="text-gray-600 text-sm">
@@ -563,7 +561,7 @@ const Recipes = () => {
                   </details>
                     {/* -----------------------------Selecting DishType (Mobile View)-------------------------------- */}
                     <details className="mt-5" open={false}>
-                    <summary className="text-black text-lg"><b>Dish Type Choices</b> <span className="text-gray-600 text-xs">(click to view/hide)</span></summary>
+                    <summary className="text-black text-lg"><b>Select Dish Type</b> <span className="text-gray-600 text-xs">(click to view/hide)</span></summary>
                     <div className=" mb-5">
 
                       <span className="text-gray-600 text-sm">
@@ -641,8 +639,8 @@ const Recipes = () => {
                     ))}
                   </Carousel>
                   </details>
-                  <h2 className="text-white text-lg text-center mb-3 mt-3">
-                    --- RANDOM RECIPES FOR YOU ---
+                  <h2 className="text-black text-lg text-center mb-3 mt-5" style={{ fontFamily: '"Matemasie", cursive'}}>
+                    Random Recipes
                   </h2>
                   {/* -----------------------------Loading state is true until random recipes are fetched-------------------------------- */}
                   {loading ? ( // Step 3: Conditional rendering
@@ -651,11 +649,11 @@ const Recipes = () => {
 
                     /////////////   3 LINES OF CODE BELOW THIS ARE THE ACTUAL LINES OF CODE   ///////////////////////
                     <div className="flex justify-center">
-                      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
+                      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
                     </div>
                     /////////////   3 LINES OF CODE ABOVE THIS ARE THE ACTUAL LINES OF CODE   ///////////////////////
                   ) : (
-                    // -----------------------------Displaying Random Recipes--------------------------------
+                    // -----------------------------Displaying Random Recipes, Card Style--------------------------------
                     <div className="flex flex-wrap gap-5 justify-center w-full">
                       {randomrecipes.map((randomRecipe) => (
                         <Card
@@ -704,7 +702,7 @@ const Recipes = () => {
                             right: "10px", // Distance from the right
                             cursor: "pointer", // Make it look like a button
                             zIndex: 1, // Ensure it appears above other content
-                            borderRadius: "50%",
+                            borderRadius: "100%",
                           }}
                           onClick={(e) => {
                             e.stopPropagation(); // Prevent the card's onClick event from firing
@@ -716,7 +714,7 @@ const Recipes = () => {
 
                         <div className="flex items-center justify-around  w-full">
                           <CardHeader className="flex items-center p-1 ">
-                            <CardTitle className="flex items-center justify-center text-[#005D90] text-base overflow-clip h-28 w-full">
+                            <CardTitle className="flex items-center justify-center text-[#005D90] text-base overflow-clip h-40 w-full">
                               <b>{randomRecipe.recipe.label}</b>
                             </CardTitle>
                           </CardHeader>
