@@ -12,6 +12,7 @@ import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
 import { imgArray } from "../data/ArrayExports";
 import { responsive } from "../data/ArrayExports";
+
 import {
   ingredientOptions,
   cuisineOptions,
@@ -27,7 +28,6 @@ import {
 } from "../components/cards";
 import heartimg from "../assets/heart.png";
 import { fetchRecipes, fetchRandomRecipes } from "../lib/utils";
-import '../styling/extraStyling.css';
 ///////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////// interface declarations  //////////////////////////
@@ -369,7 +369,7 @@ const Recipes = () => {
               {recipes.length === 0 ? (
                 <>
                   {/* -----------------------------Selecting Cuisine (Mobile View)-------------------------------- */}
-                  <details className="mt-5 details" open={true}>
+                  <details className="mt-5" open={true}>
                   <summary className="text-black text-lg"><b>Select Cuisine</b> <span className="text-gray-600 text-xs">(click to view/hide)</span></summary>
                   <div className=" mb-5">
                     
@@ -388,7 +388,6 @@ const Recipes = () => {
                     removeArrowOnDeviceType={["tablet", "mobile"]}
                     autoPlaySpeed={2000}
                     responsive={responsive}
-                    className="carousel"
                   >
                     {[
                       {
@@ -490,7 +489,7 @@ const Recipes = () => {
 
 
                   {/* -----------------------------Selecting MealType (Mobile View)-------------------------------- */}
-                  <details className="mt-5 details" open={true}>
+                  <details className="mt-5" open={true}>
                   <summary className="text-black text-lg"><b>Select Meal Type</b> <span className="text-gray-600 text-xs">(click to view/hide)</span></summary>
                   <div className=" mb-5">
                     
@@ -566,7 +565,7 @@ const Recipes = () => {
 
 
                     {/* -----------------------------Selecting DishType (Mobile View)-------------------------------- */}
-                    <details className="mt-5 details" open={false}>
+                    <details className="mt-5" open={false}>
                     <summary className="text-black text-lg"><b>Select Dish Type</b> <span className="text-gray-600 text-xs">(click to view/hide)</span></summary>
                     <div className=" mb-5">
 

@@ -20,16 +20,6 @@
     border-style: solid;
   }
 
-  .details .carousel {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 2s ease-out; /* Adjust timing and easing as desired */
-  }
-  
-  .details[open] .carousel{
-    max-height: 1000px; /* Set a maximum height that accommodates the content */
-    transition: max-height 2s ease-in; /* Adjust timing and easing as desired */
-  }
   
   
  
