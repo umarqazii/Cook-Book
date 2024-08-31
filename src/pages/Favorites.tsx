@@ -24,6 +24,7 @@ const Favorites = () => {
   const [loading, setLoading] = useState(true);
   const [favoriteRecipesID, setFavoriteRecipesID] = useState<string[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);  // Correct the state type to Recipe[]
+  let toastid ="";
   
   useEffect(() => {
     const getFavoriteRecipes = async () => {
@@ -72,18 +73,24 @@ const Favorites = () => {
     try {
       await axios.post('https://cook-book-api-rho.vercel.app/recipes/remove-favorite', { uri });
       // await axios.post('http://localhost:8080/recipes/remove-favorite', { uri });
-      toast.success('Recipe removed from favorites');
+      toast.remove(toastid);
+      toast.success('Recipe removed from favorites', {
+        duration: 5000,
+      });
       window.location.reload();
     } catch (error) {
       console.error(error);
+      toast.remove(toastid);
       toast.error('Failed to remove recipe from favorites');
     }
   }
 
+  // displays a pending toast as soon as the favorite button is clicked
   const handleFavoriteButtonToast = () => {
-    toast('Processing your request...',
+    toastid = toast('Processing your request...',
       {
         icon: '⏳',
+        duration: 10000,
         style: {
           borderRadius: '10px',
           background: '#333',
@@ -91,6 +98,10 @@ const Favorites = () => {
         },
       }
     );
+  }
+
+  function handleFavorite(uri: string) {
+    throw new Error('Function not implemented.');
   }
 
   return (
@@ -109,67 +120,72 @@ const Favorites = () => {
         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
       </div>
     ) : (
-      <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
+      <div className="flex flex-wrap gap-5 justify-center w-full">
         {recipes.map((favRecipe) => (
           <Card
-            key={favRecipe.url}
-            className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+          key={favRecipe.url}
+          className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+          style={{
+            width: "100%",
+            height: "200px",
+            background: "white",
+            padding: "0px",
+            margin: "0px",
+            border: "none",
+            borderRadius: "15px",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
+            position: "relative", // Added to make the heart image position absolute within the card
+          }}
+          onClick={() =>
+            window.open(favRecipe.url, "_blank")
+          }
+        >
+          <img
+            src={favRecipe.image}
+            alt="not found"
             style={{
-              width: "21rem",
-              height: "330px",
-              background: "white",
-              padding: "0px",
-              margin: "0px",
-              borderRadius: "5px",
-              display: "flex",
-              flexDirection: "column",
-              boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
-              position: "relative",
+              width: "60%",
+              height: "100%",
+              objectFit: "cover",
+              borderTopLeftRadius: "15px",
+              borderBottomLeftRadius: "15px",
             }}
-            onClick={() => window.open(favRecipe.url, "_blank")}
-          >
-            <img
-              src={favRecipe.image}
-              alt="not found"
-              style={{
-                width: "100%",
-                height: "60%",
-                objectFit: "cover",
-                borderTopLeftRadius: "5px",
-                borderTopRightRadius: "5px",
-              }}
-            />
+          />
 
-            <img
-              src={heartimg}
-              alt="not found"
-              style={{
-                width: "35px",
-                height: "35px",
-                position: "absolute",
-                top: "10px",
-                right: "10px",
-                cursor: "pointer",
-                zIndex: 1,
-              }}
-              onClick={(e) => {
-                e.stopPropagation();
-                handleFavoriteButtonToast();
-                handleRemoveFromFavorites(favRecipe.uri);
-                console.log('Added to Favorites');
-              }}
-            />
+          {/* Heart Image Positioned Absolutely */}
+          <img
+            src={heartimg}
+            alt="not found"
+            style={{
+              width: "35px",
+              height: "35px",
+              position: "absolute", // Make it absolutely positioned
+              top: "10px", // Distance from the top
+              right: "10px", // Distance from the right
+              cursor: "pointer", // Make it look like a button
+              zIndex: 1, // Ensure it appears above other content
+              borderRadius: "100%",
+            }}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent the card's onClick event from firing
+              handleFavoriteButtonToast();
+              handleRemoveFromFavorites(favRecipe.url);
+              console.log("Added to Favorites");
+            }}
+          />
 
-            <CardContent>
-              <div className="flex items-center justify-center">
-                <CardHeader className="self-center">
-                  <CardTitle className="text-[#005D90] text-center overflow-clip h-24">
-                    {favRecipe.label}
-                  </CardTitle>
-                </CardHeader>
-              </div>
-            </CardContent>
-          </Card>
+          <div className="flex items-center justify-around  w-full">
+            <CardHeader className="flex items-center p-1 ">
+              <CardTitle className="flex items-center justify-center text-[#005D90] text-base overflow-clip h-40 w-full">
+                <b>{favRecipe.label}</b>
+              </CardTitle>
+            </CardHeader>
+          </div>
+        </Card>
         ))}
       </div>
     )
