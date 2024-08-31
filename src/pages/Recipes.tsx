@@ -159,7 +159,7 @@ const Recipes = () => {
       setLoading(false); // Step 2: Set loading to false after fetching
     };
 
-    fetchAndSetRandomRecipes();
+    //fetchAndSetRandomRecipes();
   }, []);
 
   // when search button is clicked, it fetches the recipes according to the states selected
@@ -473,7 +473,7 @@ const Recipes = () => {
                                   transform: "translate(50%, -50%)",
                                   width: "100px",
                                   height: "100px",
-                                  border: "5px solid green",
+                                  border: "8px double green",
                                 }}
                               ></div>
                             )}
@@ -485,6 +485,8 @@ const Recipes = () => {
                     ))}
                   </Carousel>
                   </details>
+                  {/* -----------------------------End of Selecting Cuisine-------------------------------- */}
+
 
                   {/* -----------------------------Selecting MealType (Mobile View)-------------------------------- */}
                   <details className="mt-5" open={true}>
@@ -530,7 +532,7 @@ const Recipes = () => {
                         }
                       >
                         <div
-                          className="relative border rounded-lg"
+                          className="relative border rounded-lg "
                           style={{ height: "100px", width: "100px" }}
                         >
                           <img
@@ -547,7 +549,7 @@ const Recipes = () => {
                                   transform: "translate(50%, -50%)",
                                   width: "100px",
                                   height: "100px",
-                                  border: "5px solid green",
+                                  border: "8px double green",
                                 }}
                               ></div>
                             )}
@@ -559,6 +561,9 @@ const Recipes = () => {
                     ))}
                   </Carousel>
                   </details>
+                  {/* -----------------------------End of Selecting MealType-------------------------------- */}
+
+
                     {/* -----------------------------Selecting DishType (Mobile View)-------------------------------- */}
                     <details className="mt-5" open={false}>
                     <summary className="text-black text-lg"><b>Select Dish Type</b> <span className="text-gray-600 text-xs">(click to view/hide)</span></summary>
@@ -627,7 +632,7 @@ const Recipes = () => {
                                   transform: "translate(50%, -50%)",
                                   width: "100px",
                                   height: "100px",
-                                  border: "5px solid green",
+                                  border: "8px double green",
                                 }}
                               ></div>
                             )}
@@ -639,19 +644,18 @@ const Recipes = () => {
                     ))}
                   </Carousel>
                   </details>
+                  {/* -----------------------------End of Selecting DishType-------------------------------- */}
+
+
                   <h2 className="text-black text-lg text-center mb-3 mt-5" style={{ fontFamily: '"Matemasie", cursive'}}>
                     Random Recipes
                   </h2>
                   {/* -----------------------------Loading state is true until random recipes are fetched-------------------------------- */}
                   {loading ? ( // Step 3: Conditional rendering
-
-
-
-                    /////////////   3 LINES OF CODE BELOW THIS ARE THE ACTUAL LINES OF CODE   ///////////////////////
                     <div className="flex justify-center">
                       <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
                     </div>
-                    /////////////   3 LINES OF CODE ABOVE THIS ARE THE ACTUAL LINES OF CODE   ///////////////////////
+                    
                   ) : (
                     // -----------------------------Displaying Random Recipes, Card Style--------------------------------
                     <div className="flex flex-wrap gap-5 justify-center w-full">
@@ -727,7 +731,7 @@ const Recipes = () => {
               ) : (
                 // -----------------------------Displaying Based on Search After options are selected--------------------------------
                 <>
-                  <h2 className="text-white text-lg text-center mb-3 mt-3">
+                  <h2 className="text-black text-lg text-center mb-3 mt-5" style={{ fontFamily: "Matemasie"}}>
                     BASED ON YOUR SEARCH
                   </h2>
 
@@ -738,70 +742,72 @@ const Recipes = () => {
                     </div>
                   ) : (
                     // ------------------------------Displaying Recipes--------------------------------
-                    <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
+                    <div className="flex flex-wrap gap-5 justify-center w-full">
                       {recipes.map((Recipe) => (
                         <Card
-                          key={Recipe.recipe.url}
-                          className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                        key={Recipe.recipe.url}
+                        className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                        style={{
+                          width: "100%",
+                          height: "200px",
+                          background: "white",
+                          padding: "0px",
+                          margin: "0px",
+                          border: "none",
+                          borderRadius: "15px",
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "flex-start",
+                          boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
+                          position: "relative", // Added to make the heart image position absolute within the card
+                        }}
+                        onClick={() =>
+                          window.open(Recipe.recipe.url, "_blank")
+                        }
+                      >
+                        <img
+                          src={Recipe.recipe.image}
+                          alt="not found"
                           style={{
-                            width: "21rem",
-                            height: "330px",
-                            background: "white",
-                            padding: "0px",
-                            margin: "0px",
-                            borderRadius: "5px",
-                            display: "flex",
-                            flexDirection: "column",
-                            boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
-                            position: "relative", // Added to make the heart image position absolute within the card
+                            width: "60%",
+                            height: "100%",
+                            objectFit: "cover",
+                            borderTopLeftRadius: "15px",
+                            borderBottomLeftRadius: "15px",
                           }}
-                          onClick={() =>
-                            window.open(Recipe.recipe.url, "_blank")
-                          }
-                        >
-                          <img
-                            src={Recipe.recipe.image}
-                            alt="not found"
-                            style={{
-                              width: "100%",
-                              height: "60%",
-                              objectFit: "cover",
-                              borderTopLeftRadius: "5px",
-                              borderTopRightRadius: "5px",
-                            }}
-                          />
+                        />
 
-                          {/* Heart Image Positioned Absolutely */}
-                          <img
-                            src={heartimg}
-                            alt="not found"
-                            style={{
-                              width: "35px",
-                              height: "35px",
-                              position: "absolute", // Make it absolutely positioned
-                              top: "10px", // Distance from the top
-                              right: "10px", // Distance from the right
-                              cursor: "pointer", // Make it look like a button
-                              zIndex: 1, // Ensure it appears above other content
-                            }}
-                            onClick={(e) => {
-                              e.stopPropagation(); // Prevent the card's onClick event from firing
-                              handleFavoriteButtonToast();
-                              handleFavorite(Recipe.recipe.uri);
-                              console.log("Added to Favorites");
-                            }}
-                          />
+                        {/* Heart Image Positioned Absolutely */}
+                        <img
+                          src={heartimg}
+                          alt="not found"
+                          style={{
+                            width: "35px",
+                            height: "35px",
+                            position: "absolute", // Make it absolutely positioned
+                            top: "10px", // Distance from the top
+                            right: "10px", // Distance from the right
+                            cursor: "pointer", // Make it look like a button
+                            zIndex: 1, // Ensure it appears above other content
+                            borderRadius: "100%",
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent the card's onClick event from firing
+                            handleFavoriteButtonToast();
+                            handleFavorite(Recipe.recipe.uri);
+                            console.log("Added to Favorites");
+                          }}
+                        />
 
-                          <CardContent>
-                            <div className="flex items-center justify-center">
-                              <CardHeader className="self-center">
-                                <CardTitle className="text-[#005D90] text-center overflow-clip h-24">
-                                  {Recipe.recipe.label}
-                                </CardTitle>
-                              </CardHeader>
-                            </div>
-                          </CardContent>
-                        </Card>
+                        <div className="flex items-center justify-around  w-full">
+                          <CardHeader className="flex items-center p-1 ">
+                            <CardTitle className="flex items-center justify-center text-[#005D90] text-base overflow-clip h-40 w-full">
+                              <b>{Recipe.recipe.label}</b>
+                            </CardTitle>
+                          </CardHeader>
+                        </div>
+                      </Card>
                       ))}
                     </div>
                   )}
