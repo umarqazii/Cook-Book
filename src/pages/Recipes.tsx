@@ -63,6 +63,7 @@ const staticRecipe2: Hit = {
 
 const Recipes = () => {
   /////////////////////////// state declarations  //////////////////////////
+  let toastid="";
   const breakpoints = [640, 768, 1600]; // Example breakpoints: small, medium, large screens
   const breakpointIndex = useResponsive(breakpoints);
   const [loading, setLoading] = useState(true);
@@ -129,7 +130,10 @@ const Recipes = () => {
       // const response = await axios.post("http://localhost:8080/recipes/add-to-favorites", {
       //   uri: uri,
       // });
-      toast.success(response.data.message);
+      toast.remove(toastid);
+      toast.success(response.data.message, {
+        duration: 3000,
+      });
 
       console.log(response.data);
     } catch (error) {
@@ -140,8 +144,9 @@ const Recipes = () => {
 
   // displays a pending toast as soon as the favorite button is clicked
   const handleFavoriteButtonToast = () => {
-    toast("Processing your request...", {
+    toastid = toast("Processing your request...", {
       icon: "⏳",
+      duration: 10000,
       style: {
         borderRadius: "10px",
         background: "#333",

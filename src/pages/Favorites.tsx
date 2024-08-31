@@ -26,10 +26,12 @@ const Favorites = () => {
   const [recipes, setRecipes] = useState<Recipe[]>([]);  // Correct the state type to Recipe[]
   let toastid ="";
   
+  // get favorite recipes from the database
   useEffect(() => {
     const getFavoriteRecipes = async () => {
       try {
         const response = await axios.get('https://cook-book-api-rho.vercel.app/recipes/get-favorites');
+        console.log(response)
         // const response = await axios.get('http://localhost:8080/recipes/get-favorites');
         const recipeIDs = response.data.favorites.map((favorite: any) => favorite.recipeid);
         setFavoriteRecipesID(recipeIDs);
@@ -41,6 +43,7 @@ const Favorites = () => {
     getFavoriteRecipes();
   }, []);
 
+  // after getting the favorite recipes, fetch their details from the api
   useEffect(() => {
     const fetchRecipeDetails = async () => {
       try {
@@ -77,7 +80,21 @@ const Favorites = () => {
       toast.success('Recipe removed from favorites', {
         duration: 5000,
       });
-      window.location.reload();
+
+      const getFavoriteRecipes = async () => {
+        try {
+          const response = await axios.get('https://cook-book-api-rho.vercel.app/recipes/get-favorites');
+          console.log(response)
+          // const response = await axios.get('http://localhost:8080/recipes/get-favorites');
+          const recipeIDs = response.data.favorites.map((favorite: any) => favorite.recipeid);
+          setFavoriteRecipesID(recipeIDs);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    
+      getFavoriteRecipes();
+      
     } catch (error) {
       console.error(error);
       toast.remove(toastid);
@@ -98,10 +115,6 @@ const Favorites = () => {
         },
       }
     );
-  }
-
-  function handleFavorite(uri: string) {
-    throw new Error('Function not implemented.');
   }
 
   return (
@@ -173,8 +186,7 @@ const Favorites = () => {
             onClick={(e) => {
               e.stopPropagation(); // Prevent the card's onClick event from firing
               handleFavoriteButtonToast();
-              handleRemoveFromFavorites(favRecipe.url);
-              console.log("Added to Favorites");
+              handleRemoveFromFavorites(favRecipe.uri);
             }}
           />
 
