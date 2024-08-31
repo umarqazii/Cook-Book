@@ -182,8 +182,8 @@ export const toolsOptions = [
   { value: "fluid-oz-to-litre", label: "Ounces to Liters (Fluid)" },
 ]
 
+// Carousel Options
 export const responsive = {
-  
   mobile: {
     breakpoint: { max: 464, min: 0 },
     items: 3
