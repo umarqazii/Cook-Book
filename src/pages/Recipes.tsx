@@ -170,7 +170,15 @@ const Recipes = () => {
   // when search button is clicked, it fetches the recipes according to the states selected
   const submitSearch = () => {
     const fetchAndSetRecipes = async () => {
-      setLoading(true); // Step 2: Set loading to true before fetching
+      toastid = toast("Processing your request...", {
+        icon: "⏳",
+        duration: Infinity,
+        style: {
+          borderRadius: "10px",
+          background: "#333",
+          color: "#fff",
+        },
+      });
       const updatedTextQuery = textQuery.replace(/ /g, "+");
       const hits = await fetchRecipes(
         // replace all the spaces from the textQuery with '+' sign
@@ -182,7 +190,13 @@ const Recipes = () => {
         selectedMealType?.value || ""
       );
       setRecipes(hits); // Update the recipes state with the fetched hits
-      setLoading(false); // Step 2: Set loading to false after fetching
+      if(hits.length===0){
+        toast.remove(toastid);
+        toast.error("No recipes found");
+      }
+      else{
+        toast.dismiss(toastid);
+      }
     };
 
     fetchAndSetRecipes();
@@ -256,118 +270,6 @@ const Recipes = () => {
                 &nbsp;<i className="pi pi-search text-lg"></i>
               </button>
             </div>
-
-            <Drawer
-              open={isOpen}
-              onClose={toggleDrawer}
-              direction="bottom"
-              className="border rounded-t-2xl"
-              style={{
-                height: "80vh",
-              }}
-            >
-              <div className="flex flex-col ">
-                <div className="flex justify-center flex-col items-center">
-                  <div
-                    className="bg-slate-400 mt-2 mb-2 sm:w-1/3 w-2/3 h-1 border rounded-lg cursor-pointer"
-                    onClick={toggleDrawer}
-                  ></div>
-                  <h2
-                    className="text-xl mb-10 cursor-pointer"
-                    onClick={toggleDrawer}
-                  >
-                    Apply Filters <i className="pi pi-filter"></i>
-                  </h2>
-                  <div className="bg-slate-400 mt-2 w-full h-0.3 border rounded-lg"></div>
-                </div>
-                {/* dropdown menu to select multiple ingredients */}
-                <p className="text-black text-center mb-1 mt-2">
-                  Select Ingredients
-                </p>
-                <div className="flex justify-center mb-5">
-                  <Select
-                    closeMenuOnSelect={false}
-                    components={animatedComponents}
-                    defaultValue={[ingredientOptions[0]]}
-                    isMulti
-                    options={ingredientOptions}
-                    className="w-11/12 sm:w-1/2"
-                    onChange={(selectedOptions) =>
-                      setSelectedIngredients(selectedOptions)
-                    }
-                  />
-                </div>
-                <div className="flex justify-center">
-                  <div className="bg-slate-400 mt-2 mb-2 w-full sm:w-3/5 h-0.3 border rounded-lg"></div>
-                </div>
-                {/* dropdown menu to select a single cuisine */}
-                <p className="text-black text-center mb-1">Select Cuisine</p>
-                <div className="flex justify-center mb-5">
-                  <select
-                    className="w-3/4 sm:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onChange={handleCuisineChange}
-                  >
-                    <option value="">Select a cuisine</option>
-                    {cuisineOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* dropdown menu to select a single dish type */}
-                <div className="flex justify-center">
-                  <div className="bg-slate-400 mt-2 mb-2 w-full sm:w-3/5 h-0.3 border rounded-lg"></div>
-                </div>
-                <p className="text-black text-center mb-1">Select Dish Type</p>
-                <div className="flex justify-center mb-5">
-                  <select
-                    className="w-3/4 sm:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onChange={handleDishTypeChange}
-                  >
-                    <option value="">Select a dish type</option>
-                    {dishTypeOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* dropdown menu to select a single meal type */}
-                <div className="flex justify-center">
-                  <div className="bg-slate-400 mt-2 mb-2 w-full sm:w-3/5 h-0.3 border rounded-lg"></div>
-                </div>
-                <p className="text-black text-center mb-1">Select Meal Type</p>
-                <div className="flex justify-center mb-5">
-                  <select
-                    className="w-3/4 sm:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    onChange={handleMealTypeChange}
-                  >
-                    <option value="" className="text-gray-300">
-                      Select a meal type
-                    </option>
-                    {mealTypeOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                <div className="flex justify-center">
-                  {" "}
-                  {/* Centering the button */}
-                  <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/5"
-                    onClick={toggleDrawer}
-                  >
-                    Done
-                  </button>
-                </div>
-              </div>
-            </Drawer>
 
             <div>
               {/* ------------While there are no recipes (Give options to search for recipes and in the meanwhile displaying random)----------------- */}
