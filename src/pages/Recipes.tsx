@@ -27,6 +27,7 @@ import {
   CardTitle,
 } from "../components/cards";
 import heartimg from "../assets/heart.png";
+import redheartimg from "../assets/redheart.png";
 import { fetchRecipes, fetchRandomRecipes } from "../lib/utils";
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -96,6 +97,7 @@ const Recipes = () => {
 
   const [recipes, setRecipes] = useState<Hit[]>([]);
   const [favoriteRecipesURIs, setFavoriteRecipeURIs] = useState<string[]>([]);
+  const [favoritesUpdated, setFavoritesUpdated] = useState<boolean>(false);
   const [randomrecipes, setRandomRecipes] = useState<Hit[]>([]);
   const [myStaticRecipes, setMyStaticRecipes] = useState<Hit[]>([
     staticRecipe1,
@@ -142,6 +144,7 @@ const Recipes = () => {
       });
 
       console.log(response.data);
+      setFavoritesUpdated((prev) => !prev);
     } catch (error) {
       console.error(error);
       toast.error("Failed to add to favorites");
@@ -189,7 +192,7 @@ const Recipes = () => {
       };
     
       getFavoriteRecipes();
-    }, []);
+    }, [favoritesUpdated]);
 
   // when search button is clicked, it fetches the recipes according to the states selected
   const submitSearch = () => {
@@ -257,6 +260,10 @@ const Recipes = () => {
     // set recipes to empty array
     setRecipes([]);
   };
+
+  function stringExistsInArray(arr: string[], str: string): boolean {
+    return arr.includes(str);
+  }
 
   //////////////////////////////////////////////////////////////////////////
 
@@ -691,18 +698,18 @@ const Recipes = () => {
                           />
 
                           {/* Heart Image Positioned Absolutely */}
-                          <img
-                            src={heartimg}
+                          {stringExistsInArray(favoriteRecipesURIs, randomRecipe.recipe.uri) ? (
+                            <img
+                            src={redheartimg}
                             alt="not found"
                             style={{
-                              width: "35px",
-                              height: "35px",
+                              width: "25px",
+                              height: "25px",
                               position: "absolute", // Make it absolutely positioned
                               top: "10px", // Distance from the top
                               right: "10px", // Distance from the right
                               cursor: "pointer", // Make it look like a button
                               zIndex: 1, // Ensure it appears above other content
-                              borderRadius: "100%",
                             }}
                             onClick={(e) => {
                               e.stopPropagation(); // Prevent the card's onClick event from firing
@@ -711,6 +718,29 @@ const Recipes = () => {
                               console.log("Added to Favorites");
                             }}
                           />
+                          ):(
+                            <img
+                            src={heartimg}
+                            alt="not found"
+                            style={{
+                              width: "25px",
+                              height: "25px",
+                              position: "absolute", // Make it absolutely positioned
+                              top: "10px", // Distance from the top
+                              right: "10px", // Distance from the right
+                              cursor: "pointer", // Make it look like a button
+                              zIndex: 1, // Ensure it appears above other content
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent the card's onClick event from firing
+                              handleFavoriteButtonToast();
+                              handleFavorite(randomRecipe.recipe.uri);
+                              console.log("Added to Favorites");
+                            }}
+                          />
+                          )
+                          }
+                          
 
                           <div className="flex items-center justify-around  w-full">
                             <CardHeader className="flex items-center p-1 ">
@@ -778,18 +808,18 @@ const Recipes = () => {
                           />
 
                           {/* Heart Image Positioned Absolutely */}
-                          <img
-                            src={heartimg}
+                          {stringExistsInArray(favoriteRecipesURIs, Recipe.recipe.uri) ? (
+                            <img
+                            src={redheartimg}
                             alt="not found"
                             style={{
-                              width: "35px",
-                              height: "35px",
+                              width: "25px",
+                              height: "25px",
                               position: "absolute", // Make it absolutely positioned
                               top: "10px", // Distance from the top
                               right: "10px", // Distance from the right
                               cursor: "pointer", // Make it look like a button
                               zIndex: 1, // Ensure it appears above other content
-                              borderRadius: "100%",
                             }}
                             onClick={(e) => {
                               e.stopPropagation(); // Prevent the card's onClick event from firing
@@ -798,6 +828,28 @@ const Recipes = () => {
                               console.log("Added to Favorites");
                             }}
                           />
+                          ):(
+                            <img
+                            src={heartimg}
+                            alt="not found"
+                            style={{
+                              width: "25px",
+                              height: "25px",
+                              position: "absolute", // Make it absolutely positioned
+                              top: "10px", // Distance from the top
+                              right: "10px", // Distance from the right
+                              cursor: "pointer", // Make it look like a button
+                              zIndex: 1, // Ensure it appears above other content
+                            }}
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent the card's onClick event from firing
+                              handleFavoriteButtonToast();
+                              handleFavorite(Recipe.recipe.uri);
+                              console.log("Added to Favorites");
+                            }}
+                          />
+                          )
+                          }
 
                           <div className="flex items-center justify-around  w-full">
                             <CardHeader className="flex items-center p-1 ">

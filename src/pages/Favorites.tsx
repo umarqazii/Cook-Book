@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "../components/cards";
 import toast, { Toaster } from 'react-hot-toast';
-import heartimg from "../assets/heart.png";
+import heartimg from "../assets/redheart.png";
 interface Recipe {
   label: string;
   image: string;
@@ -174,14 +174,13 @@ const Favorites = () => {
             src={heartimg}
             alt="not found"
             style={{
-              width: "35px",
-              height: "35px",
+              width: "25px",
+              height: "25px",
               position: "absolute", // Make it absolutely positioned
               top: "10px", // Distance from the top
               right: "10px", // Distance from the right
               cursor: "pointer", // Make it look like a button
               zIndex: 1, // Ensure it appears above other content
-              borderRadius: "100%",
             }}
             onClick={(e) => {
               e.stopPropagation(); // Prevent the card's onClick event from firing
