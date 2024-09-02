@@ -95,6 +95,7 @@ const Recipes = () => {
   const [favorite, setFavorite] = React.useState<boolean>(false);
 
   const [recipes, setRecipes] = useState<Hit[]>([]);
+  const [favoriteRecipesURIs, setFavoriteRecipeURIs] = useState<string[]>([]);
   const [randomrecipes, setRandomRecipes] = useState<Hit[]>([]);
   const [myStaticRecipes, setMyStaticRecipes] = useState<Hit[]>([
     staticRecipe1,
@@ -171,6 +172,24 @@ const Recipes = () => {
 
     fetchAndSetRandomRecipes();
   }, []);
+
+    // get favorite recipes from the database
+    useEffect(() => {
+      const getFavoriteRecipes = async () => {
+        try {
+          const response = await axios.get('https://cook-book-api-rho.vercel.app/recipes/get-favorites');
+          console.log("favorites response: ",response)
+          // const response = await axios.get('http://localhost:8080/recipes/get-favorites');
+          const recipeURIs = response.data.favorites.map((favorite: any) => favorite.uri);
+          setFavoriteRecipeURIs(recipeURIs);
+          console.log("recipeURIs: ",recipeURIs)
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    
+      getFavoriteRecipes();
+    }, []);
 
   // when search button is clicked, it fetches the recipes according to the states selected
   const submitSearch = () => {
@@ -254,15 +273,15 @@ const Recipes = () => {
             <Toaster />
           </div>
           <div className="max-w-full  mx-auto p-4 flex flex-col">
+          
+            {/* whole search bar stuff below this with arrow */}
             <div className="flex flex-col items-left mb-3  w-full">
-              {/* back button div */}
               
-
-              {/* search bar */}
+              {/* search bar/ back button/ search button */}
               <div className="flex justify-around">
                 <div className="relative w-5/6 sm:w-1/2">
                   <button
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 p-0 text-gray-500 focus:outline-none"
+                    className="absolute bg-gray-200 rounded-full left-1 top-1/2 transform -translate-y-1/2 pl-2 pr-2 pt-1 pb-1 text-gray-600 focus:outline-none"
                     onClick={goBack}
                   >
                     <span className="pi pi-arrow-left text-base"></span>
@@ -277,13 +296,17 @@ const Recipes = () => {
                 </div>
                 {/* Centering the button */}
                 <button
-                  className="pl-1 pr-2 py-2  text-white border-white border-2 rounded-md shadow-sm focus:outline-none focus:ring-2o ml-1"
+                  className="pl-3 pr-4 py-2  text-gray-600 bg-white rounded-full shadow-sm focus:outline-none focus:ring-2o ml-1"
                   onClick={submitSearch}
                 >
                   &nbsp;<i className="pi pi-search text-lg"></i>
                 </button>
               </div>
+    
             </div>
+            {/* whole search bar stuff above this with arrow */}
+
+
 
             <div>
               {/* ------------While there are no recipes (Give options to search for recipes and in the meanwhile displaying random)----------------- */}
