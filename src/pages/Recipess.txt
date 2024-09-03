@@ -1,0 +1,74 @@
+
+const DisplayRecipe = () => {
+  const { uri } = useParams();
+  const breakpoints = [640, 768, 1600]; // Example breakpoints: small, medium, large screens
+  const breakpointIndex = useResponsive(breakpoints);
+
+  const displayUri = uri ? decodeURIComponent(uri) : "#";
+ 
+
+
+  // Convert URL string parameters back to the appropriate data types
+
+  return (
+    <>
+      {breakpointIndex === 0 && (
+        <div
+          className="flex flex-col"
+          style={{ minHeight: "calc(100vh - 72px)" }}
+        >
+          {/* Image cover */}
+          <img
+            src={displayImage}
+            alt="Recipe"
+            className="cover-image w-full h-80"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
+              maskImage:
+                "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // For other browsers
+            }}
+          />
+
+          {/* Display recipe details */}
+          <div className="p-4">
+            <h1 className="text-2xl font-bold">{decodeURIComponent(displayLabel)}</h1>
+            <p className="text-gray-600">Cuisine: {decodeURIComponent(displayCuisineType)}</p>
+            <p className="text-gray-600">Dish Type: {decodeURIComponent(displayDishType)}</p>
+            <p className="text-gray-600">Calories: {displayCalories}</p>
+          </div>
+
+          {/* Display ingredients */}
+          <div className="pl-4 pb-1 ">
+            <h2 className="text-lg font-bold">Ingredients:</h2>
+            <ul>
+              {parsedIngredients.map((ingredient) => (
+                <li key={ingredient}>{ingredient}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* View Full Recipe button */}
+          <button
+            className="w-full bg-orange-500 text-white mt-2 p-3 rounded-t-xl rounded-tl-xl"
+            onClick={() => window.open(decodeURIComponent(displayUrl))}
+          >
+            View Full Recipe <i className="pi pi-arrow-up-right"></i>
+          </button>
+        </div>
+      )}
+      {breakpointIndex === 1 && (
+        <div>
+          <h1>ONLY AVAILABLE ON MOBILE SCREENS FOR NOW</h1>
+        </div>
+      )}
+      {breakpointIndex === 2 && (
+        <div>
+          <h1>ONLY AVAILABLE ON MOBILE SCREENS FOR NOW</h1>
+        </div>
+      )}
+    </>
+  );
+};
+
+export default DisplayRecipe;

@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useResponsive } from "../styling/useResponsive";
+import axios from "axios";
 import "primeicons/primeicons.css";
-import img1 from "../assets/img1.jpg";
 
 interface Recipe {
   label: string;
@@ -18,78 +19,117 @@ interface Hit {
   recipe: Recipe;
 }
 
-const staticRecipe1: Hit = {
-  recipe: {
-    label: "Pakistani-style White Lentils with a Sizzling Oil Garnish",
-    image: img1,
-    ingredients: [
-      "1 cup white lentils",
-      "1/2 cup water",
-      "1/2 teaspoon ground black pepper",
-      "1/2 teaspoon ground cumin",
-    ],
-    cuisineType: "Indian",
-    url: "https://food52.com/recipes/8539-pakistani-style-white-lentils-with-a-sizzling-oil-garnish",
-    uri: "http://www.edamam.com/ontologies/edamam.owl#recipe_1e38243afa522e6775a99d917fd2d5c3",
-    calories: 150,
-    dishType: "Lunch",
-  },
-};
-
-const DisplayRecipe = () => {
-  const breakpoints = [640, 768, 1600]; // Example breakpoints: small, medium, large screens
+const DisplayRecipe: React.FC = () => {
+  const { uri } = useParams();
+  const [recipe, setRecipes] = useState<Hit>();
+  const [recipeLabel, setRecipeLabel] = useState<string>("");
+  const [recipeImage, setRecipeImage] = useState<string>("");
+  const [recipeUri, setRecipeUri] = useState<string>("");
+  const [recipeCuisineType, setRecipeCuisineType] = useState<string>("");
+  const [recipeDishType, setRecipeDishType] = useState<string>("");
+  const [recipeCalories, setRecipeCalories] = useState<number>(0);
+  const [recipeUrl, setRecipeUrl] = useState<string>("");
+  const [recipeIngredients, setRecipeIngredients] = useState<string[]>([]);
+  const recipeid = uri?.slice(-39);
+  const breakpoints = [640, 768, 1600];
   const breakpointIndex = useResponsive(breakpoints);
+
+  const displayUri = uri ? decodeURIComponent(uri) : "#";
+  console.log(displayUri);
+
+  useEffect(() => {
+    const getRecipe = async () => {
+      const appId = "ab7aeda7";
+      const appKey = "582c50836c0a17b6c3b525cff3c88f63";
+
+      const url = `https://api.edamam.com/api/recipes/v2/${recipeid}?type=public&app_id=${appId}&app_key=${appKey}`;
+
+      const response = await axios.get(url);
+
+      setRecipeLabel(response.data.recipe.label);
+      setRecipeImage(response.data.recipe.image);
+      setRecipeUri(response.data.recipe.uri);
+      setRecipeCuisineType(response.data.recipe.cuisineType);
+      setRecipeDishType(response.data.recipe.dishType);
+      setRecipeCalories(response.data.recipe.calories);
+      setRecipeUrl(response.data.recipe.url);
+      setRecipeIngredients(response.data.recipe.ingredientLines);
+      console.log(response.data.recipe);
+      console.log(recipeLabel);
+      console.log(recipeImage);
+      console.log(recipeUri);
+      console.log(recipeCuisineType);
+      console.log(recipeDishType);
+      console.log(recipeIngredients);
+    };
+    getRecipe();
+  }, []);
 
   return (
     <>
       {breakpointIndex === 0 && (
-        <div className="flex flex-col" style={{ minHeight: "calc(100vh - 72px)" }}>
-        {/* Image cover */}
-        <img
-          src={staticRecipe1.recipe.image}
-          alt="Recipe"
-          className="cover-image w-full h-80"
-          style={{
-            WebkitMaskImage:
-              "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
-            maskImage:
-              "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // For other browsers
-          }}
-        />
-      
-        {/* Display recipe details */}
-        <div className="p-4">
-          <h1 className="text-2xl font-bold">{staticRecipe1.recipe.label}</h1>
-          <p className="text-gray-600">Cuisine: {staticRecipe1.recipe.cuisineType}</p>
-          <p className="text-gray-600">Dish Type: {staticRecipe1.recipe.dishType}</p>
-          <p className="text-gray-600">Calories: {staticRecipe1.recipe.calories}</p>
-        </div>
-      
-        {/* Display ingredients */}
-        <div className="pl-4 pb-1 ">
-          <h2 className="text-lg font-bold">Ingredients:</h2>
-          <ul>
-            {staticRecipe1.recipe.ingredients.map((ingredient) => (
-              <li key={ingredient}>{ingredient}</li>
-            ))}
-          </ul>
-        </div>
+        <div
+          className="flex flex-col"
+          style={{ minHeight: "calc(100vh - 72px)" }}
+        >
+          {/* Image cover */}
+          <img
+            src={recipeImage}
+            alt="Recipe"
+            className="cover-image w-full h-80"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
+              maskImage:
+                "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // For other browsers
+            }}
+          />
 
-      
-        {/* View Full Recipe button */}
-        <button className="w-full bg-orange-500 text-white mt-2 p-3 rounded-t-xl rounded-tl-xl"
-        onClick={() => window.open(staticRecipe1.recipe.url)}
-        >View Full Recipe <i className="pi pi-arrow-up-right"></i></button>
-      </div>
-      
+          {/* Fixed back icon toward the top left */}
+          <button
+            className="absolute top-20 left-4 bg-white rounded-full pt-2 pb-1 pr-2 pl-2"
+            onClick={() => window.history.back()}
+          >
+            <i className="pi pi-arrow-left text-xl"></i>
+          </button>
+
+          {/* Display recipe details */}
+          <div className="p-4">
+            <h1 className="text-2xl font-bold">{recipeLabel}</h1>
+            <p className="text-gray-600">Cuisine: {recipeCuisineType}</p>
+            <p className="text-gray-600">Dish Type: {recipeDishType}</p>
+            <p className="text-gray-600">Calories: {recipeCalories}</p>
+          </div>
+
+          {/* Display ingredients */}
+          <div className="pl-4 pb-1">
+            <h2 className="text-lg font-bold">Ingredients:</h2>
+            <ul>
+              {recipeIngredients.map((ingredient) => (
+                <li key={ingredient}>- {ingredient}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Fixed View Full Recipe button */}
+          <button
+            className="fixed bottom-0 w-full bg-orange-500 text-white p-3 rounded-t-xl"
+            onClick={() => window.open(recipeUrl, "_blank")}
+          >
+            View Full Recipe <i className="pi pi-arrow-up-right"></i>
+          </button>
+        </div>
       )}
-      {breakpointIndex === 1 && <div>
-        <h1>ONLY AVAILABLE ON MOBILE SCREENS FOR NOW</h1>
-        </div>}
-      {breakpointIndex === 2 && <div>
-        {/* Content for large screens */}
-        <h1>ONLY AVAILABLE ON MOBILE SCREENS FOR NOW</h1>
-        </div>}
+      {breakpointIndex === 1 && (
+        <div>
+          <h1>ONLY AVAILABLE ON MOBILE SCREENS FOR NOW</h1>
+        </div>
+      )}
+      {breakpointIndex === 2 && (
+        <div>
+          <h1>ONLY AVAILABLE ON MOBILE SCREENS FOR NOW</h1>
+        </div>
+      )}
     </>
   );
 };

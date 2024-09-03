@@ -1,5 +1,6 @@
 //////////////////////importing the required files and packages////////////////////////
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Select, { MultiValue, SingleValue } from "react-select";
 import makeAnimated from "react-select/animated";
 import Drawer from "react-modern-drawer";
@@ -72,6 +73,7 @@ interface Hit {
 
 const Recipes = () => {
   /////////////////////////// state declarations  //////////////////////////
+  const navigate = useNavigate();
   let toastid = "";
   const breakpoints = [640, 768, 1600]; // Example breakpoints: small, medium, large screens
   const breakpointIndex = useResponsive(breakpoints);
@@ -191,7 +193,7 @@ const Recipes = () => {
           // const response = await axios.get('http://localhost:8080/recipes/get-favorites');
           const recipeURIs = response.data.favorites.map((favorite: any) => favorite.uri);
           setFavoriteRecipeURIs(recipeURIs);
-          console.log("recipeURIs: ",recipeURIs)
+          //console.log("recipeURIs: ",recipeURIs)
         } catch (error) {
           console.error(error);
         }
@@ -688,7 +690,7 @@ const Recipes = () => {
                             position: "relative", // Added to make the heart image position absolute within the card
                           }}
                           onClick={() =>
-                            window.open(randomRecipe.recipe.url, "_blank")
+                            navigate(`/displayrecipe/${encodeURIComponent(randomRecipe.recipe.uri)}`)
                           }
                         >
                           <img
@@ -805,7 +807,7 @@ const Recipes = () => {
                             position: "relative", // Added to make the heart image position absolute within the card
                           }}
                           onClick={() =>
-                            window.open(Recipe.recipe.url, "_blank")
+                            navigate(`/displayrecipe/${encodeURIComponent(Recipe.recipe.uri)}`)
                           }
                         >
                           <img

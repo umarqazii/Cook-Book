@@ -23,7 +23,7 @@ function App() {
         <Route path="/recipes" element={<Recipes />} />
         <Route path="/tools" element={<Tools />} />
         <Route path="/favorites" element={<Favorites />} />
-        <Route path="/displayrecipes" element={<DisplayRecipe />} />
+        <Route path="/displayrecipe/:uri/" element={<DisplayRecipe />}/>
       </Routes>
     </BrowserRouter>
   );

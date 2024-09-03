@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   Card,
@@ -13,6 +14,7 @@ interface Recipe {
   label: string;
   image: string;
   url: string;
+  calories: number;
   uri: string;
 }
 
@@ -21,6 +23,7 @@ interface Hit {
 }
 
 const Favorites = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [favoriteRecipesID, setFavoriteRecipesID] = useState<string[]>([]);
   const [recipes, setRecipes] = useState<Recipe[]>([]);  // Correct the state type to Recipe[]
@@ -64,7 +67,7 @@ const Favorites = () => {
         console.log(allRecipes);
       } catch (error) {
         console.error('Error fetching recipe details:', error);
-      }
+      } 
     };
 
     if (favoriteRecipesID.length > 0) { // Add a check to prevent fetching with empty array
@@ -140,21 +143,21 @@ const Favorites = () => {
           className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
           style={{
             width: "100%",
-            height: "200px",
-            background: "white",
-            padding: "0px",
-            margin: "0px",
-            border: "none",
-            borderRadius: "15px",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "flex-start",
-            boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
-            position: "relative", // Added to make the heart image position absolute within the card
+                            height: "200px",
+                            background: "white",
+                            padding: "0px",
+                            margin: "0px",
+                            border: "none",
+                            borderRadius: "15px",
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "flex-start",
+                            boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                            position: "relative", // Added to make the heart image position absolute within the card
           }}
           onClick={() =>
-            window.open(favRecipe.url, "_blank")
+            navigate(`/displayrecipe/${encodeURIComponent(favRecipe.uri)}`)
           }
         >
           <img
@@ -189,13 +192,20 @@ const Favorites = () => {
             }}
           />
 
-          <div className="flex items-center justify-around  w-full">
-            <CardHeader className="flex items-center p-1 ">
-              <CardTitle className="flex items-center justify-center text-[#005D90] text-base overflow-clip h-40 w-full">
-                <b>{favRecipe.label}</b>
-              </CardTitle>
-            </CardHeader>
-          </div>
+<div className="flex items-center justify-around flex-col  w-full  h-full">
+                            <div>
+
+                            <CardHeader className="flex items-center p-1 ">
+                              <CardTitle className="flex items-center justify-center text-[#333333] text-lg overflow-clip h-40 w-full  font-sans">
+                                <b>{favRecipe.label}</b>
+                              </CardTitle>
+                            </CardHeader>
+                            </div>
+                            <div>
+
+                            <CardDescription className="flex items-center p-1 text-gray-600 text-sm ">{favRecipe.calories.toFixed(1)} kcal</CardDescription>
+                            </div>
+                          </div>
         </Card>
         ))}
       </div>
