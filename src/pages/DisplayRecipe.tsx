@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import { useResponsive } from "../styling/useResponsive";
 import axios from "axios";
 import "primeicons/primeicons.css";
+import toast, { Toaster } from "react-hot-toast";
+import heartimg from "../assets/heart.png";
+import redheartimg from "../assets/redheart.png";
 
 interface Recipe {
   label: string;
@@ -20,8 +23,11 @@ interface Hit {
 }
 
 const DisplayRecipe: React.FC = () => {
+  let toastid = "";
   const { uri } = useParams();
   const [recipe, setRecipes] = useState<Hit>();
+  const [favoriteRecipesURIs, setFavoriteRecipeURIs] = useState<string[]>([]);
+  const [favoritesUpdated, setFavoritesUpdated] = useState<boolean>(false);
   const [recipeLabel, setRecipeLabel] = useState<string>("");
   const [recipeImage, setRecipeImage] = useState<string>("");
   const [recipeUri, setRecipeUri] = useState<string>("");
@@ -36,6 +42,47 @@ const DisplayRecipe: React.FC = () => {
 
   const displayUri = uri ? decodeURIComponent(uri) : "#";
   console.log(displayUri);
+
+  const handleFavorite = async (uri: string) => {
+    //
+    try {
+      const response = await axios.post(
+        "https://cook-book-api-rho.vercel.app/recipes/add-to-favorites",
+        {
+          uri: uri,
+        }
+      );
+      // const response = await axios.post("http://localhost:8080/recipes/add-to-favorites", {
+      //   uri: uri,
+      // });
+      toast.remove(toastid);
+      toast.success(response.data.message, {
+        duration: 3000,
+      });
+
+      console.log(response.data);
+      setFavoritesUpdated((prev) => !prev);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to add to favorites");
+    }
+  };
+
+  const handleFavoriteButtonToast = () => {
+    toastid = toast("Processing your request...", {
+      icon: "⏳",
+      duration: 10000,
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
+  };
+
+  function stringExistsInArray(arr: string[], str: string): boolean {
+    return arr.includes(str);
+  }
 
   useEffect(() => {
     const getRecipe = async () => {
@@ -65,6 +112,23 @@ const DisplayRecipe: React.FC = () => {
     getRecipe();
   }, []);
 
+  useEffect(() => {
+    const getFavoriteRecipes = async () => {
+      try {
+        const response = await axios.get('https://cook-book-api-rho.vercel.app/recipes/get-favorites');
+        console.log("favorites response: ",response)
+        // const response = await axios.get('http://localhost:8080/recipes/get-favorites');
+        const recipeURIs = response.data.favorites.map((favorite: any) => favorite.uri);
+        setFavoriteRecipeURIs(recipeURIs);
+        console.log("favrecipeURIs: ",recipeURIs)
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    getFavoriteRecipes();
+  }, [favoritesUpdated]);
+
   return (
     <>
       {breakpointIndex === 0 && (
@@ -76,33 +140,74 @@ const DisplayRecipe: React.FC = () => {
           <img
             src={recipeImage}
             alt="Recipe"
-            className="cover-image w-full h-80"
+            className="absolute top-0 cover-image w-full h-80 rounded-bl-2xl rounded-br-2xl"
             style={{
-              WebkitMaskImage:
-                "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
-              maskImage:
-                "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // For other browsers
+              // WebkitMaskImage:
+              //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
+              // maskImage:
+              //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // For other browsers
             }}
           />
+          {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
+          <img
+            src={redheartimg}
+            alt="Recipe"
+            className="bg-white rounded-full p-1"
+            onClick={(e) => {
+              handleFavoriteButtonToast();
+              handleFavorite(recipeUri);
+              console.log("Added to Favorites");
+            }}
+            style={{
+              width: "35px",
+              height: "35px",
+              position: "absolute", // Make it absolutely positioned
+              top: "20px", // Distance from the top
+              right: "10px", // Distance from the right
+              cursor: "pointer", // Make it look like a button
+              zIndex: 1, // Ensure it appears above other content
+            }}
+          />
+        ) : (
+          <img
+            src={heartimg}
+            alt="Recipe"
+            className="bg-white rounded-full p-1"
+            style={{
+              width: "35px",
+              height: "35px",
+              position: "absolute", // Make it absolutely positioned
+              top: "20px", // Distance from the top
+              right: "10px", // Distance from the right
+              cursor: "pointer", // Make it look like a button
+              zIndex: 1, // Ensure it appears above other content
+            }}
+            onClick={(e) => {
+              handleFavoriteButtonToast();
+              handleFavorite(recipeUri);
+              console.log("Added to Favorites");
+            }}
+          />
+        )}
 
           {/* Fixed back icon toward the top left */}
           <button
-            className="absolute top-20 left-4 bg-white rounded-full pt-2 pb-1 pr-2 pl-2"
+            className="absolute top-5 left-4 bg-white rounded-full pt-2 pb-1 pr-2 pl-2"
             onClick={() => window.history.back()}
           >
             <i className="pi pi-arrow-left text-xl"></i>
           </button>
 
           {/* Display recipe details */}
-          <div className="p-4">
+          <div className="pl-4 mt-64">
             <h1 className="text-2xl font-bold">{recipeLabel}</h1>
-            <p className="text-gray-600">Cuisine: {recipeCuisineType}</p>
+            <p className="text-gray-600">Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}</p>
             <p className="text-gray-600">Dish Type: {recipeDishType}</p>
-            <p className="text-gray-600">Calories: {recipeCalories}</p>
+            <p className="text-gray-600">Calories: {recipeCalories.toFixed(2)} kcal</p>
           </div>
 
           {/* Display ingredients */}
-          <div className="pl-4 pb-1">
+          <div className="pl-4 pb-1 mt-3">
             <h2 className="text-lg font-bold">Ingredients:</h2>
             <ul>
               {recipeIngredients.map((ingredient) => (
