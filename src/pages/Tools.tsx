@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toolsOptions } from "../data/ArrayExports";
+import Navbar from "../components/navbar";
 import {
   Card,
   CardContent,
@@ -9,6 +10,7 @@ import {
 } from "../components/cards";
 
 const Tools = () => {
+  
   const [selectedTool, setSelectedTool] = useState<{
     value: string;
     label: string;
@@ -121,6 +123,8 @@ const Tools = () => {
   };
 
   return (
+    <>
+    <Navbar />
     <div className=" min-h-screen">
       <div className="max-w-screen-xl mx-auto p-4 flex flex-col">
         <h1
@@ -663,6 +667,7 @@ const Tools = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

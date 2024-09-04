@@ -13,7 +13,7 @@ import "react-multi-carousel/lib/styles.css";
 import axios from "axios";
 import { imgArray } from "../data/ArrayExports";
 import { responsive } from "../data/ArrayExports";
-
+import Navbar from "../components/navbar";
 import {
   ingredientOptions,
   cuisineOptions,
@@ -278,6 +278,7 @@ const Recipes = () => {
   /////////////////////////// return statement //////////////////////////
   return (
     <>
+    <Navbar />
       {/* ---------------------------Mobile Screen Diplay-------------------------- */}
       {/* ---------------------------Mobile Screen Diplay-------------------------- */}
       {/* ---------------------------Mobile Screen Diplay-------------------------- */}
@@ -320,9 +321,6 @@ const Recipes = () => {
     
             </div>
             {/* whole search bar stuff above this with arrow */}
-
-
-
             <div>
               {/* ------------While there are no recipes (Give options to search for recipes and in the meanwhile displaying random)----------------- */}
               {recipes.length === 0 ? (
@@ -1211,311 +1209,614 @@ const Recipes = () => {
 
       {breakpointIndex === 2 && (
         <div className=" min-h-screen">
-          <div>
-            <Toaster />
-          </div>
-          <div className="max-w-full  mx-auto p-4 flex flex-col">
-            <h1
-              className="text-5xl text-white font-semibold text-center mb-6"
-              style={{ fontFamily: '"Matemasie", cursive' }}
-            >
-              Recipes
-            </h1>
-            <div className="flex justify-center mb-3">
-              {" "}
+        <div>
+          <Toaster />
+        </div>
+        <div className="max-w-full  mx-auto p-4 flex flex-col">
+        
+          {/* whole search bar stuff below this with arrow */}
+          <div className="flex flex-col items-left mb-3  w-full">
+            
+            {/* search bar/ back button/ search button */}
+            <div className="flex justify-center">
+              <div className="relative w-5/6 sm:w-1/2">
+                <button
+                  className="absolute bg-gray-200 rounded-full left-1 top-1/2 transform -translate-y-1/2 pl-2 pr-2 pt-1 pb-1 text-gray-600 focus:outline-none"
+                  onClick={goBack}
+                >
+                  <span className="pi pi-arrow-left text-base"></span>
+                </button>
+                <input
+                  type="text"
+                  placeholder="Search for recipes..."
+                  className="w-full pl-10 pr-3 py-2 border border-white rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={textQuery}
+                  onChange={(e) => setTextQuery(e.target.value)}
+                />
+              </div>
               {/* Centering the button */}
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-auto"
-                onClick={toggleDrawer}
+                className="pl-3 pr-4 py-2  text-gray-600 bg-white rounded-full shadow-sm focus:outline-none focus:ring-2o ml-1"
+                onClick={submitSearch}
               >
-                Browse Recipes &nbsp;<i className="pi pi-search"></i>
+                &nbsp;<i className="pi pi-search text-lg"></i>
               </button>
             </div>
-            <div className="flex justify-center">
-              <div className="relative">
-                <Drawer
-                  open={isOpen}
-                  onClose={toggleDrawer}
-                  direction="bottom"
-                  className="border rounded-t-2xl"
-                  style={{
-                    height: "90vh",
-                    width: "60vw",
-                    left: "20%",
-                    transform: "translateX(-50%)", // Center horizontally
-                  }}
-                >
-                  <div className="flex flex-col ">
-                    <div className="flex justify-center flex-col items-center">
-                      <div
-                        className="bg-slate-400 mt-2 mb-2 sm:w-1/3 w-2/3 h-1 border rounded-lg cursor-pointer"
-                        onClick={toggleDrawer}
-                      ></div>
-                      <h2
-                        className="text-xl mb-10 cursor-pointer"
-                        onClick={toggleDrawer}
-                      >
-                        Apply Filters <i className="pi pi-filter"></i>
-                      </h2>
-                      <div className="bg-slate-400 mt-2 w-full h-0.3 border rounded-lg"></div>
-                    </div>
-                    {/* dropdown menu to select multiple ingredients */}
-                    <p className="text-black text-center mb-1 mt-2">
-                      Select Ingredients
-                    </p>
-                    <div className="flex justify-center mb-5">
-                      <Select
-                        closeMenuOnSelect={false}
-                        components={animatedComponents}
-                        defaultValue={[ingredientOptions[0]]}
-                        isMulti
-                        options={ingredientOptions}
-                        className="w-11/12 sm:w-1/2"
-                        onChange={(selectedOptions) =>
-                          setSelectedIngredients(selectedOptions)
-                        }
-                      />
-                    </div>
-                    <div className="flex justify-center">
-                      <div className="bg-slate-400 mt-2 mb-2 w-full sm:w-3/5 h-0.3 border rounded-lg"></div>
-                    </div>
-                    {/* dropdown menu to select a single cuisine */}
-                    <p className="text-black text-center mb-1">
-                      Select Cuisine
-                    </p>
-                    <div className="flex justify-center mb-5">
-                      <select
-                        className="w-3/4 sm:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleCuisineChange}
-                      >
-                        <option value="">Select a cuisine</option>
-                        {cuisineOptions.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* dropdown menu to select a single dish type */}
-                    <div className="flex justify-center">
-                      <div className="bg-slate-400 mt-2 mb-2 w-full sm:w-3/5 h-0.3 border rounded-lg"></div>
-                    </div>
-                    <p className="text-black text-center mb-1">
-                      Select Dish Type
-                    </p>
-                    <div className="flex justify-center mb-5">
-                      <select
-                        className="w-3/4 sm:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleDishTypeChange}
-                      >
-                        <option value="">Select a dish type</option>
-                        {dishTypeOptions.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    {/* dropdown menu to select a single meal type */}
-                    <div className="flex justify-center">
-                      <div className="bg-slate-400 mt-2 mb-2 w-full sm:w-3/5 h-0.3 border rounded-lg"></div>
-                    </div>
-                    <p className="text-black text-center mb-1">
-                      Select Meal Type
-                    </p>
-                    <div className="flex justify-center mb-5">
-                      <select
-                        className="w-3/4 sm:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        onChange={handleMealTypeChange}
-                      >
-                        <option value="" className="text-gray-300">
-                          Select a meal type
-                        </option>
-                        {mealTypeOptions.map((option) => (
-                          <option key={option.value} value={option.value}>
-                            {option.label}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="flex justify-center">
-                      {" "}
-                      {/* Centering the button */}
-                      <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-1/5"
-                        onClick={toggleDrawer}
-                      >
-                        Done
-                      </button>
-                    </div>
+  
+          </div>
+          {/* whole search bar stuff above this with arrow */}
+          <div>
+            {/* ------------While there are no recipes (Give options to search for recipes and in the meanwhile displaying random)----------------- */}
+            {recipes.length === 0 ? (
+              <>
+                {/* -----------------------------Selecting Cuisine (Mobile View)-------------------------------- */}
+                <details className="mt-5" open={true}>
+                  <summary className="text-black text-lg">
+                    <b>Select Cuisine</b>{" "}
+                    <span className="text-gray-600 text-xs">
+                      (click to view/hide)
+                    </span>
+                  </summary>
+                  <div className=" mb-5">
+                    <span className="text-gray-600 text-sm">
+                      {"  "}
+                      {selectedCuisine
+                        ? "Chosen Cuisine: (" + selectedCuisine.label + ")"
+                        : "Pick any one (Optional)"}
+                    </span>
                   </div>
-                </Drawer>
-              </div>
-            </div>
-            <div>
-              {recipes.length === 0 ? (
-                <>
-                  <h2 className="text-white text-lg text-center mb-3 mt-3">
-                    --- RANDOM RECIPES FOR YOU ---
-                  </h2>
-                  {loading ? ( // Step 3: Conditional rendering
-                    <div className="flex justify-center">
-                      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
-                    </div>
-                  ) : (
-                    <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
-                      {randomrecipes.map((randomRecipe) => (
-                        <Card
-                          key={randomRecipe.recipe.url}
-                          className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
-                          style={{
-                            width: "21rem",
-                            height: "330px",
-                            background: "white",
-                            padding: "0px",
-                            margin: "0px",
-                            borderRadius: "5px",
-                            display: "flex",
-                            flexDirection: "column",
-                            boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
-                            position: "relative", // Added to make the heart image position absolute within the card
-                          }}
-                          onClick={() =>
-                            window.open(randomRecipe.recipe.url, "_blank")
-                          }
+                  {/* -----------------------------Cuisine Carousel-------------------------------- */}
+                  <Carousel
+                    autoPlay={true}
+                    infinite={true}
+                    removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
+                    autoPlaySpeed={2000}
+                    responsive={responsive}
+                  >
+                    {[
+                      {
+                        value: "american",
+                        label: "American",
+                        img: imgArray[0],
+                      },
+                      { value: "asian", label: "Asian", img: imgArray[1] },
+                      {
+                        value: "british",
+                        label: "British",
+                        img: imgArray[2],
+                      },
+                      {
+                        value: "caribbean",
+                        label: "Caribbean",
+                        img: imgArray[3],
+                      },
+                      {
+                        value: "central+europe",
+                        label: "Central Europe",
+                        img: imgArray[4],
+                      },
+                      {
+                        value: "chinese",
+                        label: "Chinese",
+                        img: imgArray[5],
+                      },
+                      {
+                        value: "eastern+europe",
+                        label: "Eastern Europe",
+                        img: imgArray[6],
+                      },
+                      { value: "french", label: "French", img: imgArray[7] },
+                      { value: "indian", label: "Indian", img: imgArray[8] },
+                      {
+                        value: "italian",
+                        label: "Italian",
+                        img: imgArray[9],
+                      },
+                      {
+                        value: "japanese",
+                        label: "Japanese",
+                        img: imgArray[10],
+                      },
+                      { value: "kosher", label: "Kosher", img: imgArray[11] },
+                      {
+                        value: "mediterranean",
+                        label: "Mediterranean",
+                        img: imgArray[12],
+                      },
+                      {
+                        value: "mexican",
+                        label: "Mexican",
+                        img: imgArray[13],
+                      },
+                      {
+                        value: "middle+eastern",
+                        label: "Middle Eastern",
+                        img: imgArray[14],
+                      },
+                      { value: "nordic", label: "Nordic", img: imgArray[15] },
+                      {
+                        value: "south+american",
+                        label: "South American",
+                        img: imgArray[16],
+                      },
+                      {
+                        value: "south+east_asian",
+                        label: "South East Asian",
+                        img: imgArray[17],
+                      },
+                    ].map((cuisine) => (
+                      <div
+                        key={cuisine.value}
+                        className="flex flex-col justify-center items-center"
+                        onClick={() =>
+                          selectedCuisine &&
+                          selectedCuisine.value === cuisine.value
+                            ? setSelectedCuisine(null)
+                            : setSelectedCuisine(cuisine)
+                        }
+                      >
+                        <div
+                          className="relative border rounded-lg"
+                          style={{ height: "200px", width: "200px" }}
                         >
                           <img
-                            src={randomRecipe.recipe.image}
-                            alt="not found"
-                            style={{
-                              width: "100%",
-                              height: "60%",
-                              objectFit: "cover",
-                              borderTopLeftRadius: "5px",
-                              borderTopRightRadius: "5px",
-                            }}
+                            src={cuisine.img}
+                            alt={cuisine.label}
+                            className="border rounded-lg"
                           />
+                          {/* Green Outline */}
+                          {selectedCuisine &&
+                            selectedCuisine.value === cuisine.value && (
+                              <div
+                                className="absolute top-1/2 right-1/2 rounded-lg"
+                                style={{
+                                  transform: "translate(50%, -50%)",
+                                  width: "200px",
+                                  height: "200px",
+                                  border: "8px double green",
+                                }}
+                              ></div>
+                            )}
+                        </div>
+                        <div className="text-black text-center">
+                          {cuisine.label}
+                        </div>
+                      </div>
+                    ))}
+                  </Carousel>
+                </details>
+                {/* -----------------------------End of Selecting Cuisine-------------------------------- */}
 
-                          {/* Heart Image Positioned Absolutely */}
-                          <img
-                            src={heartimg}
-                            alt="not found"
-                            style={{
-                              width: "35px",
-                              height: "35px",
-                              position: "absolute", // Make it absolutely positioned
-                              top: "10px", // Distance from the top
-                              right: "10px", // Distance from the right
-                              cursor: "pointer", // Make it look like a button
-                              zIndex: 1, // Ensure it appears above other content
-                            }}
-                            onClick={(e) => {
-                              e.stopPropagation(); // Prevent the card's onClick event from firing
-                              handleFavoriteButtonToast();
-                              handleFavorite(randomRecipe.recipe.uri);
-                              console.log("Added to Favorites");
-                            }}
-                          />
-
-                          <CardContent>
-                            <div className="flex items-center justify-center">
-                              <CardHeader className="self-center">
-                                <CardTitle className="text-[#005D90] text-center overflow-clip h-24">
-                                  {randomRecipe.recipe.label}
-                                </CardTitle>
-                              </CardHeader>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <>
-                  <h2 className="text-white text-lg text-center mb-3 mt-3">
-                    --- RECIPES BASED ON YOUR SEARCH ---
-                  </h2>
-                  {loading ? ( // Step 3: Conditional rendering
-                    <div className="flex justify-center">
-                      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
-                    </div>
-                  ) : (
-                    <div className="flex flex-wrap gap-5 p-5 justify-center w-full">
-                      {recipes.map((Recipe) => (
-                        <Card
-                          key={Recipe.recipe.url}
-                          className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
-                          style={{
-                            width: "21rem",
-                            height: "330px",
-                            background: "white",
-                            padding: "0px",
-                            margin: "0px",
-                            borderRadius: "5px",
-                            display: "flex",
-                            flexDirection: "column",
-                            boxShadow: "0px 5px 15px rgba(0, 0, 0, 0.1)",
-                            position: "relative", // Added to make the heart image position absolute within the card
-                          }}
-                          onClick={() =>
-                            window.open(Recipe.recipe.url, "_blank")
-                          }
+                {/* -----------------------------Selecting MealType (Mobile View)-------------------------------- */}
+                <details className="mt-5" open={true}>
+                  <summary className="text-black text-lg">
+                    <b>Select Meal Type</b>{" "}
+                    <span className="text-gray-600 text-xs">
+                      (click to view/hide)
+                    </span>
+                  </summary>
+                  <div className=" mb-5">
+                    <span className="text-gray-600 text-sm">
+                      {"  "}
+                      {selectedMealType
+                        ? "Chosen Option: (" + selectedMealType.label + ")"
+                        : "Pick any one (Optional)"}{" "}
+                    </span>
+                  </div>
+                  {/* -----------------------------MealType Carousel-------------------------------- */}
+                  <Carousel
+                    infinite={true}
+                    responsive={responsive}
+                    arrows={true}
+                  >
+                    {[
+                      {
+                        value: "breakfast",
+                        label: "Breakfast",
+                        img: imgArray[18],
+                      },
+                      {
+                        value: "lunch+dinner",
+                        label: "Lunch/Dinner",
+                        img: imgArray[19],
+                      },
+                      { value: "snack", label: "Snack", img: imgArray[20] },
+                      {
+                        value: "teatime",
+                        label: "Teatime",
+                        img: imgArray[21],
+                      },
+                      {
+                        value: "lunch+dinner",
+                        label: "Lunch/Dinner",
+                        img: imgArray[19],
+                      },
+                      
+                    ].map((mealType) => (
+                      <div
+                        key={mealType.value}
+                        className="flex flex-col justify-center items-center"
+                        onClick={() =>
+                          selectedMealType &&
+                          selectedMealType.value === mealType.value
+                            ? setSelectedMealType(null)
+                            : setSelectedMealType(mealType)
+                        }
+                      >
+                        <div
+                          className="relative border rounded-lg "
+                          style={{ height: "200px", width: "200px" }}
                         >
                           <img
-                            src={Recipe.recipe.image}
-                            alt="not found"
-                            style={{
-                              width: "100%",
-                              height: "60%",
-                              objectFit: "cover",
-                              borderTopLeftRadius: "5px",
-                              borderTopRightRadius: "5px",
-                            }}
+                            src={mealType.img}
+                            alt={mealType.label}
+                            className="border rounded-lg"
                           />
+                          {/* Green Outline */}
+                          {selectedMealType &&
+                            selectedMealType.value === mealType.value && (
+                              <div
+                                className="absolute top-1/2 right-1/2 rounded-lg"
+                                style={{
+                                  transform: "translate(50%, -50%)",
+                                  width: "200px",
+                                  height: "200px",
+                                  border: "8px double green",
+                                }}
+                              ></div>
+                            )}
+                        </div>
+                        <div className="text-black text-center">
+                          {mealType.label}
+                        </div>
+                      </div>
+                    ))}
+                  </Carousel>
+                </details>
+                {/* -----------------------------End of Selecting MealType-------------------------------- */}
 
-                          {/* Heart Image Positioned Absolutely */}
+                {/* -----------------------------Selecting DishType (Mobile View)-------------------------------- */}
+                <details className="mt-5" open={false}>
+                  <summary className="text-black text-lg">
+                    <b>Select Dish Type</b>{" "}
+                    <span className="text-gray-600 text-xs">
+                      (click to view/hide)
+                    </span>
+                  </summary>
+                  <div className=" mb-5">
+                    <span className="text-gray-600 text-sm">
+                      {"  "}
+                      {selectedDishType
+                        ? "Chosen Option: (" + selectedDishType.label + ")"
+                        : "Pick any one (Optional)"}{" "}
+                    </span>
+                  </div>
+                  {/* -----------------------------DishType Carousel-------------------------------- */}
+                  <Carousel infinite={true} responsive={responsive}>
+                    {[
+                      {
+                        value: "biscuits+and+cookies",
+                        label: "Biscuits and Cookies",
+                        img: imgArray[22],
+                      },
+                      { value: "bread", label: "Bread", img: imgArray[23] },
+                      {
+                        value: "desserts",
+                        label: "Desserts",
+                        img: imgArray[24],
+                      },
+                      { value: "salad", label: "Salads", img: imgArray[25] },
+                      {
+                        value: "sandwiches",
+                        label: "Sandwiches",
+                        img: imgArray[26],
+                      },
+                      { value: "soup", label: "Soup", img: imgArray[27] },
+                      { value: "sweets", label: "Sweets", img: imgArray[28] },
+                      { value: "drinks", label: "Drinks", img: imgArray[29] },
+                      {
+                        value: "main+course",
+                        label: "Main Course",
+                        img: imgArray[30],
+                      },
+                      {
+                        value: "starter",
+                        label: "Starter",
+                        img: imgArray[31],
+                      },
+                      {
+                        value: "pancake",
+                        label: "Pancake",
+                        img: imgArray[32],
+                      },
+                      { value: "pasta", label: "Pasta", img: imgArray[33] },
+                      {
+                        value: "seafood",
+                        label: "Seafood",
+                        img: imgArray[34],
+                      },
+                      { value: "pizza", label: "Pizza", img: imgArray[35] },
+                      {
+                        value: "side+dish",
+                        label: "Side Dish",
+                        img: imgArray[36],
+                      },
+                    ].map((dishType) => (
+                      <div
+                        key={dishType.value}
+                        className="flex flex-col justify-center items-center"
+                        onClick={() =>
+                          selectedDishType &&
+                          selectedDishType.value === dishType.value
+                            ? setSelectedDishType(null)
+                            : setSelectedDishType(dishType)
+                        }
+                      >
+                        <div
+                          className="relative border rounded-lg"
+                          style={{ height: "200px", width: "200px" }}
+                        >
                           <img
-                            src={heartimg}
-                            alt="not found"
-                            style={{
-                              width: "35px",
-                              height: "35px",
-                              position: "absolute", // Make it absolutely positioned
-                              top: "10px", // Distance from the top
-                              right: "10px", // Distance from the right
-                              cursor: "pointer", // Make it look like a button
-                              zIndex: 1, // Ensure it appears above other content
-                            }}
-                            onClick={(e) => {
-                              e.stopPropagation(); // Prevent the card's onClick event from firing
-                              handleFavoriteButtonToast();
-                              handleFavorite(Recipe.recipe.uri);
-                              console.log("Added to Favorites");
-                            }}
+                            src={dishType.img}
+                            alt={dishType.label}
+                            className="border rounded-lg"
                           />
+                          {/* Green Outline */}
+                          {selectedDishType &&
+                            selectedDishType.value === dishType.value && (
+                              <div
+                                className="absolute top-1/2 right-1/2 rounded-lg"
+                                style={{
+                                  transform: "translate(50%, -50%)",
+                                  width: "200px",
+                                  height: "200px",
+                                  border: "8px double green",
+                                }}
+                              ></div>
+                            )}
+                        </div>
+                        <div className="text-black text-center">
+                          {dishType.label}
+                        </div>
+                      </div>
+                    ))}
+                  </Carousel>
+                </details>
+                {/* -----------------------------End of Selecting DishType-------------------------------- */}
 
-                          <CardContent>
-                            <div className="flex items-center justify-center">
-                              <CardHeader className="self-center">
-                                <CardTitle className="text-[#005D90] text-center overflow-clip h-24">
-                                  {Recipe.recipe.label}
-                                </CardTitle>
-                              </CardHeader>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
+                <h2
+                  className="text-black text-2xl text-center mb-3 mt-5"
+                  style={{ fontFamily: ' cursive', fontWeight: "bold" }}
+                >
+                  Random Recipes
+                </h2>
+                {/* -----------------------------Loading state is true until random recipes are fetched-------------------------------- */}
+                {loading ? ( // Step 3: Conditional rendering
+                  <div className="flex justify-center">
+                    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
+                  </div>
+                ) : (
+                  // -----------------------------Displaying Random Recipes, Card Style--------------------------------
+                  <div className="flex flex-wrap gap-5 justify-center w-full">
+                    {randomrecipes.map((randomRecipe) => (
+                      <Card
+                        key={randomRecipe.recipe.url}
+                        className="Card transition-transform duration-300  hover:shadow-lg hover:cursor-pointer"
+                        style={{
+                          width: "400px",
+                          height: "200px",
+                          background: "white",
+                          padding: "0px",
+                          margin: "0px",
+                          border: "none",
+                          borderRadius: "15px",
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "flex-start",
+                          boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                          position: "relative", // Added to make the heart image position absolute within the card
+                        }}
+                        onClick={() =>
+                          navigate(`/displayrecipe/${encodeURIComponent(randomRecipe.recipe.uri)}`)
+                        }
+                      >
+                        <img
+                          src={randomRecipe.recipe.image}
+                          alt="not found"
+                          style={{
+                            width: "60%",
+                            height: "100%",
+                            objectFit: "cover",
+                            borderTopLeftRadius: "15px",
+                            borderBottomLeftRadius: "15px",
+                          }}
+                        />
+
+                        {/* Heart Image Positioned Absolutely */}
+                        {stringExistsInArray(favoriteRecipesURIs, randomRecipe.recipe.uri) ? (
+                          <img
+                          src={redheartimg}
+                          alt="not found"
+                          style={{
+                            width: "25px",
+                            height: "25px",
+                            position: "absolute", // Make it absolutely positioned
+                            top: "10px", // Distance from the top
+                            right: "10px", // Distance from the right
+                            cursor: "pointer", // Make it look like a button
+                            zIndex: 1, // Ensure it appears above other content
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent the card's onClick event from firing
+                            handleFavoriteButtonToast();
+                            handleFavorite(randomRecipe.recipe.uri);
+                            console.log("Added to Favorites");
+                          }}
+                        />
+                        ):(
+                          <img
+                          src={heartimg}
+                          alt="not found"
+                          style={{
+                            width: "25px",
+                            height: "25px",
+                            position: "absolute", // Make it absolutely positioned
+                            top: "10px", // Distance from the top
+                            right: "10px", // Distance from the right
+                            cursor: "pointer", // Make it look like a button
+                            zIndex: 1, // Ensure it appears above other content
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent the card's onClick event from firing
+                            handleFavoriteButtonToast();
+                            handleFavorite(randomRecipe.recipe.uri);
+                            console.log("Added to Favorites");
+                          }}
+                        />
+                        )
+                        }
+                        
+
+                        <div className="flex items-center justify-around flex-col  w-full  h-full">
+                          <div>
+
+                          <CardHeader className="flex items-center p-1 ">
+                            <CardTitle className="flex items-center justify-center text-[#333333] text-lg overflow-clip h-40 w-full  font-sans">
+                              <b>{randomRecipe.recipe.label}</b>
+                            </CardTitle>
+                          </CardHeader>
+                          </div>
+                          <div>
+
+                          <CardDescription className="flex items-center p-1 text-gray-600 text-sm ">{randomRecipe.recipe.calories.toFixed(1)} kcal</CardDescription>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              // -----------------------------Displaying Based on Search After options are selected--------------------------------
+              <>
+                <h2
+                  className="text-black text-lg font-bold text-center mb-3 mt-5"
+                  style={{ fontFamily: 'cursive' }}
+                >
+                  BASED ON YOUR SEARCH
+                </h2>
+
+                {/* -----------------------------Loading state is true until recipes are fetched-------------------------------- */}
+                {loading ? ( // Step 3: Conditional rendering
+                  <div className="flex justify-center">
+                    <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
+                  </div>
+                ) : (
+                  // ------------------------------Displaying Recipes--------------------------------
+                  <div className="flex flex-wrap gap-5 justify-center w-full">
+                    {recipes.map((Recipe) => (
+                      <Card
+                        key={Recipe.recipe.url}
+                        className="Card transition-transform duration-300 hover:shadow-lg hover:cursor-pointer"
+                        style={{
+                          width: "100%",
+                          height: "200px",
+                          background: "white",
+                          padding: "0px",
+                          margin: "0px",
+                          border: "none",
+                          borderRadius: "15px",
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "flex-start",
+                          boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                          position: "relative", // Added to make the heart image position absolute within the card
+                        }}
+                        onClick={() =>
+                          navigate(`/displayrecipe/${encodeURIComponent(Recipe.recipe.uri)}`)
+                        }
+                      >
+                        <img
+                          src={Recipe.recipe.image}
+                          alt="not found"
+                          style={{
+                            width: "60%",
+                            height: "100%",
+                            objectFit: "cover",
+                            borderTopLeftRadius: "15px",
+                            borderBottomLeftRadius: "15px",
+                          }}
+                        />
+
+                        {/* Heart Image Positioned Absolutely */}
+                        {stringExistsInArray(favoriteRecipesURIs, Recipe.recipe.uri) ? (
+                          <img
+                          src={redheartimg}
+                          alt="not found"
+                          style={{
+                            width: "25px",
+                            height: "25px",
+                            position: "absolute", // Make it absolutely positioned
+                            top: "10px", // Distance from the top
+                            right: "10px", // Distance from the right
+                            cursor: "pointer", // Make it look like a button
+                            zIndex: 1, // Ensure it appears above other content
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent the card's onClick event from firing
+                            handleFavoriteButtonToast();
+                            handleFavorite(Recipe.recipe.uri);
+                            console.log("Added to Favorites");
+                          }}
+                        />
+                        ):(
+                          <img
+                          src={heartimg}
+                          alt="not found"
+                          style={{
+                            width: "25px",
+                            height: "25px",
+                            position: "absolute", // Make it absolutely positioned
+                            top: "10px", // Distance from the top
+                            right: "10px", // Distance from the right
+                            cursor: "pointer", // Make it look like a button
+                            zIndex: 1, // Ensure it appears above other content
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation(); // Prevent the card's onClick event from firing
+                            handleFavoriteButtonToast();
+                            handleFavorite(Recipe.recipe.uri);
+                            console.log("Added to Favorites");
+                          }}
+                        />
+                        )
+                        }
+
+                        <div className="flex items-center justify-around flex-col  w-full  h-full">
+                          <div>
+
+                          <CardHeader className="flex items-center p-1 ">
+                            <CardTitle className="flex items-center justify-center text-[#333333] text-lg overflow-clip h-40 w-full  font-sans">
+                              <b>{Recipe.recipe.label}</b>
+                            </CardTitle>
+                          </CardHeader>
+                          </div>
+                          <div>
+
+                          <CardDescription className="flex items-center p-1 text-gray-600 text-sm ">{Recipe.recipe.calories.toFixed(1)} kcal</CardDescription>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
+      </div>
       )}
     </>
   );

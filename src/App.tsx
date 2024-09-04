@@ -10,13 +10,13 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
 function App() {
-  let bgvid = "/assets/bgvid.mp4";
+  
   return (
     <BrowserRouter>
       <div>
         <Toaster />
       </div>
-      <Navbar />
+      
      
       <Routes>
         <Route path="/" element={<Home />} />

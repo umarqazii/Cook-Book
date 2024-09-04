@@ -133,14 +133,15 @@ const DisplayRecipe: React.FC = () => {
     <>
       {breakpointIndex === 0 && (
         <div
-          className="flex flex-col"
-          style={{ minHeight: "calc(100vh - 72px)" }}
+          className="flex flex-col "
+          style={{ minHeight: "100vh" }}
+          
         >
           {/* Image cover */}
           <img
             src={recipeImage}
             alt="Recipe"
-            className="absolute top-0 cover-image w-full h-80 rounded-bl-2xl rounded-br-2xl"
+            className="top-0 cover-image w-full h-80"
             style={{
               // WebkitMaskImage:
               //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
@@ -199,7 +200,7 @@ const DisplayRecipe: React.FC = () => {
           </button>
 
           {/* Display recipe details */}
-          <div className="pl-4 mt-64">
+          <div className="pl-4 mt-5">
             <h1 className="text-2xl font-bold">{recipeLabel}</h1>
             <p className="text-gray-600">Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}</p>
             <p className="text-gray-600">Dish Type: {recipeDishType}</p>
