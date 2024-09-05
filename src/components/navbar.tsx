@@ -56,6 +56,7 @@ const Navbar = () => {
             id="navbar-cta"
           >
             <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border border-white rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ">
+              
               <li>
                 <NavLink
                   to="/"
@@ -117,9 +118,28 @@ const Navbar = () => {
                   Tools
                 </NavLink>
               </li>
+              <li>
+              <NavLink
+                  to="/addrecipe"
+                  className={({ isActive }) =>
+                    `block py-2 px-3 md:p-0 rounded ${
+                      isActive
+                        ? "md:text-white md:underline lg:text-white lg:underline underline-offset-8 bg-white md:bg-transparent"
+                        : "text-white hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:hover:text-xl"
+                    }`
+                  }
+                  onClick={toggleMenu}
+                >
+                  Add Recipe
+                </NavLink>
+              </li>
+              
             </ul>
+            
           </div>
+          
         </div>
+        
       </nav>
     </div>
   );
