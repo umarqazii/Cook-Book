@@ -6,6 +6,7 @@ import "primeicons/primeicons.css";
 import toast, { Toaster } from "react-hot-toast";
 import heartimg from "../assets/heart.png";
 import redheartimg from "../assets/redheart.png";
+import Navbar from "../components/navbar";
 
 interface Recipe {
   label: string;
@@ -228,6 +229,8 @@ const DisplayRecipe: React.FC = () => {
         </div>
       )}
       {breakpointIndex === 1 && (
+        <>
+        
         <div
         className="flex flex-row "
         style={{ minHeight: "100vh" }}
@@ -324,6 +327,7 @@ const DisplayRecipe: React.FC = () => {
           View Full Recipe <i className="pi pi-arrow-up-right"></i>
         </button>
       </div>
+      </>
       )}
       {breakpointIndex === 2 && (
         <div
@@ -424,8 +428,10 @@ const DisplayRecipe: React.FC = () => {
       </div>
       )}
       {breakpointIndex === 3 && (
+        <>
+        <Navbar />
         <div
-        className="flex flex-row "
+        className="flex flex-col items-center"
         style={{ minHeight: "100vh" }}
         
       >
@@ -433,7 +439,7 @@ const DisplayRecipe: React.FC = () => {
         <img
           src={recipeImage}
           alt="Recipe"
-          className="h-2/3 w-1/2"
+          className="h-80 w-1/2 rounded-3xl"
           style={{
             // WebkitMaskImage:
             //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
@@ -491,7 +497,7 @@ const DisplayRecipe: React.FC = () => {
           <i className="pi pi-arrow-left text-xl"></i>
         </button>
 
-        <div>
+        <div className="flex flex-col w-1/2 ">
 
         {/* Display recipe details */}
         <div className="pl-4 mt-5">
@@ -520,6 +526,7 @@ const DisplayRecipe: React.FC = () => {
           View Full Recipe <i className="pi pi-arrow-up-right"></i>
         </button>
       </div>
+      </>
       )}
     </>
   );

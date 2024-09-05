@@ -164,7 +164,7 @@ const Favorites = () => {
                   style={{
                     width: "100%",
                     height: "200px",
-                    background: "#fce3e3",
+                    background: "#ebebeb",
                     padding: "0px",
                     margin: "0px",
                     border: "none",
@@ -260,7 +260,7 @@ const Favorites = () => {
                   style={{
                     width: "500px",
                     height: "200px",
-                    background: "#fce3e3",
+                    background: "#ebebeb",
                     padding: "0px",
                     margin: "0px",
                     border: "none",
@@ -356,7 +356,7 @@ const Favorites = () => {
                   style={{
                     width: "500px",
                     height: "200px",
-                    background: "#fce3e3",
+                    background: "#ebebeb",
                     padding: "0px",
                     margin: "0px",
                     border: "none",
@@ -452,7 +452,7 @@ const Favorites = () => {
                   style={{
                     width: "400px",
                     height: "200px",
-                    background: "#fce3e3",
+                    background: "#ebebeb",
                     padding: "0px",
                     margin: "0px",
                     border: "none",
