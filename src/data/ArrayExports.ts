@@ -185,15 +185,15 @@ export const toolsOptions = [
 // Carousel Options
 export const responsive = {
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 480, min: 0 },
     items: 3
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
+    breakpoint: { max: 1045, min: 481 },
     items: 3
   },
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 3000, min: 1045 },
     items: 5
   }
 };

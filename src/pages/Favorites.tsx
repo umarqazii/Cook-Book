@@ -27,7 +27,7 @@ interface Hit {
 }
 
 const Favorites = () => {
-  const breakpoints = [640, 768, 1600];
+  const breakpoints = [480, 768, 1279];
   const breakpointIndex = useResponsive(breakpoints);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -164,7 +164,7 @@ const Favorites = () => {
                   style={{
                     width: "100%",
                     height: "200px",
-                    background: "white",
+                    background: "#fce3e3",
                     padding: "0px",
                     margin: "0px",
                     border: "none",
@@ -258,9 +258,9 @@ const Favorites = () => {
                   key={favRecipe.url}
                   className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
                   style={{
-                    width: "300px",
+                    width: "500px",
                     height: "200px",
-                    background: "white",
+                    background: "#fce3e3",
                     padding: "0px",
                     margin: "0px",
                     border: "none",
@@ -354,9 +354,105 @@ const Favorites = () => {
                   key={favRecipe.url}
                   className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
                   style={{
+                    width: "500px",
+                    height: "200px",
+                    background: "#fce3e3",
+                    padding: "0px",
+                    margin: "0px",
+                    border: "none",
+                    borderRadius: "15px",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                    position: "relative", // Added to make the heart image position absolute within the card
+                  }}
+                  onClick={() =>
+                    navigate(
+                      `/displayrecipe/${encodeURIComponent(favRecipe.uri)}`
+                    )
+                  }
+                >
+                  <img
+                    src={favRecipe.image}
+                    alt="not found"
+                    style={{
+                      width: "70%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderTopLeftRadius: "15px",
+                      borderBottomLeftRadius: "15px",
+                    }}
+                  />
+
+                  {/* Heart Image Positioned Absolutely */}
+                  <img
+                    src={heartimg}
+                    alt="not found"
+                    style={{
+                      width: "25px",
+                      height: "25px",
+                      position: "absolute", // Make it absolutely positioned
+                      top: "10px", // Distance from the top
+                      right: "10px", // Distance from the right
+                      cursor: "pointer", // Make it look like a button
+                      zIndex: 1, // Ensure it appears above other content
+                    }}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent the card's onClick event from firing
+                      handleFavoriteButtonToast();
+                      handleRemoveFromFavorites(favRecipe.uri);
+                    }}
+                  />
+
+                  <div className="flex items-center justify-around flex-col  w-full  h-full">
+                    <div>
+                      <CardHeader className="flex items-center p-1 ">
+                        <CardTitle className="flex items-center justify-center text-[#333333] text-lg overflow-clip h-40 w-full  font-sans">
+                          <b>{favRecipe.label}</b>
+                        </CardTitle>
+                      </CardHeader>
+                    </div>
+                    <div>
+                      <CardDescription className="flex items-center p-1 text-gray-600 text-sm ">
+                        {favRecipe.calories.toFixed(1)} kcal
+                      </CardDescription>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      {breakpointIndex === 3 && (
+        <div className=" min-h-screen p-4">
+          <div
+            className="flex justify-center text-white text-5xl mb-10"
+            style={{ fontFamily: '"Matemasie", cursive' }}
+          >
+            <h1>Favorites</h1>
+          </div>
+
+          {favoriteRecipesID.length === 0 ? (
+            <div className="flex justify-center text-white text-2xl">
+              <h1>No Favorites Yet</h1>
+            </div>
+          ) : loading ? (
+            <div className="flex justify-center">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-5 justify-center w-full">
+              {recipes.map((favRecipe) => (
+                <Card
+                  key={favRecipe.url}
+                  className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                  style={{
                     width: "400px",
                     height: "200px",
-                    background: "white",
+                    background: "#fce3e3",
                     padding: "0px",
                     margin: "0px",
                     border: "none",

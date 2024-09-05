@@ -136,7 +136,7 @@ const Tools = () => {
         <p className="text-white text-center mb-1">Select a Conversion Tool</p>
         <div className="flex justify-center mb-5">
           <select
-            className="w-3/4 sm:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-3/4 sm:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             onChange={handleToolChange}
             value={selectedTool?.value || ""}
           >
@@ -144,7 +144,7 @@ const Tools = () => {
               -- Select a Tool --
             </option>
             {toolsOptions.map((option) => (
-              <option key={option.value} value={option.value}>
+              <option key={option.value} value={option.value} className="">
                 {option.label}
               </option>
             ))}
@@ -157,7 +157,7 @@ const Tools = () => {
         ) : selectedTool.value === "Cel-to-Fah" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -199,7 +199,7 @@ const Tools = () => {
         ) : selectedTool.value === "dry-gm-to-oz" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -241,7 +241,7 @@ const Tools = () => {
         ) : selectedTool.value === "dry-cup-to-tbsp" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -283,7 +283,7 @@ const Tools = () => {
         ) : selectedTool.value === "dry-cup-to-tsp" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -327,7 +327,7 @@ const Tools = () => {
         ) : selectedTool.value === "dry-cup-to-oz" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -371,7 +371,7 @@ const Tools = () => {
         )  : selectedTool.value === "dry-tbsp-to-oz" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -413,7 +413,7 @@ const Tools = () => {
         ) : selectedTool.value === "dry-tsp-to-oz" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -455,7 +455,7 @@ const Tools = () => {
         ) : selectedTool.value === "fluid-gal-to-cup" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -497,7 +497,7 @@ const Tools = () => {
         ) : selectedTool.value === "fluid-gal-to-oz" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -539,7 +539,7 @@ const Tools = () => {
         ) : selectedTool.value === "fluid-gal-to-liter" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -581,7 +581,7 @@ const Tools = () => {
         ) : selectedTool.value === "fluid-cup-to-liter" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
@@ -623,7 +623,7 @@ const Tools = () => {
         ) : selectedTool.value === "fluid-oz-to-litre" ? (
           <div className="flex justify-center">
             <Card
-              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-slate-800 p-0 m-0 border rounded-xl"
+              className="flex flex-col transition-transform duration-300 hover:scale-105 hover:shadow-lg w-full sm:w-1/2 h-96 bg-transparent p-0 m-0 border-white border-4 rounded-xl"
               style={{
                 boxShadow: "0 5px 15px rgba(0, 0, 0, 0.1)", // Default shadow
               }}
