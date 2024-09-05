@@ -117,41 +117,140 @@ const DisplayRecipe: React.FC = () => {
   useEffect(() => {
     const getFavoriteRecipes = async () => {
       try {
-        const response = await axios.get('https://cook-book-api-rho.vercel.app/recipes/get-favorites');
-        console.log("favorites response: ",response)
+        const response = await axios.get(
+          "https://cook-book-api-rho.vercel.app/recipes/get-favorites"
+        );
+        console.log("favorites response: ", response);
         // const response = await axios.get('http://localhost:8080/recipes/get-favorites');
-        const recipeURIs = response.data.favorites.map((favorite: any) => favorite.uri);
+        const recipeURIs = response.data.favorites.map(
+          (favorite: any) => favorite.uri
+        );
         setFavoriteRecipeURIs(recipeURIs);
-        console.log("favrecipeURIs: ",recipeURIs)
+        console.log("favrecipeURIs: ", recipeURIs);
       } catch (error) {
         console.error(error);
       }
     };
-  
+
     getFavoriteRecipes();
   }, [favoritesUpdated]);
 
   return (
     <>
       {breakpointIndex === 0 && (
-        <div
-          className="flex flex-col "
-          style={{ minHeight: "100vh" }}
-          
-        >
+        <div className="flex flex-col " style={{ minHeight: "100vh" }}>
           {/* Image cover */}
           <img
             src={recipeImage}
             alt="Recipe"
             className="top-0 cover-image w-full h-80"
-            style={{
+            style={
+              {
+                // WebkitMaskImage:
+                //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
+                // maskImage:
+                //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // For other browsers
+              }
+            }
+          />
+          {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
+            <img
+              src={redheartimg}
+              alt="Recipe"
+              className="bg-white rounded-full p-1"
+              onClick={(e) => {
+                handleFavoriteButtonToast();
+                handleFavorite(recipeUri);
+                console.log("Added to Favorites");
+              }}
+              style={{
+                width: "35px",
+                height: "35px",
+                position: "absolute", // Make it absolutely positioned
+                top: "20px", // Distance from the top
+                right: "10px", // Distance from the right
+                cursor: "pointer", // Make it look like a button
+                zIndex: 1, // Ensure it appears above other content
+              }}
+            />
+          ) : (
+            <img
+              src={heartimg}
+              alt="Recipe"
+              className="bg-white rounded-full p-1"
+              style={{
+                width: "35px",
+                height: "35px",
+                position: "absolute", // Make it absolutely positioned
+                top: "20px", // Distance from the top
+                right: "10px", // Distance from the right
+                cursor: "pointer", // Make it look like a button
+                zIndex: 1, // Ensure it appears above other content
+              }}
+              onClick={(e) => {
+                handleFavoriteButtonToast();
+                handleFavorite(recipeUri);
+                console.log("Added to Favorites");
+              }}
+            />
+          )}
+
+          {/* Fixed back icon toward the top left */}
+          <button
+            className="absolute top-5 left-4 bg-white rounded-full pt-2 pb-1 pr-2 pl-2"
+            onClick={() => window.history.back()}
+          >
+            <i className="pi pi-arrow-left text-xl"></i>
+          </button>
+
+          {/* Display recipe details */}
+          <div className="pl-4 mt-5">
+            <h1 className="text-2xl font-bold">{recipeLabel}</h1>
+            <p className="text-gray-600">
+              Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
+            </p>
+            <p className="text-gray-600">Dish Type: {recipeDishType}</p>
+            <p className="text-gray-600">
+              Calories: {recipeCalories.toFixed(2)} kcal
+            </p>
+          </div>
+
+          {/* Display ingredients */}
+          <div className="pl-4 pb-1 mt-3">
+            <h2 className="text-lg font-bold">Ingredients:</h2>
+            <ul>
+              {recipeIngredients.map((ingredient) => (
+                <li key={ingredient}>- {ingredient}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Fixed View Full Recipe button */}
+          <button
+            className="fixed bottom-0 w-full bg-orange-500 text-white p-3 rounded-t-xl"
+            onClick={() => window.open(recipeUrl, "_blank")}
+          >
+            View Full Recipe <i className="pi pi-arrow-up-right"></i>
+          </button>
+        </div>
+      )}
+      {breakpointIndex === 1 && (
+        <div className="flex flex-col " style={{ minHeight: "100vh" }}>
+        {/* Image cover */}
+        <img
+          src={recipeImage}
+          alt="Recipe"
+          className="top-0 cover-image w-full h-80"
+          style={
+            {
               // WebkitMaskImage:
               //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
               // maskImage:
               //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // For other browsers
-            }}
-          />
-          {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
+            }
+          }
+        />
+        {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
           <img
             src={redheartimg}
             alt="Recipe"
@@ -193,103 +292,6 @@ const DisplayRecipe: React.FC = () => {
           />
         )}
 
-          {/* Fixed back icon toward the top left */}
-          <button
-            className="absolute top-5 left-4 bg-white rounded-full pt-2 pb-1 pr-2 pl-2"
-            onClick={() => window.history.back()}
-          >
-            <i className="pi pi-arrow-left text-xl"></i>
-          </button>
-
-          {/* Display recipe details */}
-          <div className="pl-4 mt-5">
-            <h1 className="text-2xl font-bold">{recipeLabel}</h1>
-            <p className="text-gray-600">Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}</p>
-            <p className="text-gray-600">Dish Type: {recipeDishType}</p>
-            <p className="text-gray-600">Calories: {recipeCalories.toFixed(2)} kcal</p>
-          </div>
-
-          {/* Display ingredients */}
-          <div className="pl-4 pb-1 mt-3">
-            <h2 className="text-lg font-bold">Ingredients:</h2>
-            <ul>
-              {recipeIngredients.map((ingredient) => (
-                <li key={ingredient}>- {ingredient}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Fixed View Full Recipe button */}
-          <button
-            className="fixed bottom-0 w-full bg-orange-500 text-white p-3 rounded-t-xl"
-            onClick={() => window.open(recipeUrl, "_blank")}
-          >
-            View Full Recipe <i className="pi pi-arrow-up-right"></i>
-          </button>
-        </div>
-      )}
-      {breakpointIndex === 1 && (
-        <>
-        
-        <div
-        className="flex flex-row "
-        style={{ minHeight: "100vh" }}
-        
-      >
-        {/* Image cover */}
-        <img
-          src={recipeImage}
-          alt="Recipe"
-          className="h-2/3 w-1/2"
-          style={{
-            // WebkitMaskImage:
-            //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
-            // maskImage:
-            //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // For other browsers
-          }}
-        />
-        {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
-        <img
-          src={redheartimg}
-          alt="Recipe"
-          className="bg-white rounded-full p-1"
-          onClick={(e) => {
-            handleFavoriteButtonToast();
-            handleFavorite(recipeUri);
-            console.log("Added to Favorites");
-          }}
-          style={{
-            width: "35px",
-            height: "35px",
-            position: "absolute", // Make it absolutely positioned
-            top: "20px", // Distance from the top
-            right: "10px", // Distance from the right
-            cursor: "pointer", // Make it look like a button
-            zIndex: 1, // Ensure it appears above other content
-          }}
-        />
-      ) : (
-        <img
-          src={heartimg}
-          alt="Recipe"
-          className="bg-white rounded-full p-1"
-          style={{
-            width: "35px",
-            height: "35px",
-            position: "absolute", // Make it absolutely positioned
-            top: "20px", // Distance from the top
-            right: "10px", // Distance from the right
-            cursor: "pointer", // Make it look like a button
-            zIndex: 1, // Ensure it appears above other content
-          }}
-          onClick={(e) => {
-            handleFavoriteButtonToast();
-            handleFavorite(recipeUri);
-            console.log("Added to Favorites");
-          }}
-        />
-      )}
-
         {/* Fixed back icon toward the top left */}
         <button
           className="absolute top-5 left-4 bg-white rounded-full pt-2 pb-1 pr-2 pl-2"
@@ -298,14 +300,16 @@ const DisplayRecipe: React.FC = () => {
           <i className="pi pi-arrow-left text-xl"></i>
         </button>
 
-        <div>
-
         {/* Display recipe details */}
         <div className="pl-4 mt-5">
           <h1 className="text-2xl font-bold">{recipeLabel}</h1>
-          <p className="text-gray-600">Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}</p>
+          <p className="text-gray-600">
+            Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
+          </p>
           <p className="text-gray-600">Dish Type: {recipeDishType}</p>
-          <p className="text-gray-600">Calories: {recipeCalories.toFixed(2)} kcal</p>
+          <p className="text-gray-600">
+            Calories: {recipeCalories.toFixed(2)} kcal
+          </p>
         </div>
 
         {/* Display ingredients */}
@@ -318,7 +322,6 @@ const DisplayRecipe: React.FC = () => {
           </ul>
         </div>
 
-            </div>
         {/* Fixed View Full Recipe button */}
         <button
           className="fixed bottom-0 w-full bg-orange-500 text-white p-3 rounded-t-xl"
@@ -327,206 +330,226 @@ const DisplayRecipe: React.FC = () => {
           View Full Recipe <i className="pi pi-arrow-up-right"></i>
         </button>
       </div>
-      </>
       )}
       {breakpointIndex === 2 && (
-        <div
-        className="flex flex-row "
-        style={{ minHeight: "100vh" }}
-        
-      >
-        {/* Image cover */}
-        <img
-          src={recipeImage}
-          alt="Recipe"
-          className="h-2/3 w-1/2"
-          style={{
-            // WebkitMaskImage:
-            //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
-            // maskImage:
-            //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // For other browsers
-          }}
-        />
-        {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
-        <img
-          src={redheartimg}
-          alt="Recipe"
-          className="bg-white rounded-full p-1"
-          onClick={(e) => {
-            handleFavoriteButtonToast();
-            handleFavorite(recipeUri);
-            console.log("Added to Favorites");
-          }}
-          style={{
-            width: "35px",
-            height: "35px",
-            position: "absolute", // Make it absolutely positioned
-            top: "20px", // Distance from the top
-            right: "10px", // Distance from the right
-            cursor: "pointer", // Make it look like a button
-            zIndex: 1, // Ensure it appears above other content
-          }}
-        />
-      ) : (
-        <img
-          src={heartimg}
-          alt="Recipe"
-          className="bg-white rounded-full p-1"
-          style={{
-            width: "35px",
-            height: "35px",
-            position: "absolute", // Make it absolutely positioned
-            top: "20px", // Distance from the top
-            right: "10px", // Distance from the right
-            cursor: "pointer", // Make it look like a button
-            zIndex: 1, // Ensure it appears above other content
-          }}
-          onClick={(e) => {
-            handleFavoriteButtonToast();
-            handleFavorite(recipeUri);
-            console.log("Added to Favorites");
-          }}
-        />
-      )}
-
-        {/* Fixed back icon toward the top left */}
-        <button
-          className="absolute top-5 left-4 bg-white rounded-full pt-2 pb-1 pr-2 pl-2"
-          onClick={() => window.history.back()}
-        >
-          <i className="pi pi-arrow-left text-xl"></i>
-        </button>
-
-        <div>
-
-        {/* Display recipe details */}
-        <div className="pl-4 mt-5">
-          <h1 className="text-2xl font-bold">{recipeLabel}</h1>
-          <p className="text-gray-600">Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}</p>
-          <p className="text-gray-600">Dish Type: {recipeDishType}</p>
-          <p className="text-gray-600">Calories: {recipeCalories.toFixed(2)} kcal</p>
-        </div>
-
-        {/* Display ingredients */}
-        <div className="pl-4 pb-1 mt-3">
-          <h2 className="text-lg font-bold">Ingredients:</h2>
-          <ul>
-            {recipeIngredients.map((ingredient) => (
-              <li key={ingredient}>- {ingredient}</li>
-            ))}
-          </ul>
-        </div>
-
-            </div>
-        {/* Fixed View Full Recipe button */}
-        <button
-          className="fixed bottom-0 w-full bg-orange-500 text-white p-3 rounded-t-xl"
-          onClick={() => window.open(recipeUrl, "_blank")}
-        >
-          View Full Recipe <i className="pi pi-arrow-up-right"></i>
-        </button>
-      </div>
-      )}
-      {breakpointIndex === 3 && (
         <>
         <Navbar />
         <div
-        className="flex flex-col items-center"
-        style={{ minHeight: "100vh" }}
-        
-      >
-        {/* Image cover */}
-        <img
-          src={recipeImage}
-          alt="Recipe"
-          className="h-80 w-1/2 rounded-3xl"
-          style={{
-            // WebkitMaskImage:
-            //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // Safari compatibility
-            // maskImage:
-            //   "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%)", // For other browsers
-          }}
-        />
-        {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
-        <img
-          src={redheartimg}
-          alt="Recipe"
-          className="bg-white rounded-full p-1"
-          onClick={(e) => {
-            handleFavoriteButtonToast();
-            handleFavorite(recipeUri);
-            console.log("Added to Favorites");
-          }}
-          style={{
-            width: "35px",
-            height: "35px",
-            position: "absolute", // Make it absolutely positioned
-            top: "20px", // Distance from the top
-            right: "10px", // Distance from the right
-            cursor: "pointer", // Make it look like a button
-            zIndex: 1, // Ensure it appears above other content
-          }}
-        />
-      ) : (
-        <img
-          src={heartimg}
-          alt="Recipe"
-          className="bg-white rounded-full p-1"
-          style={{
-            width: "35px",
-            height: "35px",
-            position: "absolute", // Make it absolutely positioned
-            top: "20px", // Distance from the top
-            right: "10px", // Distance from the right
-            cursor: "pointer", // Make it look like a button
-            zIndex: 1, // Ensure it appears above other content
-          }}
-          onClick={(e) => {
-            handleFavoriteButtonToast();
-            handleFavorite(recipeUri);
-            console.log("Added to Favorites");
-          }}
-        />
-      )}
-
-        {/* Fixed back icon toward the top left */}
-        <button
-          className="absolute top-5 left-4 bg-white rounded-full pt-2 pb-1 pr-2 pl-2"
-          onClick={() => window.history.back()}
+          className="flex flex-col items-center"
+          style={{ minHeight: "100vh" }}
         >
-          <i className="pi pi-arrow-left text-xl"></i>
-        </button>
+          {/* Image cover */}
+          <div className="flex items-start justify-between mt-5 mb-5  w-2/3">
+            <button
+              className="  rounded-full pt-2 pb-1 pr-2 pl-2"
+              onClick={() => window.history.back()}
+            >
+              <i className="pi pi-arrow-left text-xl"></i>
+            </button>
+            <h1 className="text-2xl font-bold">{recipeLabel}</h1>
+            {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
+              <img
+                src={redheartimg}
+                alt="Recipe"
+                className="rounded-full p-1"
+                onClick={(e) => {
+                  handleFavoriteButtonToast();
+                  handleFavorite(recipeUri);
+                  console.log("Added to Favorites");
+                }}
+                style={{
+                  width: "35px",
+                  height: "35px",
+                  top: "20px", // Distance from the top
+                  right: "10px", // Distance from the right
+                  cursor: "pointer", // Make it look like a button
+                  zIndex: 1, // Ensure it appears above other content
+                }}
+              />
+            ) : (
+              <img
+                src={heartimg}
+                alt="Recipe"
+                className="rounded-full p-1"
+                style={{
+                  width: "35px",
+                  height: "35px",
+                  top: "20px", // Distance from the top
+                  right: "10px", // Distance from the right
+                  cursor: "pointer", // Make it look like a button
+                  zIndex: 1, // Ensure it appears above other content
+                }}
+                onClick={(e) => {
+                  handleFavoriteButtonToast();
+                  handleFavorite(recipeUri);
+                  console.log("Added to Favorites");
+                }}
+              />
+            )}
+          </div>
+          <img
+            src={recipeImage}
+            alt="Recipe"
+            className="h-96 w-2/3 rounded-3xl"
+            style={{}}
+          />
 
-        <div className="flex flex-col w-1/2 ">
+          {/* Fixed back icon toward the top left */}
 
-        {/* Display recipe details */}
-        <div className="pl-4 mt-5">
-          <h1 className="text-2xl font-bold">{recipeLabel}</h1>
-          <p className="text-gray-600">Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}</p>
-          <p className="text-gray-600">Dish Type: {recipeDishType}</p>
-          <p className="text-gray-600">Calories: {recipeCalories.toFixed(2)} kcal</p>
-        </div>
-
-        {/* Display ingredients */}
-        <div className="pl-4 pb-1 mt-3">
-          <h2 className="text-lg font-bold">Ingredients:</h2>
-          <ul>
-            {recipeIngredients.map((ingredient) => (
-              <li key={ingredient}>- {ingredient}</li>
-            ))}
-          </ul>
-        </div>
-
+          <div className="flex flex-row w-2/3 justify-around h-auto">
+            {/* Display ingredients */}
+            <div className="pl-4 pb-1 mt-3">
+              <h2 className="text-lg font-bold">Ingredients:</h2>
+              <ul>
+                {recipeIngredients.map((ingredient) => (
+                  <li key={ingredient}>- {ingredient}</li>
+                ))}
+              </ul>
             </div>
-        {/* Fixed View Full Recipe button */}
-        <button
-          className="fixed bottom-0 w-full bg-orange-500 text-white p-3 rounded-t-xl"
-          onClick={() => window.open(recipeUrl, "_blank")}
-        >
-          View Full Recipe <i className="pi pi-arrow-up-right"></i>
-        </button>
-      </div>
+            {/* Display recipe details */}
+            <div className="pl-4 mt-5">
+            <h2 className="text-lg font-bold">Info:</h2>
+              <p className="">
+                Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
+              </p>
+              <p className="">Dish Type: {recipeDishType}</p>
+              <p className="">
+                Calories: {recipeCalories.toFixed(2)} kcal
+              </p>
+            </div>
+
+            {/* Fixed View Full Recipe button */}
+            <div className="flex flex-col h-auto justify-around  m-2">
+              <button
+                className="bg-orange-500 text-white rounded-xl p-3 m-1"
+                onClick={() => window.open(recipeUrl, "_blank")}
+              >
+                View Full Recipe <i className="pi pi-arrow-up-right"></i>
+              </button>
+              <button
+                className="bg-orange-500 text-white rounded-xl p-3 m-1"
+                onClick={(e) => {
+                  handleFavoriteButtonToast();
+                  handleFavorite(recipeUri);
+                  console.log("Added to Favorites");
+                }}
+              >
+                Add to Favorites <i className="pi pi-heart"></i>
+              </button>
+            </div>
+          </div>
+        </div>
       </>
+      )}
+      {breakpointIndex === 3 && (
+        <>
+          <Navbar />
+          <div
+            className="flex flex-col items-center"
+            style={{ minHeight: "100vh" }}
+          >
+            {/* Image cover */}
+            <div className="flex items-start justify-between mt-5 mb-5  w-2/3">
+              <button
+                className="  rounded-full pt-2 pb-1 pr-2 pl-2"
+                onClick={() => window.history.back()}
+              >
+                <i className="pi pi-arrow-left text-xl"></i>
+              </button>
+              <h1 className="text-2xl font-bold">{recipeLabel}</h1>
+              {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
+                <img
+                  src={redheartimg}
+                  alt="Recipe"
+                  className="rounded-full p-1"
+                  onClick={(e) => {
+                    handleFavoriteButtonToast();
+                    handleFavorite(recipeUri);
+                    console.log("Added to Favorites");
+                  }}
+                  style={{
+                    width: "35px",
+                    height: "35px",
+                    top: "20px", // Distance from the top
+                    right: "10px", // Distance from the right
+                    cursor: "pointer", // Make it look like a button
+                    zIndex: 1, // Ensure it appears above other content
+                  }}
+                />
+              ) : (
+                <img
+                  src={heartimg}
+                  alt="Recipe"
+                  className="rounded-full p-1"
+                  style={{
+                    width: "35px",
+                    height: "35px",
+                    top: "20px", // Distance from the top
+                    right: "10px", // Distance from the right
+                    cursor: "pointer", // Make it look like a button
+                    zIndex: 1, // Ensure it appears above other content
+                  }}
+                  onClick={(e) => {
+                    handleFavoriteButtonToast();
+                    handleFavorite(recipeUri);
+                    console.log("Added to Favorites");
+                  }}
+                />
+              )}
+            </div>
+            <img
+              src={recipeImage}
+              alt="Recipe"
+              className="h-96 w-2/3 rounded-3xl"
+              style={{}}
+            />
+
+            {/* Fixed back icon toward the top left */}
+
+            <div className="flex flex-row w-2/3 justify-around h-auto">
+              {/* Display ingredients */}
+              <div className="pl-4 pb-1 mt-3">
+                <h2 className="text-lg font-bold">Ingredients:</h2>
+                <ul>
+                  {recipeIngredients.map((ingredient) => (
+                    <li key={ingredient}>- {ingredient}</li>
+                  ))}
+                </ul>
+              </div>
+              {/* Display recipe details */}
+              <div className="pl-4 mt-5">
+              <h2 className="text-lg font-bold">Info:</h2>
+                <p className="">
+                  Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
+                </p>
+                <p className="">Dish Type: {recipeDishType}</p>
+                <p className="">
+                  Calories: {recipeCalories.toFixed(2)} kcal
+                </p>
+              </div>
+
+              {/* Fixed View Full Recipe button */}
+              <div className="flex flex-col h-auto justify-around  m-2">
+                <button
+                  className="bg-orange-500 text-white rounded-xl p-3 m-1"
+                  onClick={() => window.open(recipeUrl, "_blank")}
+                >
+                  View Full Recipe <i className="pi pi-arrow-up-right"></i>
+                </button>
+                <button
+                  className="bg-orange-500 text-white rounded-xl p-3 m-1"
+                  onClick={(e) => {
+                    handleFavoriteButtonToast();
+                    handleFavorite(recipeUri);
+                    console.log("Added to Favorites");
+                  }}
+                >
+                  Add to Favorites <i className="pi pi-heart"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
       )}
     </>
   );

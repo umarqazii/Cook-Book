@@ -97,11 +97,11 @@ const Home = () => {
       )}
       {breakpointIndex === 1 && (
         <div className="flex flex-wrap min-h-screen">
-          <div className="w-full sm:w-1/2 bg-gray-700 flex items-center justify-center">
+          <div className="w-full sm:w-1/2  flex items-center justify-center">
             <img src={img1} alt="hospital" className="ml-3 w-1/1 sm: object-cover circle-plate-img" />
           </div>
 
-          <div className="w-full sm:w-1/2 flex flex-col justify-center items-center bg-gray-700">
+          <div className="w-full sm:w-1/2 flex flex-col justify-center items-center ">
             <h1
               className="text-5xl text-white mb-3 text-center reveal-type"
               style={{ fontFamily: '"Matemasie", cursive' }}
