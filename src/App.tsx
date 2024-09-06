@@ -7,6 +7,7 @@ import Favorites from "./pages/Favorites";
 import DisplayRecipe from "./pages/DisplayRecipe";
 import toast, { Toaster } from "react-hot-toast";
 import AddRecipe from "./pages/AddRecipe";
+import FirebaseImageUpload from "./FirebaseImageUploading/FirebaseImageUpload";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
@@ -26,6 +27,7 @@ function App() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/displayrecipe/:uri/" element={<DisplayRecipe />}/>
         <Route path="/addrecipe" element={<AddRecipe/>}/>
+        <Route path="/upload" element={<FirebaseImageUpload />} />
       </Routes>
     </BrowserRouter>
   );
