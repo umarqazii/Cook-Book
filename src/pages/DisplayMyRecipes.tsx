@@ -1,56 +1,411 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
-import Navbar from '../components/navbar';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Navbar from "../components/navbar";
+import { useResponsive } from "../styling/useResponsive";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../components/cards";
+import heartimg from "../assets/redheart.png";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { imageDB } from "../lib/Config";
 
 interface Recipe {
-    dateOfPosting: string;
-    imageName: string;
-    recipeName: string;
-    cuisineType: string;
-    mealType: string;
-    dishType: string;
-    ingredients: string[];
-    instructions: string[];
+  dateOfPosting: string;
+  imageName: string;
+  recipeName: string;
+  cuisineType: string;
+  mealType: string;
+  dishType: string;
+  ingredients: string[];
+  instructions: string[];
 }
 
 const DisplayMyRecipes = () => {
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const breakpoints = [480, 768, 1279];
+  const breakpointIndex = useResponsive(breakpoints);
+  const [loading, setLoading] = useState(true);
+  const [imageUrls, setImageUrls] = useState<{ [key: string]: string }>({}); // Image URLs state
+  let logo = "/logo192.png";
 
-    // state that will store an array of recipes
-    const [recipes, setRecipes] = React.useState<Recipe[]>([]);
+  const fetchImageUrl = async (fileEncodedName: string) => {
+    try {
+      const imgRef = ref(imageDB, `files/${fileEncodedName}`);
+      const url = await getDownloadURL(imgRef);
+      setImageUrls((prevUrls) => ({
+        ...prevUrls,
+        [fileEncodedName]: url,
+      }));
+    } catch (error) {
+      console.error("Error fetching image URL:", error);
+    }
+  };
 
-    // get recipes from the database
-    useEffect(() => {
-        const getRecipes = async () => {
-            try {
-                //const response = await axios.get('http://localhost:8080/recipes/get-all-recipes');
-                const response = await axios.get('https://cook-book-api-rho.vercel.app/recipes/get-all-recipes');
-                console.log(response.data.recipes);
-                // const response = await axios.get('http://localhost:8080/recipes/get-all-recipes');
-                setRecipes(response.data.recipes);
-                console.log("recipes array",recipes);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        getRecipes();
-    }, []);
+  useEffect(() => {
+    const getRecipes = async () => {
+      try {
+        const response = await axios.get(
+          "https://cook-book-api-rho.vercel.app/recipes/get-all-recipes"
+        );
+        const fetchedRecipes = response.data.recipes;
+        setRecipes(fetchedRecipes);
+
+        // Fetch image URLs for each recipe
+        fetchedRecipes.forEach((recipe: Recipe) => {
+          fetchImageUrl(recipe.imageName);
+        });
+
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getRecipes();
+  }, []);
 
   return (
     <>
       <Navbar />
-      {recipes.map((recipe) => (
-        <div key={recipe.imageName} >
-          <h1>{recipe.dateOfPosting}</h1>
-          <h2>{recipe.imageName}</h2>
-          <h2>{recipe.recipeName}</h2>
-          <p>{recipe.cuisineType}</p>
-          <p>{recipe.mealType}</p>
-          <p>{recipe.dishType}</p>
-          <p>{recipe.ingredients}</p>
-          <p>{recipe.instructions}</p>
-          <br></br>
+      {breakpointIndex === 0 && (
+        <div className=" min-h-screen p-4">
+          <div
+            className="flex justify-center text-white text-5xl mb-10"
+            style={{ fontFamily: '"Matemasie", cursive' }}
+          >
+            <h1>My Recipes</h1>
+          </div>
+          {recipes.length === 0 ? (
+            <div className="flex justify-center text-white text-2xl">
+              <h1>No Recipes Found</h1>
+            </div>
+          ) : loading ? (
+            <div className="flex justify-center">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-5 justify-center w-full">
+              {recipes.map((Recipe) => (
+                <Card
+                  key={Recipe.imageName}
+                  className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                  style={{
+                    width: "400px",
+                    height: "200px",
+                    background: "#ebebeb",
+                    padding: "0px",
+                    margin: "0px",
+                    border: "none",
+                    borderRadius: "15px",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                    position: "relative",
+                  }}
+                >
+                  <img
+                    src={imageUrls[Recipe.imageName] || logo} // Fetch image dynamically
+                    alt="Recipe"
+                    style={{
+                      width: "70%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderTopLeftRadius: "15px",
+                      borderBottomLeftRadius: "15px",
+                    }}
+                  />
+
+                  <img
+                    src={heartimg}
+                    alt="not found"
+                    style={{
+                      width: "25px",
+                      height: "25px",
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      cursor: "pointer",
+                      zIndex: 1,
+                    }}
+                  />
+
+                  <div className="flex items-center justify-around flex-col  w-full  h-full">
+                    <div>
+                      <CardHeader className="flex items-center p-1 ">
+                        <CardTitle className="flex items-center justify-center text-[#333333] text-lg overflow-clip h-40 w-full  font-sans">
+                          <b>{Recipe.recipeName}</b>
+                        </CardTitle>
+                      </CardHeader>
+                    </div>
+                    <div>
+                      <CardDescription className="flex items-center p-1 text-gray-600 text-sm ">
+                        {Recipe.dateOfPosting.slice(0, 10)}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
-      ))}
+      )}
+      {breakpointIndex === 1 && (
+        <div className=" min-h-screen p-4">
+          <div
+            className="flex justify-center text-white text-5xl mb-10"
+            style={{ fontFamily: '"Matemasie", cursive' }}
+          >
+            <h1>My Recipes</h1>
+          </div>
+          {recipes.length === 0 ? (
+            <div className="flex justify-center text-white text-2xl">
+              <h1>No Recipes Found</h1>
+            </div>
+          ) : loading ? (
+            <div className="flex justify-center">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-5 justify-center w-full">
+              {recipes.map((Recipe) => (
+                <Card
+                  key={Recipe.imageName}
+                  className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                  style={{
+                    width: "400px",
+                    height: "200px",
+                    background: "#ebebeb",
+                    padding: "0px",
+                    margin: "0px",
+                    border: "none",
+                    borderRadius: "15px",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                    position: "relative",
+                  }}
+                >
+                  <img
+                    src={imageUrls[Recipe.imageName] || logo} // Fetch image dynamically
+                    alt="Recipe"
+                    style={{
+                      width: "70%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderTopLeftRadius: "15px",
+                      borderBottomLeftRadius: "15px",
+                    }}
+                  />
+
+                  <img
+                    src={heartimg}
+                    alt="not found"
+                    style={{
+                      width: "25px",
+                      height: "25px",
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      cursor: "pointer",
+                      zIndex: 1,
+                    }}
+                  />
+
+                  <div className="flex items-center justify-around flex-col  w-full  h-full">
+                    <div>
+                      <CardHeader className="flex items-center p-1 ">
+                        <CardTitle className="flex items-center justify-center text-[#333333] text-lg overflow-clip h-40 w-full  font-sans">
+                          <b>{Recipe.recipeName}</b>
+                        </CardTitle>
+                      </CardHeader>
+                    </div>
+                    <div>
+                      <CardDescription className="flex items-center p-1 text-gray-600 text-sm ">
+                        {Recipe.dateOfPosting.slice(0, 10)}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      {breakpointIndex === 2 && (
+        <div className=" min-h-screen p-4">
+          <div
+            className="flex justify-center text-white text-5xl mb-10"
+            style={{ fontFamily: '"Matemasie", cursive' }}
+          >
+            <h1>My Recipes</h1>
+          </div>
+          {recipes.length === 0 ? (
+            <div className="flex justify-center text-white text-2xl">
+              <h1>No Recipes Found</h1>
+            </div>
+          ) : loading ? (
+            <div className="flex justify-center">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-5 justify-center w-full">
+              {recipes.map((Recipe) => (
+                <Card
+                  key={Recipe.imageName}
+                  className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                  style={{
+                    width: "400px",
+                    height: "200px",
+                    background: "#ebebeb",
+                    padding: "0px",
+                    margin: "0px",
+                    border: "none",
+                    borderRadius: "15px",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                    position: "relative",
+                  }}
+                >
+                  <img
+                    src={imageUrls[Recipe.imageName] || logo} // Fetch image dynamically
+                    alt="Recipe"
+                    style={{
+                      width: "70%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderTopLeftRadius: "15px",
+                      borderBottomLeftRadius: "15px",
+                    }}
+                  />
+
+                  <img
+                    src={heartimg}
+                    alt="not found"
+                    style={{
+                      width: "25px",
+                      height: "25px",
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      cursor: "pointer",
+                      zIndex: 1,
+                    }}
+                  />
+
+                  <div className="flex items-center justify-around flex-col  w-full  h-full">
+                    <div>
+                      <CardHeader className="flex items-center p-1 ">
+                        <CardTitle className="flex items-center justify-center text-[#333333] text-lg overflow-clip h-40 w-full  font-sans">
+                          <b>{Recipe.recipeName}</b>
+                        </CardTitle>
+                      </CardHeader>
+                    </div>
+                    <div>
+                      <CardDescription className="flex items-center p-1 text-gray-600 text-sm ">
+                        {Recipe.dateOfPosting.slice(0, 10)}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+      {breakpointIndex === 3 && (
+        <div className=" min-h-screen p-4">
+          <div
+            className="flex justify-center text-white text-5xl mb-10"
+            style={{ fontFamily: '"Matemasie", cursive' }}
+          >
+            <h1>My Recipes</h1>
+          </div>
+          {recipes.length === 0 ? (
+            <div className="flex justify-center text-white text-2xl">
+              <h1>No Recipes Found</h1>
+            </div>
+          ) : loading ? (
+            <div className="flex justify-center">
+              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-300"></div>
+            </div>
+          ) : (
+            <div className="flex flex-wrap gap-5 justify-center w-full">
+              {recipes.map((Recipe) => (
+                <Card
+                  key={Recipe.imageName}
+                  className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
+                  style={{
+                    width: "400px",
+                    height: "200px",
+                    background: "#ebebeb",
+                    padding: "0px",
+                    margin: "0px",
+                    border: "none",
+                    borderRadius: "15px",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    boxShadow: "0px 8px 20px rgba(0, 0, 0, 0.2)",
+                    position: "relative",
+                  }}
+                >
+                  <img
+                    src={imageUrls[Recipe.imageName] || logo} // Fetch image dynamically
+                    alt="Recipe"
+                    style={{
+                      width: "70%",
+                      height: "100%",
+                      objectFit: "cover",
+                      borderTopLeftRadius: "15px",
+                      borderBottomLeftRadius: "15px",
+                    }}
+                  />
+
+                  <img
+                    src={heartimg}
+                    alt="not found"
+                    style={{
+                      width: "25px",
+                      height: "25px",
+                      position: "absolute",
+                      top: "10px",
+                      right: "10px",
+                      cursor: "pointer",
+                      zIndex: 1,
+                    }}
+                  />
+
+                  <div className="flex items-center justify-around flex-col  w-full  h-full">
+                    <div>
+                      <CardHeader className="flex items-center p-1 ">
+                        <CardTitle className="flex items-center justify-center text-[#333333] text-lg overflow-clip h-40 w-full  font-sans">
+                          <b>{Recipe.recipeName}</b>
+                        </CardTitle>
+                      </CardHeader>
+                    </div>
+                    <div>
+                      <CardDescription className="flex items-center p-1 text-gray-600 text-sm ">
+                        {Recipe.dateOfPosting.slice(0, 10)}
+                      </CardDescription>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };

@@ -164,8 +164,8 @@ const AddRecipe = () => {
 
       // If the image upload succeeds, send the recipe data to the backend
       const response = await axios.post(
-        "http://localhost:8080/recipes/create-recipe",
-        //"https://cook-book-api-rho.vercel.app/recipes/create-recipe",
+        //"http://localhost:8080/recipes/create-recipe",
+        "https://cook-book-api-rho.vercel.app/recipes/create-recipe",
         recipeData
       );
       if (response.status === 201) {
