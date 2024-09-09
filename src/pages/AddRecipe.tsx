@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import Navbar from "../components/navbar";
+import Nav from "../components/NavbarRes";
 import "primeicons/primeicons.css";
 import { imageDB } from "../lib/Config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -181,7 +182,7 @@ const AddRecipe = () => {
 
   return (
     <>
-      <Navbar />
+      <Nav />
       {breakpointIndex === 0 && (
         <>
           <div className="min-h-screen p-4">

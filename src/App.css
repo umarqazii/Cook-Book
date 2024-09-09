@@ -39,9 +39,9 @@
 
 
 body {
-  background: linear-gradient(270deg, #ffb6b6, #ffb184, #ffda7c); /* Define gradient colors */
-  background-size: 800% 800%;  /* Large size for smooth animation */
-  animation: gradientAnimation 7s ease infinite;  /* Animation properties */
+  background: linear-gradient(0deg, #000, #a2542d, #000000); /* Define gradient colors */
+  background-size: 50% 50%;  /* Large size for smooth animation */
+  animation: gradientAnimation 1s ease infinite;  /* Animation properties */
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -50,12 +50,19 @@ body {
 
 @keyframes gradientAnimation {
   0% {
+    background: linear-gradient(0deg, #000, #a2542d, #000000); /* Define gradient colors */
+    background-size: 70% 100%;  /* Large size for smooth animation */
     background-position: 0% 50%;  /* Start position */
   }
   50% {
+    background: linear-gradient(0deg, #000, #b05528, #000000); /* Define gradient colors */
+    background-size: 70% 100%;  /* Large size for smooth animation */
     background-position: 100% 50%;  /* Mid animation position */
   }
   100% {
+    background: linear-gradient(0deg, #000, #a2542d, #000000); /* Define gradient colors */
+    background-size: 70% 100%;  /* Large size for smooth animation */
     background-position: 0% 50%;  /* End position (loops back) */
   }
 }
+

@@ -12,7 +12,7 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="bg-gradient-to-b from-pink-500 to ">
+      <nav className="bg-gradient-to-b from-black to ">
         <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <NavLink
             to="/"

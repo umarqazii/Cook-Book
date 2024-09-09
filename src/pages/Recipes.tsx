@@ -14,6 +14,7 @@ import axios from "axios";
 import { imgArray } from "../data/ArrayExports";
 import { responsive } from "../data/ArrayExports";
 import Navbar from "../components/navbar";
+import Nav from "../components/NavbarRes";
 import {
   ingredientOptions,
   cuisineOptions,
@@ -278,7 +279,7 @@ const Recipes = () => {
   /////////////////////////// return statement //////////////////////////
   return (
     <>
-    <Navbar />
+    <Nav />
       {/* ---------------------------Mobile Screen Diplay-------------------------- */}
       {/* ---------------------------Mobile Screen Diplay-------------------------- */}
       {/* ---------------------------Mobile Screen Diplay-------------------------- */}
@@ -327,14 +328,14 @@ const Recipes = () => {
                 <>
                   {/* -----------------------------Selecting Cuisine (Mobile View)-------------------------------- */}
                   <details className="mt-5" open={true}>
-                    <summary className="text-black text-lg">
+                    <summary className="text-white text-lg">
                       <b>Select Cuisine</b>{" "}
-                      <span className="text-gray-600 text-xs">
+                      <span className="text-gray-400 text-xs">
                         (click to view/hide)
                       </span>
                     </summary>
                     <div className=" mb-5">
-                      <span className="text-gray-600 text-sm">
+                      <span className="text-gray-400 text-sm">
                         {"  "}
                         {selectedCuisine
                           ? "Chosen Cuisine: (" + selectedCuisine.label + ")"
@@ -454,7 +455,7 @@ const Recipes = () => {
                                 ></div>
                               )}
                           </div>
-                          <div className="text-black text-center">
+                          <div className="text-white text-center">
                             {cuisine.label}
                           </div>
                         </div>
@@ -465,14 +466,14 @@ const Recipes = () => {
 
                   {/* -----------------------------Selecting MealType (Mobile View)-------------------------------- */}
                   <details className="mt-5" open={true}>
-                    <summary className="text-black text-lg">
+                    <summary className="text-white text-lg">
                       <b>Select Meal Type</b>{" "}
-                      <span className="text-gray-600 text-xs">
+                      <span className="text-gray-400 text-xs">
                         (click to view/hide)
                       </span>
                     </summary>
                     <div className=" mb-5">
-                      <span className="text-gray-600 text-sm">
+                      <span className="text-gray-400 text-sm">
                         {"  "}
                         {selectedMealType
                           ? "Chosen Option: (" + selectedMealType.label + ")"
@@ -536,7 +537,7 @@ const Recipes = () => {
                                 ></div>
                               )}
                           </div>
-                          <div className="text-black text-center">
+                          <div className="text-white text-center">
                             {mealType.label}
                           </div>
                         </div>
@@ -547,14 +548,14 @@ const Recipes = () => {
 
                   {/* -----------------------------Selecting DishType (Mobile View)-------------------------------- */}
                   <details className="mt-5" open={false}>
-                    <summary className="text-black text-lg">
+                    <summary className="text-white text-lg">
                       <b>Select Dish Type</b>{" "}
-                      <span className="text-gray-600 text-xs">
+                      <span className="text-gray-400 text-xs">
                         (click to view/hide)
                       </span>
                     </summary>
                     <div className=" mb-5">
-                      <span className="text-gray-600 text-sm">
+                      <span className="text-gray-400 text-sm">
                         {"  "}
                         {selectedDishType
                           ? "Chosen Option: (" + selectedDishType.label + ")"
@@ -655,7 +656,7 @@ const Recipes = () => {
                   {/* -----------------------------End of Selecting DishType-------------------------------- */}
 
                   <h2
-                    className="text-black text-lg text-center mb-3 mt-5"
+                    className="text-white text-lg text-center mb-3 mt-5"
                     style={{ fontFamily: ' cursive', fontWeight: "bold" }}
                   >
                     Random Recipes
@@ -2168,14 +2169,14 @@ const Recipes = () => {
               <>
                 {/* -----------------------------Selecting Cuisine (Mobile View)-------------------------------- */}
                 <details className="mt-5" open={true}>
-                  <summary className="text-black text-lg">
+                  <summary className="text-white text-lg">
                     <b>Select Cuisine</b>{" "}
-                    <span className="text-gray-600 text-xs">
+                    <span className="text-gray-400 text-xs">
                       (click to view/hide)
                     </span>
                   </summary>
                   <div className=" mb-5">
-                    <span className="text-gray-600 text-sm">
+                    <span className="text-gray-400 text-sm">
                       {"  "}
                       {selectedCuisine
                         ? "Chosen Cuisine: (" + selectedCuisine.label + ")"
@@ -2295,7 +2296,7 @@ const Recipes = () => {
                               ></div>
                             )}
                         </div>
-                        <div className="text-black text-center">
+                        <div className="text-white text-center">
                           {cuisine.label}
                         </div>
                       </div>
@@ -2306,14 +2307,14 @@ const Recipes = () => {
 
                 {/* -----------------------------Selecting MealType (Mobile View)-------------------------------- */}
                 <details className="mt-5" open={false}>
-                  <summary className="text-black text-lg">
+                  <summary className="text-white text-lg">
                     <b>Select Meal Type</b>{" "}
-                    <span className="text-gray-600 text-xs">
+                    <span className="text-gray-400 text-xs">
                       (click to view/hide)
                     </span>
                   </summary>
                   <div className=" mb-5">
-                    <span className="text-gray-600 text-sm">
+                    <span className="text-gray-400 text-sm">
                       {"  "}
                       {selectedMealType
                         ? "Chosen Option: (" + selectedMealType.label + ")"
@@ -2383,7 +2384,7 @@ const Recipes = () => {
                               ></div>
                             )}
                         </div>
-                        <div className="text-black text-center">
+                        <div className="text-white text-center">
                           {mealType.label}
                         </div>
                       </div>
@@ -2394,14 +2395,14 @@ const Recipes = () => {
 
                 {/* -----------------------------Selecting DishType (Mobile View)-------------------------------- */}
                 <details className="mt-5" open={false}>
-                  <summary className="text-black text-lg">
+                  <summary className="text-white text-lg">
                     <b>Select Dish Type</b>{" "}
-                    <span className="text-gray-600 text-xs">
+                    <span className="text-gray-400 text-xs">
                       (click to view/hide)
                     </span>
                   </summary>
                   <div className=" mb-5">
-                    <span className="text-gray-600 text-sm">
+                    <span className="text-gray-400 text-sm">
                       {"  "}
                       {selectedDishType
                         ? "Chosen Option: (" + selectedDishType.label + ")"
@@ -2492,7 +2493,7 @@ const Recipes = () => {
                               ></div>
                             )}
                         </div>
-                        <div className="text-black text-center">
+                        <div className="text-white text-center">
                           {dishType.label}
                         </div>
                       </div>
@@ -2502,7 +2503,7 @@ const Recipes = () => {
                 {/* -----------------------------End of Selecting DishType-------------------------------- */}
 
                 <h2
-                  className="text-black text-2xl text-center mb-3 mt-5"
+                  className="text-white text-2xl text-center mb-3 mt-5"
                   style={{ fontFamily: ' cursive', fontWeight: "bold" }}
                 >
                   Random Recipes

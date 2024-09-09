@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/navbar";
+import Nav from "../components/NavbarRes";
 import { useResponsive } from "../styling/useResponsive";
 import {
   Card,
@@ -69,7 +70,7 @@ const DisplayMyRecipes = () => {
 
   return (
     <>
-      <Navbar />
+      <Nav />
       {breakpointIndex === 0 && (
         <div className=" min-h-screen p-4">
           <div

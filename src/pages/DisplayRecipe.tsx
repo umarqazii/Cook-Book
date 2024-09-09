@@ -7,6 +7,7 @@ import toast, { Toaster } from "react-hot-toast";
 import heartimg from "../assets/heart.png";
 import redheartimg from "../assets/redheart.png";
 import Navbar from "../components/navbar";
+import Nav from "../components/NavbarRes";
 
 interface Recipe {
   label: string;
@@ -333,7 +334,7 @@ const DisplayRecipe: React.FC = () => {
       )}
       {breakpointIndex === 2 && (
         <>
-        <Navbar />
+        <Nav />
         <div
           className="flex flex-col items-center"
           style={{ minHeight: "100vh" }}

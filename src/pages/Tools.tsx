@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { toolsOptions } from "../data/ArrayExports";
 import Navbar from "../components/navbar";
+import Nav from "../components/NavbarRes";
 import {
   Card,
   CardContent,
@@ -124,7 +125,7 @@ const Tools = () => {
 
   return (
     <>
-    <Navbar />
+    <Nav />
     <div className=" min-h-screen">
       <div className="max-w-screen-xl mx-auto p-4 flex flex-col">
         <h1

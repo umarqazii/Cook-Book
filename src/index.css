@@ -67,3 +67,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+ul a.active{
+  background-color: white;
+  color: black;
+}

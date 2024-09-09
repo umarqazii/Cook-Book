@@ -5,6 +5,7 @@ import SplitType from "split-type";
 import Typed from "typed.js";
 import { useResponsive } from "../styling/useResponsive";
 import Navbar from "../components/navbar";
+import Nav from "../components/NavbarRes";
 import img1 from "../assets/foodplate.png";
 import img2 from "../assets/handholdingplate1.png";
 import bgimg from "../assets/low-poly-grid-haikei.png";
@@ -72,7 +73,7 @@ const Home = () => {
 
   return (
     <>
-    <Navbar />
+    <Nav />
       {breakpointIndex === 0 && (
         <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 72px)" }}>
           <div ref={container} className="w-full  flex flex-col items-center" >

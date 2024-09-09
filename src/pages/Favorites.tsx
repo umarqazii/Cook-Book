@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useResponsive } from "../styling/useResponsive";
 import Navbar from "../components/navbar";
+import Nav from "../components/NavbarRes";
 import {
   Card,
   CardContent,
@@ -137,7 +138,7 @@ const Favorites = () => {
 
   return (
     <>
-      <Navbar />
+      <Nav />
       {breakpointIndex === 0 && (
         <div className=" min-h-screen p-4">
           <div
