@@ -365,7 +365,7 @@ const DisplayMyRecipes = () => {
                     src={imageUrls[Recipe.imageName] || logo} // Fetch image dynamically
                     alt="Recipe"
                     style={{
-                      width: "70%",
+                      width: "300px",
                       height: "100%",
                       objectFit: "cover",
                       borderTopLeftRadius: "15px",

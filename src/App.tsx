@@ -6,6 +6,7 @@ import Favorites from "./pages/Favorites";
 import DisplayRecipe from "./pages/DisplayRecipe";
 import DisplayMyRecipes from "./pages/DisplayMyRecipes";
 import AddRecipe from "./pages/AddRecipe";
+import Login from "./pages/Login";
 import Test from "./pages/BackgroundTest";
 import {Toaster} from "react-hot-toast";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -26,6 +27,7 @@ function App() {
         <Route path="/displayrecipe/:uri/" element={<DisplayRecipe />}/>
         <Route path="/addrecipe" element={<AddRecipe/>}/>
         <Route path="/displaymyrecipes" element={<DisplayMyRecipes/>}/>
+        <Route path="/login" element={<Login/>}/>
         <Route path="/test" element={<Test/>}/>
       </Routes>
     </BrowserRouter>

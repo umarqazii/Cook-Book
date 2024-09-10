@@ -75,7 +75,7 @@ const Home = () => {
     <>
     <Nav />
       {breakpointIndex === 0 && (
-        <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 72px)" }}>
+        <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 86px)" }}>
           <div ref={container} className="w-full  flex flex-col items-center" >
             <img src={img2} alt="foodimg" className="object-cover pr-5 pl-5 pb-10 plate-img w-5/6"style={{
         WebkitMaskImage: "linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1)10%)",  // Safari compatibility
@@ -97,7 +97,7 @@ const Home = () => {
         </div>
       )}
       {breakpointIndex === 1 && (
-        <div className="flex flex-wrap min-h-screen">
+        <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 86px)" }}>
           <div className="w-full sm:w-1/2  flex items-center justify-center">
             <img src={img1} alt="hospital" className="ml-3 w-1/1 sm: object-cover circle-plate-img" />
           </div>
@@ -120,7 +120,7 @@ const Home = () => {
       )}
 
       {breakpointIndex === 2 && (
-        <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 72px)" }}>
+        <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 86px)" }}>
           <div className="w-full sm:w-1/2 flex items-center justify-center">
             <img src={img1} alt="hospital" className="ml-3 w-1/1 sm: object-cover circle-plate-img" />
           </div>
