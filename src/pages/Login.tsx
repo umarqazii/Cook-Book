@@ -9,13 +9,14 @@ const Login = () => {
   const [toggle, setToggle] = useState(false);
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] =useState("");
+  const [fullName, setFullName] = useState("");
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("")
   const [reenterPassword, setReenterPassword] = useState("")
 
   const handleLogin = (event: React.FormEvent) => {
     event?.preventDefault();
-    axios.post('http://localhost:8080/login',{
+    axios.post('http://localhost:8080/auth/login',{
       loginEmail,
       loginPassword
     })
@@ -29,7 +30,8 @@ const Login = () => {
 
   const handleSignup = (event: React.FormEvent) =>{
     event.preventDefault();
-    axios.post('http://localhost:8080/signup', {
+    axios.post('http://localhost:8080/auth/signup', {
+      fullName,
       signupEmail,
       signupPassword
     })
@@ -127,13 +129,33 @@ const Login = () => {
                 toggle ? "block" : "hidden"
               }`}
             >
-              <h1 className="text-white text-3xl font-bold mb-8">Sign up</h1>
-              <form className="space-y-6 w-1/2">
+              <h1 className="text-white text-3xl font-bold mb-3">Sign up</h1>
+              <form className="space-y-4 w-1/2">
+              <div>
+                  <label className="block text-sm font-medium leading-6 text-white">
+                    Full Name
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      placeholder="eg. John Doe"
+                      required
+                      value={fullName}
+                      onChange={(e) => {
+                        setFullName(e.target.value);
+                      }}
+                      className="block w-full rounded-md border-0 p-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium leading-6 text-white">
                     Email address
                   </label>
-                  <div className="mt-2">
+                  <div className="mt-1">
                     <input
                       id="email"
                       name="email"
@@ -155,7 +177,7 @@ const Login = () => {
                       Password
                     </label>
                   </div>
-                  <div className="mt-2">
+                  <div className="mt-1">
                     <input
                       id="password"
                       name="password"
@@ -188,7 +210,7 @@ const Login = () => {
                       ) : null}
                     </label>
                   </div>
-                  <div className="mt-2">
+                  <div className="mt-1">
                     <input
                       id="reenterpassword"
                       name="reenterpassword"
@@ -224,7 +246,7 @@ const Login = () => {
                 </div>
               </form>
 
-              <p className="mt-10 text-center text-sm text-gray-300">
+              <p className="mt-2 text-center text-sm text-gray-300">
                 Already have an account?
                 <span
                   className="font-semibold leading-6 text-orange-300 hover:text-orange-500 cursor-pointer"
