@@ -206,22 +206,22 @@ const DisplayRecipe: React.FC = () => {
 
           {/* Display recipe details */}
           <div className="pl-4 mt-5">
-            <h1 className="text-2xl font-bold">{recipeLabel}</h1>
-            <p className="text-gray-600">
+            <h1 className="text-white text-2xl font-bold">{recipeLabel}</h1>
+            <p className="text-gray-400">
               Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
             </p>
-            <p className="text-gray-600">Dish Type: {recipeDishType}</p>
-            <p className="text-gray-600">
+            <p className="text-gray-400">Dish Type: {recipeDishType}</p>
+            <p className="text-gray-400">
               Calories: {recipeCalories.toFixed(2)} kcal
             </p>
           </div>
 
           {/* Display ingredients */}
           <div className="pl-4 pb-1 mt-3">
-            <h2 className="text-lg font-bold">Ingredients:</h2>
+            <h2 className="text-white text-lg font-bold">Ingredients:</h2>
             <ul>
               {recipeIngredients.map((ingredient) => (
-                <li key={ingredient}>- {ingredient}</li>
+                <li className="text-white" key={ingredient}>- {ingredient}</li>
               ))}
             </ul>
           </div>
@@ -303,22 +303,22 @@ const DisplayRecipe: React.FC = () => {
 
         {/* Display recipe details */}
         <div className="pl-4 mt-5">
-          <h1 className="text-2xl font-bold">{recipeLabel}</h1>
-          <p className="text-gray-600">
+          <h1 className="text-white text-2xl font-bold">{recipeLabel}</h1>
+          <p className="text-gray-400">
             Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
           </p>
-          <p className="text-gray-600">Dish Type: {recipeDishType}</p>
-          <p className="text-gray-600">
+          <p className="text-gray-400">Dish Type: {recipeDishType}</p>
+          <p className="text-gray-400">
             Calories: {recipeCalories.toFixed(2)} kcal
           </p>
         </div>
 
         {/* Display ingredients */}
         <div className="pl-4 pb-1 mt-3">
-          <h2 className="text-lg font-bold">Ingredients:</h2>
+          <h2 className="text-white text-lg font-bold">Ingredients:</h2>
           <ul>
             {recipeIngredients.map((ingredient) => (
-              <li key={ingredient}>- {ingredient}</li>
+              <li className="text-white" key={ingredient}>- {ingredient}</li>
             ))}
           </ul>
         </div>
@@ -345,14 +345,14 @@ const DisplayRecipe: React.FC = () => {
               className="  rounded-full pt-2 pb-1 pr-2 pl-2"
               onClick={() => window.history.back()}
             >
-              <i className="pi pi-arrow-left text-xl"></i>
+              <i className=" text-white pi pi-arrow-left text-xl"></i>
             </button>
-            <h1 className="text-2xl font-bold">{recipeLabel}</h1>
+            <h1 className="text-white text-2xl font-bold">{recipeLabel}</h1>
             {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
               <img
                 src={redheartimg}
                 alt="Recipe"
-                className="rounded-full p-1"
+                className="bg-white rounded-full p-1"
                 onClick={(e) => {
                   handleFavoriteButtonToast();
                   handleFavorite(recipeUri);
@@ -371,7 +371,7 @@ const DisplayRecipe: React.FC = () => {
               <img
                 src={heartimg}
                 alt="Recipe"
-                className="rounded-full p-1"
+                className="bg-white rounded-full p-1"
                 style={{
                   width: "35px",
                   height: "35px",
@@ -400,21 +400,21 @@ const DisplayRecipe: React.FC = () => {
           <div className="flex flex-row w-2/3 justify-around h-auto">
             {/* Display ingredients */}
             <div className="pl-4 pb-1 mt-3">
-              <h2 className="text-lg font-bold">Ingredients:</h2>
+              <h2 className="text-white text-lg font-bold">Ingredients:</h2>
               <ul>
                 {recipeIngredients.map((ingredient) => (
-                  <li key={ingredient}>- {ingredient}</li>
+                  <li className="text-white" key={ingredient}>- {ingredient}</li>
                 ))}
               </ul>
             </div>
             {/* Display recipe details */}
             <div className="pl-4 mt-5">
-            <h2 className="text-lg font-bold">Info:</h2>
-              <p className="">
+            {/* <h2 className="text-white text-lg font-bold">Info:</h2> */}
+              <p className="text-gray-400">
                 Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
               </p>
-              <p className="">Dish Type: {recipeDishType}</p>
-              <p className="">
+              <p className="text-gray-400">Dish Type: {recipeDishType}</p>
+              <p className="text-gray-400">
                 Calories: {recipeCalories.toFixed(2)} kcal
               </p>
             </div>
@@ -444,7 +444,7 @@ const DisplayRecipe: React.FC = () => {
       )}
       {breakpointIndex === 3 && (
         <>
-          <Navbar />
+          <Nav />
           <div
             className="flex flex-col items-center"
             style={{ minHeight: "100vh" }}
@@ -452,17 +452,17 @@ const DisplayRecipe: React.FC = () => {
             {/* Image cover */}
             <div className="flex items-start justify-between mt-5 mb-5  w-2/3">
               <button
-                className="  rounded-full pt-2 pb-1 pr-2 pl-2"
+                className=" rounded-full pt-2 pb-1 pr-2 pl-2"
                 onClick={() => window.history.back()}
               >
-                <i className="pi pi-arrow-left text-xl"></i>
+                <i className="text-white pi pi-arrow-left text-xl"></i>
               </button>
-              <h1 className="text-2xl font-bold">{recipeLabel}</h1>
+              <h1 className="text-white text-2xl font-bold">{recipeLabel}</h1>
               {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
                 <img
                   src={redheartimg}
                   alt="Recipe"
-                  className="rounded-full p-1"
+                  className="bg-white rounded-full p-1"
                   onClick={(e) => {
                     handleFavoriteButtonToast();
                     handleFavorite(recipeUri);
@@ -481,7 +481,7 @@ const DisplayRecipe: React.FC = () => {
                 <img
                   src={heartimg}
                   alt="Recipe"
-                  className="rounded-full p-1"
+                  className="bg-white rounded-full p-1"
                   style={{
                     width: "35px",
                     height: "35px",
@@ -510,21 +510,21 @@ const DisplayRecipe: React.FC = () => {
             <div className="flex flex-row w-2/3 justify-around h-auto">
               {/* Display ingredients */}
               <div className="pl-4 pb-1 mt-3">
-                <h2 className="text-lg font-bold">Ingredients:</h2>
+                <h2 className="text-white text-lg font-bold">Ingredients:</h2>
                 <ul>
                   {recipeIngredients.map((ingredient) => (
-                    <li key={ingredient}>- {ingredient}</li>
+                    <li className="text-white" key={ingredient}>- {ingredient}</li>
                   ))}
                 </ul>
               </div>
               {/* Display recipe details */}
               <div className="pl-4 mt-5">
-              <h2 className="text-lg font-bold">Info:</h2>
-                <p className="">
+              {/* <h2 className="text-white text-lg font-bold">Info:</h2> */}
+                <p className="text-gray-400">
                   Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
                 </p>
-                <p className="">Dish Type: {recipeDishType}</p>
-                <p className="">
+                <p className="text-gray-400">Dish Type: {recipeDishType}</p>
+                <p className="text-gray-400">
                   Calories: {recipeCalories.toFixed(2)} kcal
                 </p>
               </div>
