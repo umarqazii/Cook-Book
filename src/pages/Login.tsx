@@ -192,7 +192,7 @@ const Login = () => {
                     <input
                       id="reenterpassword"
                       name="reenterpassword"
-                      type="reenterpassword"
+                      type="password"
                       placeholder="eg. nkdP@45"
                       required
                       value={reenterPassword}
