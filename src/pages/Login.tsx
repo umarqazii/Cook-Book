@@ -30,6 +30,7 @@ const Login = () => {
 
   const handleSignup = (event: React.FormEvent) =>{
     event.preventDefault();
+    console.log(fullName, signupEmail, signupPassword)
     axios.post('http://localhost:8080/auth/signup', {
       fullName,
       signupEmail,
@@ -133,7 +134,7 @@ const Login = () => {
               <form className="space-y-4 w-1/2">
               <div>
                   <label className="block text-sm font-medium leading-6 text-white">
-                    Full Name
+                    Name
                   </label>
                   <div className="mt-1">
                     <input
