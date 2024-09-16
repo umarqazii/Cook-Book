@@ -3,7 +3,11 @@ import axios from "axios";
 import img1 from "../assets/lolo.png";
 import { useResponsive } from "../styling/useResponsive";
 
-const Login = () => {
+interface LoginProps {
+  setToken: (token: string) => void;
+}
+
+const Login: React.FC <LoginProps> = ({ setToken }) => {
   const breakpoints = [480, 768, 1279]; // Example breakpoints: small, medium, large screens
   const breakpointIndex = useResponsive(breakpoints);
   const [toggle, setToggle] = useState(false);
@@ -21,7 +25,9 @@ const Login = () => {
       loginPassword
     })
     .then((res)=>{
-      console.log(res.status)
+      console.log(res)
+      setToken(res.data.token);
+      localStorage.setItem("token", res.data.token);
     })
     .catch((err)=>{
       alert(err)
