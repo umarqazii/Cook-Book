@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import img1 from "../assets/lolo.png";
 import { useResponsive } from "../styling/useResponsive";
@@ -17,10 +18,13 @@ const Login: React.FC <LoginProps> = ({ setToken }) => {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("")
   const [reenterPassword, setReenterPassword] = useState("")
+  const [userid, setUserid] = useState("")
+  const navigate = useNavigate();
 
   const handleLogin = (event: React.FormEvent) => {
     event?.preventDefault();
-    axios.post('http://localhost:8080/auth/login',{
+    axios.post('https://cook-book-api-rho.vercel.app/auth/login',{
+    //axios.post('http://localhost:8080/auth/login',{
       loginEmail,
       loginPassword
     })
@@ -28,6 +32,8 @@ const Login: React.FC <LoginProps> = ({ setToken }) => {
       console.log(res)
       setToken(res.data.token);
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("userid", res.data.user);
+      navigate("/");
     })
     .catch((err)=>{
       alert(err)
@@ -37,7 +43,8 @@ const Login: React.FC <LoginProps> = ({ setToken }) => {
   const handleSignup = (event: React.FormEvent) =>{
     event.preventDefault();
     console.log(fullName, signupEmail, signupPassword)
-    axios.post('http://localhost:8080/auth/signup', {
+    axios.post('https://cook-book-api-rho.vercel.app/auth/signup', {
+    //axios.post('http://localhost:8080/auth/signup', {
       fullName,
       signupEmail,
       signupPassword

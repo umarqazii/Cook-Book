@@ -141,10 +141,12 @@ const Recipes = () => {
       const response = await axios.post(
         "https://cook-book-api-rho.vercel.app/recipes/add-to-favorites",
         {
+          userid: localStorage.getItem("userid"),
           uri: uri,
         }
       );
       // const response = await axios.post("http://localhost:8080/recipes/add-to-favorites", {
+      //   userid: localStorage.getItem("userid"),
       //   uri: uri,
       // });
       toast.remove(toastid);

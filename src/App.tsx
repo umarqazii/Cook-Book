@@ -22,7 +22,8 @@ function App() {
     const checkToken = async () => {
       try {
         if (token) {
-          await axios.get('http://localhost:8080/auth/protected', {
+          await axios.get('https://cook-book-api-rho.vercel.app/auth/protected', {
+          //await axios.get('http://localhost:8080/auth/protected', {
             headers: {
               Authorization: `Bearer ${token}`,
             },
