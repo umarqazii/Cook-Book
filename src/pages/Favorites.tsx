@@ -40,11 +40,17 @@ const Favorites = () => {
   useEffect(() => {
     const getFavoriteRecipes = async () => {
       try {
-        const response = await axios.get(
-          "https://cook-book-api-rho.vercel.app/recipes/get-favorites"
+        const response = await axios.post(
+          "https://cook-book-api-rho.vercel.app/recipes/get-favorites", {
+            userid: localStorage.getItem("userid"),
+          }
         );
         console.log(response);
-        // const response = await axios.get('http://localhost:8080/recipes/get-favorites');
+        // const response = await axios.post('http://localhost:8080/recipes/get-favorites',{
+        //   userid: localStorage.getItem("userid"),
+        // });
+
+        // console.log(response);
         const recipeIDs = response.data.favorites.map(
           (favorite: any) => favorite.recipeid
         );

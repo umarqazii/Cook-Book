@@ -158,7 +158,10 @@ const Recipes = () => {
       setFavoritesUpdated((prev) => !prev);
     } catch (error) {
       console.error(error);
-      toast.error("Failed to add to favorites");
+      toast.remove(toastid);
+      toast.error("Failed to add to favorites, make sure you're logged in",{
+        duration: 3000,
+      });
     }
   };
 
