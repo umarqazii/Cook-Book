@@ -32,7 +32,7 @@ const Login: React.FC <LoginProps> = ({ setToken }) => {
       console.log(res)
       setToken(res.data.token);
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userid", res.data.user);
+      localStorage.setItem("userid", res.data.user._id);
       navigate("/");
     })
     .catch((err)=>{
@@ -135,6 +135,14 @@ const Login: React.FC <LoginProps> = ({ setToken }) => {
                   &nbsp; Sign up Now
                 </span>
               </p>
+              
+                <span
+                  className="font-semibold leading-6 mt-3 text-orange-300 hover:text-orange-500 cursor-pointer"
+                  onClick={() => navigate("/")}
+                >
+                  Back to Home
+                </span>
+              
             </div>
 
             {/* Signup form positioned on the left inside the outer div */}
@@ -269,6 +277,7 @@ const Login: React.FC <LoginProps> = ({ setToken }) => {
                   &nbsp; Login
                 </span>
               </p>
+              
             </div>
 
             {/* div that moves */}
