@@ -32,7 +32,7 @@ const Login: React.FC <LoginProps> = ({ setToken }) => {
       console.log(res)
       setToken(res.data.token);
       localStorage.setItem("token", res.data.token);
-      localStorage.setItem("userid", res.data.user._id);
+      //localStorage.setItem("userid", res.data.user._id);
       navigate("/");
     })
     .catch((err)=>{
