@@ -136,7 +136,11 @@ function getIdFromToken(): string | null {
     try {
       await axios.post(
         "https://cook-book-api-rho.vercel.app/recipes/remove-favorite",
-        { uri }
+        { 
+          uri,
+          userid: getIdFromToken(),
+
+         }
       );
       // await axios.post('http://localhost:8080/recipes/remove-favorite', { uri });
       toast.remove(toastid);
