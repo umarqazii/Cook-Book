@@ -2650,7 +2650,7 @@ function getIdFromToken(): string | null {
               // -----------------------------Displaying Based on Search After options are selected--------------------------------
               <>
                 <h2
-                  className="text-black text-lg font-bold text-center mb-3 mt-5"
+                  className="text-white text-lg font-bold text-center mb-3 mt-5"
                   style={{ fontFamily: 'cursive' }}
                 >
                   BASED ON YOUR SEARCH
@@ -2667,7 +2667,7 @@ function getIdFromToken(): string | null {
                     {recipes.map((Recipe) => (
                       <Card
                         key={Recipe.recipe.url}
-                        className="Card transition-transform duration-300 hover:shadow-lg hover:cursor-pointer"
+                        className="Card transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:cursor-pointer"
                         style={{
                           width: "400px",
                           height: "200px",

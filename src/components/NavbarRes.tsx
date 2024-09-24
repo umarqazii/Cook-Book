@@ -11,7 +11,7 @@ const Nav = () => {
 
     const handleLogout = () => {
       localStorage.removeItem("token");  // Remove the token
-      navigate("/");                     // Navigate to home screen
+      window.location.href = "/";                     // Navigate to home screen
     };
 
     const handleDropdown = () => {
@@ -104,7 +104,7 @@ const Nav = () => {
                     >Add Recipes</NavLink>
                     <NavLink to="/displaymyrecipes" className='text-xl px-7 py-2 rounded-full'
                     onClick={() => setToggle(!toggle)}
-                    >My Recipes</NavLink>
+                    >Display My Recipes</NavLink>
                 </ul>
             </div>
         </div>

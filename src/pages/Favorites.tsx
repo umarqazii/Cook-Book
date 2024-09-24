@@ -150,8 +150,10 @@ function getIdFromToken(): string | null {
 
       const getFavoriteRecipes = async () => {
         try {
-          const response = await axios.get(
-            "https://cook-book-api-rho.vercel.app/recipes/get-favorites"
+          const response = await axios.post(
+            "https://cook-book-api-rho.vercel.app/recipes/get-favorites",{
+              userid: getIdFromToken(),
+            }
           );
           console.log(response);
           // const response = await axios.get('http://localhost:8080/recipes/get-favorites');

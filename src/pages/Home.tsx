@@ -16,6 +16,53 @@ const Home = () => {
   const breakpoints = [640, 768, 1600]; // Example breakpoints: small, medium, large screens
   const breakpointIndex = useResponsive(breakpoints);
   const container = useRef<HTMLDivElement>(null);
+  const [displayUsername, setDisplayUsername] = React.useState(false);
+  const [username, setUsername] = React.useState<string | null>(null);
+
+  useEffect(()=>{
+    const token = localStorage.getItem("token")
+    if(token){
+      setDisplayUsername(true)
+      setUsername(getUsernameFromToken())
+    }
+  },[])
+
+  function parseJwt(token: string): { [key: string]: any } | null {
+    try {
+      const base64Url = token.split('.')[1]; // Get the payload part of the JWT
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Handle URL-safe base64
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join('')
+      );
+  
+      return JSON.parse(jsonPayload); // Parse the JSON payload
+    } catch (error) {
+      console.error("Failed to parse JWT", error);
+      return null;
+    }
+  }
+  
+  // Function to get _id from the token
+  function getUsernameFromToken(): string | null {
+    const token = localStorage.getItem('token'); // Retrieve the JWT from local storage
+    if (!token) {
+      console.log("No token found in local storage");
+      return null;
+    }
+  
+    const decodedToken = parseJwt(token); // Manually decode the JWT
+    if (decodedToken && decodedToken.Username) {
+      return decodedToken.Username; // Extract and return the _id
+    } else {
+      console.log("Invalid or missing username in token");
+      return null;
+    }
+  }
 
   useEffect(() => {
     // SplitType and GSAP animations
@@ -126,6 +173,18 @@ const Home = () => {
           </div>
 
           <div className="w-full sm:w-1/2 flex flex-col justify-center items-center ">
+            
+          {displayUsername && (
+            <h1
+            className="text-2xl text-white mb-3 text-center reveal-type"
+            style={{ fontFamily: '"Matemasie", cursive' }}
+          >
+            Hello {username}
+          </h1>
+          )
+
+          }
+            
             <h1
               className="text-5xl text-white mb-3 text-center reveal-type"
               style={{ fontFamily: '"Matemasie", cursive' }}
