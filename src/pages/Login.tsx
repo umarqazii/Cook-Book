@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import img1 from "../assets/lolo.png";
+import toast, { Toaster } from "react-hot-toast";
 import { useResponsive } from "../styling/useResponsive";
 
 interface LoginProps {
@@ -19,9 +20,20 @@ const Login: React.FC <LoginProps> = ({ setToken }) => {
   const [signupPassword, setSignupPassword] = useState("")
   const [reenterPassword, setReenterPassword] = useState("")
   const [userid, setUserid] = useState("")
+  let toastid = "";
   const navigate = useNavigate();
 
   const handleLogin = (event: React.FormEvent) => {
+    toastid = toast("Processing your request...", {
+      icon: "⏳",
+      duration: Infinity,
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
+
     event?.preventDefault();
     axios.post('https://cook-book-api-rho.vercel.app/auth/login',{
     //axios.post('http://localhost:8080/auth/login',{
@@ -34,13 +46,29 @@ const Login: React.FC <LoginProps> = ({ setToken }) => {
       localStorage.setItem("token", res.data.token);
       //localStorage.setItem("userid", res.data.user._id);
       navigate("/");
+      toast.remove(toastid);
+      toast.success("Login successful", {
+        duration: 3000,
+      });
     })
     .catch((err)=>{
-      alert(err)
+      toast.remove(toastid);
+      toast.error("Login Failed", {
+        duration: 3000,
+      });
     })
   }
 
   const handleSignup = (event: React.FormEvent) =>{
+    toastid = toast("Processing your request...", {
+      icon: "⏳",
+      duration: Infinity,
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
     event.preventDefault();
     console.log(fullName, signupEmail, signupPassword)
     axios.post('https://cook-book-api-rho.vercel.app/auth/signup', {
@@ -51,9 +79,17 @@ const Login: React.FC <LoginProps> = ({ setToken }) => {
     })
     .then((res)=>{
       console.log(res)
+      toast.remove(toastid);
+      toast.success("Signup successful", {
+        duration: 3000,
+      });
+      setToggle(!toggle);
     })
     .catch((err)=>{
-      alert(err)
+      toast.remove(toastid);
+      toast.error("Signup Failed, please try again later", {
+        duration: 3000,
+      });
     })
   }
 

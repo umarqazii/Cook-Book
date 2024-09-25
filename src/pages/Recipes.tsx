@@ -209,6 +209,12 @@ function getIdFromToken(): string | null {
       const hits = await fetchRandomRecipes();
       setRandomRecipes(hits); // Update the recipes state with the fetched hits
       setLoading(false); // Step 2: Set loading to false after fetching
+
+      // if length of random recipes is 0, fetch again
+      if (hits.length === 0) {
+        fetchAndSetRandomRecipes();
+      }
+
     };
 
     fetchAndSetRandomRecipes();
