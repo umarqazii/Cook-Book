@@ -14,6 +14,10 @@ const Nav = () => {
       window.location.href = "/";                     // Navigate to home screen
     };
 
+    const handleLogin = () => {
+      navigate("/login");
+    };
+
     const handleDropdown = () => {
       setDropdown(!dropdown);  // Toggle the dropdown visibility
     };
@@ -71,8 +75,10 @@ const Nav = () => {
               </div>
             )}
           </div>
-          {displayLogout && (
+          {displayLogout ? (
             <button  className='px-7 py-2 rounded-full' onClick={handleLogout}>Logout</button>
+          ):(
+            <button  className='px-7 py-2 rounded-full' onClick={handleLogin}>Login</button>
           )
 
           }

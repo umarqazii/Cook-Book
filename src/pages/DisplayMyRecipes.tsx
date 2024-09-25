@@ -46,11 +46,53 @@ const DisplayMyRecipes = () => {
     }
   };
 
+  function parseJwt(token: string): { [key: string]: any } | null {
+    try {
+      const base64Url = token.split('.')[1]; // Get the payload part of the JWT
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); // Handle URL-safe base64
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join('')
+      );
+  
+      return JSON.parse(jsonPayload); // Parse the JSON payload
+    } catch (error) {
+      console.error("Failed to parse JWT", error);
+      return null;
+    }
+  }
+  
+  // Function to get _id from the token
+  function getIdFromToken(): string | null {
+    const token = localStorage.getItem('token'); // Retrieve the JWT from local storage
+    if (!token) {
+      console.log("No token found in local storage");
+      return null;
+    }
+  
+    const decodedToken = parseJwt(token); // Manually decode the JWT
+    if (decodedToken && decodedToken._id) {
+      return decodedToken._id; // Extract and return the _id
+    } else {
+      console.log("Invalid or missing _id in token");
+      return null;
+    }
+  }
+
   useEffect(() => {
     const getRecipes = async () => {
       try {
-        const response = await axios.get(
-          "https://cook-book-api-rho.vercel.app/recipes/get-all-recipes"
+        // const response = await axios.get(
+        //   "https://cook-book-api-rho.vercel.app/recipes/get-all-recipes"
+        // );
+        const response = await axios.post(
+          "http://localhost:8080/recipes/get-all-recipes",{
+            userid: getIdFromToken(),
+          }
         );
         const fetchedRecipes = response.data.recipes;
         setRecipes(fetchedRecipes);
