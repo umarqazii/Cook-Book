@@ -86,14 +86,16 @@ const DisplayMyRecipes = () => {
   useEffect(() => {
     const getRecipes = async () => {
       try {
-        // const response = await axios.get(
-        //   "https://cook-book-api-rho.vercel.app/recipes/get-all-recipes"
-        // );
         const response = await axios.post(
-          "http://localhost:8080/recipes/get-all-recipes",{
+          "https://cook-book-api-rho.vercel.app/recipes/get-all-recipes",{
             userid: getIdFromToken(),
           }
         );
+        // const response = await axios.post(
+        //   "http://localhost:8080/recipes/get-all-recipes",{
+        //     userid: getIdFromToken(),
+        //   }
+        // );
         const fetchedRecipes = response.data.recipes;
         setRecipes(fetchedRecipes);
 
