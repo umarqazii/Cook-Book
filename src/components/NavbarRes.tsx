@@ -78,7 +78,7 @@ const Nav = () => {
           {displayLogout ? (
             <button  className='px-7 py-2 rounded-full' onClick={handleLogout}>Logout</button>
           ):(
-            <button  className='px-7 py-2 rounded-full' onClick={handleLogin}>Login</button>
+            <></>
           )
 
           }

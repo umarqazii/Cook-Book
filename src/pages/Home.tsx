@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import gsap from 'gsap'; 
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
@@ -13,6 +14,7 @@ import bgimg from "../assets/low-poly-grid-haikei.png";
 gsap.registerPlugin(ScrollTrigger);
 
 const Home = () => {
+  const navigate = useNavigate();
   const breakpoints = [640, 768, 1600]; // Example breakpoints: small, medium, large screens
   const breakpointIndex = useResponsive(breakpoints);
   const container = useRef<HTMLDivElement>(null);
@@ -88,6 +90,10 @@ const Home = () => {
       ease: "anticipate",
       opacity: 0,
     });
+
+
+    gsap.from('.login-btn', {scale:2, y:300 , duration: 3, ease: "anticipate", opacity: 0});
+
     gsap.from('.circle-plate-img', {x: -300, duration: 3, ease: "anticipate", opacity: 0});
     gsap.to('.circle-plate-img', { rotation: 100, duration: 3, repeat:0 });
 
@@ -197,6 +203,15 @@ const Home = () => {
                 style={{ fontFamily: '"Cedarville Cursive", cursive' }}
               ></span>
             </div>
+            {displayUsername ? (
+            <></>
+          ) : (
+            <div className="mt-5 login-btn">
+              <button className="text-white border-2 border-white rounded-full p-4 hover:bg-orange-700" onClick={()=>navigate("/login")}>Login / Signup</button>
+            </div>
+          )
+
+          }
           </div>
         </div>
       )}

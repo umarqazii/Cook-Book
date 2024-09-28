@@ -8,6 +8,7 @@ import heartimg from "../assets/heart.png";
 import redheartimg from "../assets/redheart.png";
 import Navbar from "../components/navbar";
 import Nav from "../components/NavbarRes";
+import coverimg from "../assets/cover.png";
 
 interface Recipe {
   label: string;
@@ -206,15 +207,15 @@ const DisplayRecipe: React.FC = () => {
 
           {/* Display recipe details */}
           <div className="pl-4 mt-5">
-            <h1 className="text-white text-2xl font-bold">{recipeLabel}</h1>
-            <p className="text-gray-400">
-              Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
-            </p>
-            <p className="text-gray-400">Dish Type: {recipeDishType}</p>
-            <p className="text-gray-400">
-              Calories: {recipeCalories.toFixed(2)} kcal
-            </p>
-          </div>
+          <h1 className="text-white text-2xl font-bold">{recipeLabel}</h1>
+          <p className="text-gray-200">
+            <b>Cuisine:</b> {recipeCuisineType[0]} {recipeCuisineType[1]}
+          </p>
+          <p className="text-gray-200"><b>Dish Type:</b> {recipeDishType}</p>
+          <p className="text-gray-200">
+            <b>Calories:</b> {recipeCalories.toFixed(2)} kcal
+          </p>
+        </div>
 
           {/* Display ingredients */}
           <div className="pl-4 pb-1 mt-3">
@@ -241,7 +242,7 @@ const DisplayRecipe: React.FC = () => {
         <img
           src={recipeImage}
           alt="Recipe"
-          className="top-0 cover-image w-full h-80"
+          className="top-0 cover-image w-full self-center h-80"
           style={
             {
               // WebkitMaskImage:
@@ -304,12 +305,12 @@ const DisplayRecipe: React.FC = () => {
         {/* Display recipe details */}
         <div className="pl-4 mt-5">
           <h1 className="text-white text-2xl font-bold">{recipeLabel}</h1>
-          <p className="text-gray-400">
-            Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
+          <p className="text-gray-200">
+            <b>Cuisine:</b> {recipeCuisineType[0]} {recipeCuisineType[1]}
           </p>
-          <p className="text-gray-400">Dish Type: {recipeDishType}</p>
-          <p className="text-gray-400">
-            Calories: {recipeCalories.toFixed(2)} kcal
+          <p className="text-gray-200"><b>Dish Type:</b> {recipeDishType}</p>
+          <p className="text-gray-200">
+            <b>Calories:</b> {recipeCalories.toFixed(2)} kcal
           </p>
         </div>
 
@@ -335,17 +336,18 @@ const DisplayRecipe: React.FC = () => {
       {breakpointIndex === 2 && (
         <>
         <Nav />
+        {/* <img src={coverimg} alt="" className="w-full h-56" /> */}
         <div
           className="flex flex-col items-center"
-          style={{ minHeight: "100vh" }}
+          style={{ minHeight: "89vh" }}
         >
           {/* Image cover */}
-          <div className="flex items-start justify-between mt-5 mb-5  w-2/3">
+          <div className="flex items-start justify-between mt-5  w-5/6 mb-16">
             <button
-              className="  rounded-full pt-2 pb-1 pr-2 pl-2"
+              className=" rounded-full pt-2 pb-1 pr-2 pl-2"
               onClick={() => window.history.back()}
             >
-              <i className=" text-white pi pi-arrow-left text-xl"></i>
+              <i className="text-white pi pi-arrow-left text-xl"></i>
             </button>
             <h1 className="text-white text-2xl font-bold">{recipeLabel}</h1>
             {stringExistsInArray(favoriteRecipesURIs, recipeUri) ? (
@@ -388,34 +390,39 @@ const DisplayRecipe: React.FC = () => {
               />
             )}
           </div>
+          
+
+          {/* Fixed back icon toward the top left */}
+
+          <div className="flex flex-row items-center w-5/6 justify-between h-auto ">
           <img
             src={recipeImage}
             alt="Recipe"
             className="h-96 w-2/3 rounded-3xl"
             style={{}}
           />
-
-          {/* Fixed back icon toward the top left */}
-
-          <div className="flex flex-row w-2/3 justify-around h-auto">
             {/* Display ingredients */}
             <div className="pl-4 pb-1 mt-3">
-              <h2 className="text-white text-lg font-bold">Ingredients:</h2>
+              <h2 className="text-white text-xl font-bold">Ingredients:</h2>
               <ul>
                 {recipeIngredients.map((ingredient) => (
                   <li className="text-white" key={ingredient}>- {ingredient}</li>
                 ))}
               </ul>
             </div>
+
+            
+          </div>
+          <div className="flex flex-row items-center w-5/6 justify-around h-auto ">
             {/* Display recipe details */}
             <div className="pl-4 mt-5">
             {/* <h2 className="text-white text-lg font-bold">Info:</h2> */}
-              <p className="text-gray-400">
-                Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
+              <p className="text-gray-200">
+                <b className="text-white text-xl font-bold">Cuisine:</b> {recipeCuisineType[0]} {recipeCuisineType[1]}
               </p>
-              <p className="text-gray-400">Dish Type: {recipeDishType}</p>
-              <p className="text-gray-400">
-                Calories: {recipeCalories.toFixed(2)} kcal
+              <p className="text-gray-200"><b className="text-white text-xl font-bold">Dish Type:</b> {recipeDishType}</p>
+              <p className="text-gray-200">
+              <b className="text-white text-xl font-bold">Calories:</b> {recipeCalories.toFixed(2)} kcal
               </p>
             </div>
 
@@ -438,19 +445,20 @@ const DisplayRecipe: React.FC = () => {
                 Add to Favorites <i className="pi pi-heart"></i>
               </button>
             </div>
-          </div>
+            </div>
         </div>
       </>
       )}
       {breakpointIndex === 3 && (
         <>
           <Nav />
+          {/* <img src={coverimg} alt="" className="w-full h-56" /> */}
           <div
             className="flex flex-col items-center"
-            style={{ minHeight: "100vh" }}
+            style={{ minHeight: "89vh" }}
           >
             {/* Image cover */}
-            <div className="flex items-start justify-between mt-5 mb-5  w-2/3">
+            <div className="flex items-start justify-between mt-5  w-5/6 mb-16">
               <button
                 className=" rounded-full pt-2 pb-1 pr-2 pl-2"
                 onClick={() => window.history.back()}
@@ -498,34 +506,37 @@ const DisplayRecipe: React.FC = () => {
                 />
               )}
             </div>
-            <img
-              src={recipeImage}
-              alt="Recipe"
-              className="h-96 w-2/3 rounded-3xl"
-              style={{}}
-            />
+            
 
             {/* Fixed back icon toward the top left */}
 
-            <div className="flex flex-row w-2/3 justify-around h-auto">
+            <div className="flex flex-row items-center w-5/6 justify-around h-auto ">
+            <img
+              src={recipeImage}
+              alt="Recipe"
+              className="h-96 w-1/3 rounded-3xl"
+              style={{}}
+            />
               {/* Display ingredients */}
               <div className="pl-4 pb-1 mt-3">
-                <h2 className="text-white text-lg font-bold">Ingredients:</h2>
+                <h2 className="text-white text-xl font-bold">Ingredients:</h2>
                 <ul>
                   {recipeIngredients.map((ingredient) => (
                     <li className="text-white" key={ingredient}>- {ingredient}</li>
                   ))}
                 </ul>
               </div>
+
+              <div>
               {/* Display recipe details */}
               <div className="pl-4 mt-5">
               {/* <h2 className="text-white text-lg font-bold">Info:</h2> */}
-                <p className="text-gray-400">
-                  Cuisine: {recipeCuisineType[0]} {recipeCuisineType[1]}
+                <p className="text-gray-200">
+                  <b className="text-white text-xl font-bold">Cuisine:</b> {recipeCuisineType[0]} {recipeCuisineType[1]}
                 </p>
-                <p className="text-gray-400">Dish Type: {recipeDishType}</p>
-                <p className="text-gray-400">
-                  Calories: {recipeCalories.toFixed(2)} kcal
+                <p className="text-gray-200"><b className="text-white text-xl font-bold">Dish Type:</b> {recipeDishType}</p>
+                <p className="text-gray-200">
+                <b className="text-white text-xl font-bold">Calories:</b> {recipeCalories.toFixed(2)} kcal
                 </p>
               </div>
 
@@ -547,6 +558,7 @@ const DisplayRecipe: React.FC = () => {
                 >
                   Add to Favorites <i className="pi pi-heart"></i>
                 </button>
+              </div>
               </div>
             </div>
           </div>
