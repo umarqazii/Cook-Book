@@ -171,7 +171,6 @@ const Home = () => {
           </div>
         </div>
       )}
-
       {breakpointIndex === 2 && (
         <div className="flex flex-wrap min-h-screen" style={{ minHeight: "calc(100vh - 86px)" }}>
           <div className="w-full sm:w-1/2 flex items-center justify-center">
